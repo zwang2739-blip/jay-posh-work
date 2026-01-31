@@ -30,18 +30,19 @@
             z-index: 100; 
             background: transparent;
             transition: background 0.3s, padding 0.3s;
-            mix-blend-mode: difference; /* 讓文字在黑白背景都能看見 */
+            mix-blend-mode: difference; 
             color: #fff;
         }
-        header.scrolled { background: rgba(255,255,255,0.9); padding: 20px 50px; color: #000; mix-blend-mode: normal; }
+        header.scrolled { background: rgba(255,255,255,0.95); padding: 20px 50px; color: #000; mix-blend-mode: normal; }
 
         .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 700; text-transform: uppercase; }
         .menu-btn { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; }
 
-        /* --- Hero Section (LOGO影片) --- */
+        /* --- Hero Section --- */
         .hero-section {
             width: 100%; height: 100vh; background-color: #ffffff;
             position: relative; overflow: hidden;
+            border-bottom: 1px solid #e0e0e0;
         }
         .hero-video {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
@@ -50,15 +51,15 @@
         }
 
         /* =========================================
-           ★ 核心結構：Split -> Text -> Grid -> Split ★
+           ★ 核心結構修正：更乾淨的圖片 + 密集格線 ★
            ========================================= */
         
-        /* 通用：雙欄滿版圖 (用於開頭和結尾) */
+        /* 1. 開頭雙圖 (Split Header) */
         .split-image-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
             width: 100%;
-            height: 80vh; /* 高度佔螢幕 80% */
+            height: 90vh; /* 稍微加高，更有氣勢 */
         }
         .split-img-box {
             width: 100%;
@@ -68,106 +69,126 @@
         .split-img-box img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: cover; /* 確保滿版不變形 */
             transition: transform 1s ease;
         }
-        .split-img-box:hover img { transform: scale(1.05); }
+        .split-img-box:hover img { transform: scale(1.03); }
 
-        /* 中間：文字敘述區 (DAGNY FIELDS 風格) */
+        /* 2. 文字敘述區 */
         .narrative-section {
-            padding: 100px 50px;
+            padding: 120px 50px;
             text-align: center;
             max-width: 1200px;
             margin: 0 auto;
         }
         .narrative-title {
             font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            letter-spacing: 2px;
+            font-size: 0.9rem;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            margin-bottom: 60px;
+            margin-bottom: 80px;
             font-weight: 600;
+            opacity: 0.6;
         }
         .narrative-content {
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr 1fr; /* 三欄比例 */
+            gap: 40px;
             text-align: left;
-            font-size: 0.8rem;
-            color: #444;
+            font-size: 0.85rem;
+            color: #333;
             line-height: 1.8;
+            border-top: 1px solid #ddd;
+            padding-top: 30px;
         }
-        .narrative-col { width: 30%; }
-        .narrative-list span { display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; color: #888; }
+        .narrative-list span { display: block; margin-bottom: 8px; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; color: #888; }
 
-        /* ★ 重點：筆記本錯位格線區 (Notebook Grid) ★ */
+        /* ★ 3. 筆記本格線區 (Notebook Grid - 修正版) ★ */
         .notebook-section {
             width: 100%;
-            /* 畫出垂直線：每 25% 一條線 (4欄) */
-            background-image: linear-gradient(to right, #e0e0e0 1px, transparent 1px);
-            background-size: 25% 100%; 
+            position: relative;
+            
+            /* ★★★ 修正點：密集格線 ★★★ */
+            /* 每 30px 一條線，看起來像真正的設計稿紙 */
+            background-image: linear-gradient(to right, #f2f2f2 1px, transparent 1px);
+            background-size: 30px 100%; 
+            
             border-top: 1px solid #e0e0e0;
             border-bottom: 1px solid #e0e0e0;
             
+            /* Grid 設定 */
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 4欄 */
-            /* 定義列的高度，用來控制錯位 */
-            grid-template-rows: 150px 300px 100px 300px 150px; 
+            grid-template-columns: repeat(4, 1fr); /* 分4大區塊 */
+            /* 自動高度，避免內容重疊 */
+            grid-auto-rows: minmax(100px, auto); 
+            
+            /* 增加底部留白，確保蝴蝶影片不會撞到下面 */
+            padding-bottom: 150px; 
         }
 
-        /* 格線內容設定 */
+        /* 內容容器 */
         .nb-item {
             position: relative;
-            padding: 20px; /* 圖片與格線的距離 */
+            padding: 0 15px; /* 稍微留點左右邊距，不要黏死格線 */
         }
         .nb-item img, .nb-item video {
             width: 100%;
             display: block;
-            filter: grayscale(20%);
-            transition: 0.5s;
+            filter: grayscale(100%);
+            transition: 0.6s;
         }
         .nb-item:hover img, .nb-item:hover video { filter: grayscale(0%); }
         
         .nb-caption {
             font-family: 'Cormorant Garamond', serif;
             font-style: italic;
-            font-size: 0.9rem;
-            margin-top: 10px;
-            color: #666;
+            font-size: 0.85rem;
+            margin-top: 15px;
+            color: #888;
         }
 
-        /* --- 錯位佈局 (依照參考圖配置) --- */
+        /* --- 錯位佈局設定 (修正重疊問題) --- */
         
-        /* A. 左一圖 (佔據第 2-3 列) */
+        /* A. 左一：人物 (grid-a.jpg) */
         .pos-a {
             grid-column: 1;
-            grid-row: 2 / span 2; 
-            padding-top: 50px; /* 往下壓一點 */
+            grid-row: 1; 
+            margin-top: 100px; /* 起始位置 */
+            padding-left: 30px; /* 靠左一點 */
         }
 
-        /* B. 左二影片 (佔據第 2 列) - 梳子位置 */
+        /* B. 左二：風吹影片 (grid-b.mp4) */
         .pos-b {
             grid-column: 2;
-            grid-row: 2;
-            padding-top: 0; /* 貼頂 */
+            grid-row: 1;
+            margin-top: 50px; /* 比左一高一點 */
         }
 
-        /* C. 右二影片 (佔據第 4 列) - 綠領巾位置 (沉下去) */
-        .pos-c {
-            grid-column: 4; /* 改到最右邊那欄 */
-            grid-row: 4;
-            padding-top: 20px;
-        }
-
-        /* D. 左二圖 (佔據第 4 列) - 辮子位置 */
+        /* D. 左二下方：藝術字 (grid-d.jpg) */
         .pos-d {
             grid-column: 2;
-            grid-row: 4;
-            padding-top: 0;
+            grid-row: 2;
+            margin-top: 50px; /* 與上方影片的距離 */
+            width: 80%; /*稍微縮小一點 */
+        }
+
+        /* C. 右側沉底：蝴蝶影片 (grid-c.mp4) */
+        .pos-c {
+            grid-column: 4; /* 最右欄 */
+            grid-row: 2; /* 第二列開始 */
+            margin-top: 150px; /* ★ 往下沉，製造錯落感 */
+            padding-right: 30px;
+            /* 這裡不需要擔心重疊，因為父層 .notebook-section 沒有設死高度 */
         }
 
 
-        /* --- Gallery Section (下方原有作品) --- */
-        .grid-section { padding: 100px 60px 150px; background-color: #fff; }
+        /* 4. 結尾雙圖 (Split Footer) */
+        .split-image-section {
+            /* 樣式同上，確保一致性 */
+        }
+
+        /* --- Gallery Section --- */
+        .grid-section { padding: 150px 60px; background-color: #fff; } /* 增加與上方的距離 */
         .project-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 80px; align-items: start; }
         .col-right { margin-top: 250px; } 
         .project-item { margin-bottom: 220px; cursor: pointer; transition: opacity 0.3s; }
@@ -197,13 +218,12 @@
         @media (max-width: 768px) {
             header { padding: 20px; }
             .split-image-section { grid-template-columns: 1fr; height: auto; }
-            .split-img-box { height: 50vh; }
+            .split-img-box { height: 60vh; }
             
-            .narrative-content { flex-direction: column; gap: 30px; }
-            .narrative-col { width: 100%; }
+            .narrative-content { grid-template-columns: 1fr; gap: 30px; }
             
-            .notebook-section { display: block; background-image: none; } /* 手機取消格線 */
-            .pos-a, .pos-b, .pos-c, .pos-d { grid-column: auto; grid-row: auto; padding: 20px; margin-bottom: 20px; }
+            .notebook-section { display: block; background-image: none; padding-bottom: 50px; } /* 手機版取消格線 */
+            .pos-a, .pos-b, .pos-c, .pos-d { grid-column: auto; grid-row: auto; margin: 0; padding: 20px; margin-bottom: 20px; width: 100%; }
             
             .grid-section { padding: 80px 20px; }
             .project-grid { grid-template-columns: 1fr; gap: 0; }
@@ -239,15 +259,15 @@
     <section class="narrative-section">
         <div class="narrative-title">JAY POSH — VISUAL DIRECTOR</div>
         <div class="narrative-content">
-            <div class="narrative-col">
+            <div>
                 <p>Sculpting personalized masterpieces that reflect your unique style and personality.</p>
             </div>
-            <div class="narrative-col" style="width: 40%;">
+            <div>
                 <p>
                     Driven by a profound love for art, cinema, and music, I seek inspiration in the diverse narratives of life. I believe that good imagery is not merely a visual presentation, but an artistic language capable of conveying deep emotions and stories.
                 </p>
             </div>
-            <div class="narrative-col" style="text-align: right;">
+            <div style="text-align: right;">
                 <div class="narrative-list">
                     <span>001 Creative Direction</span>
                     <span>002 Photography</span>
@@ -273,16 +293,16 @@
             <div class="nb-caption">Motion — b.</div>
         </div>
 
+        <div class="nb-item pos-d">
+            <img src="images/grid-d.jpg" alt="Gallery d">
+            <div class="nb-caption">Typography — d.</div>
+        </div>
+
         <div class="nb-item pos-c">
             <video autoplay loop muted playsinline>
                 <source src="images/grid-c.mp4" type="video/mp4">
             </video>
             <div class="nb-caption">Visual — c.</div>
-        </div>
-
-        <div class="nb-item pos-d">
-            <img src="images/grid-d.jpg" alt="Gallery d">
-            <div class="nb-caption">Typography — d.</div>
         </div>
 
     </section>
