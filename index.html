@@ -30,17 +30,18 @@
             z-index: 100; 
             background: transparent;
             transition: background 0.3s, padding 0.3s;
+            mix-blend-mode: difference; /* 讓文字在黑白背景都能看見 */
+            color: #fff;
         }
-        header.scrolled { background: rgba(255,255,255,0.95); padding: 20px 50px; border-bottom: 1px solid #eee; }
+        header.scrolled { background: rgba(255,255,255,0.9); padding: 20px 50px; color: #000; mix-blend-mode: normal; }
 
-        .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 700; text-transform: uppercase; color: #000; }
-        .menu-btn { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; color: #000; }
+        .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 700; text-transform: uppercase; }
+        .menu-btn { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; }
 
-        /* --- Hero Section (滿版影片) --- */
+        /* --- Hero Section (LOGO影片) --- */
         .hero-section {
             width: 100%; height: 100vh; background-color: #ffffff;
             position: relative; overflow: hidden;
-            border-bottom: 1px solid #ddd;
         }
         .hero-video {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
@@ -49,117 +50,124 @@
         }
 
         /* =========================================
-           ★ 瑞士網格佈局 (Swiss Grid Layout) ★
+           ★ 核心結構：Split -> Text -> Grid -> Split ★
            ========================================= */
-        .swiss-section {
-            width: 100%;
-            background-color: #fff;
-            padding-bottom: 150px;
-        }
-
-        /* 1. 頂部文字資訊區 (模仿參考圖上方的文字排版) */
-        .swiss-header {
-            padding: 100px 50px 60px;
-            max-width: 1400px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        .swiss-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.5rem;
-            margin-bottom: 80px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
         
-        /* 資訊欄位 (三欄式) */
-        .swiss-info-row {
+        /* 通用：雙欄滿版圖 (用於開頭和結尾) */
+        .split-image-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            width: 100%;
+            height: 80vh; /* 高度佔螢幕 80% */
+        }
+        .split-img-box {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .split-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1s ease;
+        }
+        .split-img-box:hover img { transform: scale(1.05); }
+
+        /* 中間：文字敘述區 (DAGNY FIELDS 風格) */
+        .narrative-section {
+            padding: 100px 50px;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .narrative-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 60px;
+            font-weight: 600;
+        }
+        .narrative-content {
             display: flex;
             justify-content: space-between;
             text-align: left;
-            border-top: 1px solid #ddd;
-            padding-top: 20px;
-            margin-bottom: 60px;
-        }
-        .info-col { width: 30%; }
-        .info-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-            display: block;
-        }
-        .info-text {
-            font-size: 0.9rem;
-            color: #555;
+            font-size: 0.8rem;
+            color: #444;
             line-height: 1.8;
-            text-align: justify;
         }
-        .info-list span { display: block; font-size: 0.8rem; color: #888; margin-bottom: 5px; text-transform: uppercase; }
+        .narrative-col { width: 30%; }
+        .narrative-list span { display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; color: #888; }
 
-        /* 2. 錯落網格區 (模仿圖片的散落感) */
-        .swiss-grid {
-            position: relative;
+        /* ★ 重點：筆記本錯位格線區 (Notebook Grid) ★ */
+        .notebook-section {
             width: 100%;
-            /* 畫出 4 條垂直線背景 */
-            background-image: linear-gradient(to right, #f0f0f0 1px, transparent 1px);
-            background-size: 25% 100%; /* 25% = 4欄 */
-            border-top: 1px solid #f0f0f0;
+            /* 畫出垂直線：每 25% 一條線 (4欄) */
+            background-image: linear-gradient(to right, #e0e0e0 1px, transparent 1px);
+            background-size: 25% 100%; 
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
             
-            /* Grid 設定 */
             display: grid;
             grid-template-columns: repeat(4, 1fr); /* 4欄 */
-            grid-auto-rows: minmax(100px, auto);
+            /* 定義列的高度，用來控制錯位 */
+            grid-template-rows: 150px 300px 100px 300px 150px; 
         }
 
-        /* --- 圖片錯位設定 (完全復刻參考圖) --- */
+        /* 格線內容設定 */
+        .nb-item {
+            position: relative;
+            padding: 20px; /* 圖片與格線的距離 */
+        }
+        .nb-item img, .nb-item video {
+            width: 100%;
+            display: block;
+            filter: grayscale(20%);
+            transition: 0.5s;
+        }
+        .nb-item:hover img, .nb-item:hover video { filter: grayscale(0%); }
         
-        /* 左 1：大張人像 (about-main.jpg) */
-        .grid-item-1 {
-            grid-column: 1;
-            padding: 40px 20px 0 40px; /* 左邊留白 */
-        }
-        
-        /* 左 2：風吹影片 (about-wind.mp4) - 與左1並排 */
-        .grid-item-2 {
-            grid-column: 2;
-            padding: 40px 20px 0 0;
-            margin-top: 50px; /* 稍微低一點，製造層次 */
-        }
-
-        /* 右 1：蝴蝶影片 (about-butterfly.mp4) - 沉到底部右側 */
-        .grid-item-3 {
-            grid-column: 4;
-            padding: 0 40px 0 20px;
-            margin-top: 400px; /* ★ 往下推，製造大留白 */
-        }
-
-        /* 中下：藝術字 (about-art.jpg) - 介於中間 */
-        .grid-item-4 {
-            grid-column: 2;
-            padding: 0 20px 0 0;
-            margin-top: 150px; /* 接在風吹影片下面，但有距離 */
-            margin-bottom: 100px;
-        }
-
-        /* 圖片樣式 */
-        .swiss-img { width: 100%; filter: grayscale(100%); transition: 1s; display: block; }
-        .swiss-img:hover { filter: grayscale(0%); }
-        
-        .swiss-video { width: 100%; height: auto; display: block; }
-
-        /* 圖片下方的小標題 */
-        .caption {
-            font-size: 0.7rem;
+        .nb-caption {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 0.9rem;
             margin-top: 10px;
-            color: #999;
-            font-family: monospace;
+            color: #666;
+        }
+
+        /* --- 錯位佈局 (依照參考圖配置) --- */
+        
+        /* A. 左一圖 (佔據第 2-3 列) */
+        .pos-a {
+            grid-column: 1;
+            grid-row: 2 / span 2; 
+            padding-top: 50px; /* 往下壓一點 */
+        }
+
+        /* B. 左二影片 (佔據第 2 列) - 梳子位置 */
+        .pos-b {
+            grid-column: 2;
+            grid-row: 2;
+            padding-top: 0; /* 貼頂 */
+        }
+
+        /* C. 右二影片 (佔據第 4 列) - 綠領巾位置 (沉下去) */
+        .pos-c {
+            grid-column: 4; /* 改到最右邊那欄 */
+            grid-row: 4;
+            padding-top: 20px;
+        }
+
+        /* D. 左二圖 (佔據第 4 列) - 辮子位置 */
+        .pos-d {
+            grid-column: 2;
+            grid-row: 4;
+            padding-top: 0;
         }
 
 
-        /* --- Gallery Section --- */
-        .grid-section { padding: 100px 60px 150px; background-color: #fff; border-top: 1px solid #000; }
+        /* --- Gallery Section (下方原有作品) --- */
+        .grid-section { padding: 100px 60px 150px; background-color: #fff; }
         .project-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 80px; align-items: start; }
         .col-right { margin-top: 250px; } 
         .project-item { margin-bottom: 220px; cursor: pointer; transition: opacity 0.3s; }
@@ -188,18 +196,14 @@
         /* RWD 手機版 */
         @media (max-width: 768px) {
             header { padding: 20px; }
-            .swiss-header { padding: 60px 20px; }
-            .swiss-info-row { flex-direction: column; gap: 40px; }
-            .info-col { width: 100%; }
+            .split-image-section { grid-template-columns: 1fr; height: auto; }
+            .split-img-box { height: 50vh; }
             
-            .swiss-grid { display: block; background-image: none; } /* 手機版取消格線 */
-            .grid-item-1, .grid-item-2, .grid-item-3, .grid-item-4 {
-                grid-column: auto;
-                padding: 0 20px;
-                margin-top: 40px;
-                margin-bottom: 40px;
-            }
-            .grid-item-3 { margin-top: 40px; } /* 取消大留白 */
+            .narrative-content { flex-direction: column; gap: 30px; }
+            .narrative-col { width: 100%; }
+            
+            .notebook-section { display: block; background-image: none; } /* 手機取消格線 */
+            .pos-a, .pos-b, .pos-c, .pos-d { grid-column: auto; grid-row: auto; padding: 20px; margin-bottom: 20px; }
             
             .grid-section { padding: 80px 20px; }
             .project-grid { grid-template-columns: 1fr; gap: 0; }
@@ -223,68 +227,72 @@
         </video>
     </section>
 
-    <section class="swiss-section">
-        
-        <div class="swiss-header">
-            <h2 class="swiss-title">JAY POSH</h2>
-            
-            <div class="swiss-info-row">
-                <div class="info-col">
-                    <span class="info-label">Creative Visual Director</span>
-                    <p class="info-text">
-                        Specializing in brand identity,<br>
-                        editorial photography,<br>
-                        and cinematic narratives.
-                    </p>
-                </div>
-                
-                <div class="info-col" style="width: 40%;">
-                    <span class="info-label">About</span>
-                    <p class="info-text">
-                        Driven by a profound love for art, cinema, and music, I seek inspiration in the diverse narratives of life. I believe that good imagery is not merely a visual presentation, but an artistic language capable of conveying deep emotions and stories.
-                        <br><br>
-                        With keen observation and acute aesthetics, I specialize in capturing subtle visual details and translating them into textured designs.
-                    </p>
-                </div>
+    <section class="split-image-section">
+        <div class="split-img-box">
+            <img src="images/split-1.jpg" alt="Visual 1">
+        </div>
+        <div class="split-img-box">
+            <img src="images/split-2.jpg" alt="Visual 2">
+        </div>
+    </section>
 
-                <div class="info-col" style="text-align: right;">
-                    <span class="info-label">Services</span>
-                    <div class="info-list">
-                        <span>01 Art Direction</span>
-                        <span>02 Photography</span>
-                        <span>03 Graphic Design</span>
-                        <span>04 Video Production</span>
-                    </div>
+    <section class="narrative-section">
+        <div class="narrative-title">JAY POSH — VISUAL DIRECTOR</div>
+        <div class="narrative-content">
+            <div class="narrative-col">
+                <p>Sculpting personalized masterpieces that reflect your unique style and personality.</p>
+            </div>
+            <div class="narrative-col" style="width: 40%;">
+                <p>
+                    Driven by a profound love for art, cinema, and music, I seek inspiration in the diverse narratives of life. I believe that good imagery is not merely a visual presentation, but an artistic language capable of conveying deep emotions and stories.
+                </p>
+            </div>
+            <div class="narrative-col" style="text-align: right;">
+                <div class="narrative-list">
+                    <span>001 Creative Direction</span>
+                    <span>002 Photography</span>
+                    <span>003 Graphic Design</span>
+                    <span>004 Branding</span>
+                    <span>005 Get in Touch</span>
                 </div>
             </div>
         </div>
+    </section>
 
-        <div class="swiss-grid">
-            
-            <div class="grid-item-1">
-                <img src="images/about-main.jpg" class="swiss-img" alt="Portrait">
-                <div class="caption">Gallery — a.</div>
-            </div>
+    <section class="notebook-section">
+        
+        <div class="nb-item pos-a">
+            <img src="images/grid-a.jpg" alt="Gallery a">
+            <div class="nb-caption">Gallery — a.</div>
+        </div>
 
-            <div class="grid-item-2">
-                <video class="swiss-video" autoplay loop muted playsinline>
-                    <source src="images/about-wind.mp4" type="video/mp4">
-                </video>
-                <div class="caption">Motion — b.</div>
-            </div>
+        <div class="nb-item pos-b">
+            <video autoplay loop muted playsinline>
+                <source src="images/grid-b.mp4" type="video/mp4">
+            </video>
+            <div class="nb-caption">Motion — b.</div>
+        </div>
 
-            <div class="grid-item-4">
-                <img src="images/about-art.jpg" class="swiss-img" alt="Typography">
-                <div class="caption">Gallery — d.</div>
-            </div>
+        <div class="nb-item pos-c">
+            <video autoplay loop muted playsinline>
+                <source src="images/grid-c.mp4" type="video/mp4">
+            </video>
+            <div class="nb-caption">Visual — c.</div>
+        </div>
 
-            <div class="grid-item-3">
-                <video class="swiss-video" autoplay loop muted playsinline>
-                    <source src="images/about-butterfly.mp4" type="video/mp4">
-                </video>
-                <div class="caption">Visual — c.</div>
-            </div>
+        <div class="nb-item pos-d">
+            <img src="images/grid-d.jpg" alt="Gallery d">
+            <div class="nb-caption">Typography — d.</div>
+        </div>
 
+    </section>
+
+    <section class="split-image-section">
+        <div class="split-img-box">
+            <img src="images/split-3.jpg" alt="Texture 1">
+        </div>
+        <div class="split-img-box">
+            <img src="images/split-4.jpg" alt="Texture 2">
         </div>
     </section>
 
@@ -302,8 +310,6 @@
                 <div class="project-item"><img src="images/work11.jpg"><div class="project-meta"><span class="project-title">Magazine</span><span class="project-id">17</span></div></div>
                 <div class="project-item"><img src="images/work36.jpg"><div class="project-meta"><span class="project-title">Dynamic</span><span class="project-id">19</span></div></div>
                 <div class="project-item"><img src="images/p3.jpg"><div class="project-meta"><span class="project-title">Desert Storm</span><span class="project-id">21</span></div></div>
-                <div class="project-item"><img src="images/work38.jpg"><div class="project-meta"><span class="project-title">Organic</span><span class="project-id">23</span></div></div>
-                <div class="project-item"><img src="images/work77.jpg"><div class="project-meta"><span class="project-title">Portrait</span><span class="project-id">25</span></div></div>
             </div>
             <div class="col-right">
                 <div class="project-item"><img src="images/work50.jpg"><div class="project-meta"><span class="project-title">Edge</span><span class="project-id">02</span></div></div>
@@ -317,8 +323,6 @@
                 <div class="project-item"><img src="images/work12.jpg"><div class="project-meta"><span class="project-title">Pink Studio</span><span class="project-id">18</span></div></div>
                 <div class="project-item"><img src="images/work33.jpg"><div class="project-meta"><span class="project-title">Neon</span><span class="project-id">20</span></div></div>
                 <div class="project-item"><img src="images/p4.jpg"><div class="project-meta"><span class="project-title">Wasteland</span><span class="project-id">22</span></div></div>
-                <div class="project-item"><img src="images/work39.jpg"><div class="project-meta"><span class="project-title">Botanical</span><span class="project-id">24</span></div></div>
-                <div class="project-item"><img src="images/work72.jpg"><div class="project-meta"><span class="project-title">Warmth</span><span class="project-id">26</span></div></div>
             </div>
         </div>
     </section>
