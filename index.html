@@ -49,135 +49,117 @@
         }
 
         /* =========================================
-           ★ 瑞士網格雜誌風 About Section ★
+           ★ 瑞士網格佈局 (Swiss Grid Layout) ★
            ========================================= */
-        .magazine-section {
+        .swiss-section {
             width: 100%;
             background-color: #fff;
-            /* ★ 魔法 CSS：畫出 5 條垂直格線 */
-            background-image: linear-gradient(to right, #eeeeee 1px, transparent 1px);
-            background-size: 20% 100%; /* 20% = 5欄 */
-            border-bottom: 1px solid #000;
-            position: relative;
+            padding-bottom: 150px;
         }
 
-        /* 標題區：跨滿寬度 */
-        .mag-header {
-            padding: 100px 50px 40px;
-            border-bottom: 1px solid #eeeeee;
+        /* 1. 頂部文字資訊區 (模仿參考圖上方的文字排版) */
+        .swiss-header {
+            padding: 100px 50px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .swiss-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            margin-bottom: 80px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        /* 資訊欄位 (三欄式) */
+        .swiss-info-row {
             display: flex;
             justify-content: space-between;
-            align-items: flex-end;
-            background: rgba(255,255,255,0.8); /* 微微透出格線 */
+            text-align: left;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+            margin-bottom: 60px;
         }
-        .mag-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 4rem;
-            line-height: 1;
-            font-weight: 400;
-        }
-        .mag-meta {
-            text-align: right;
-            font-size: 0.8rem;
-            color: #888;
-            font-family: 'Inter', sans-serif;
+        .info-col { width: 30%; }
+        .info-label {
+            font-size: 0.75rem;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
+            margin-bottom: 15px;
+            display: block;
         }
-
-        /* 內容網格容器 */
-        .mag-grid {
-            display: grid;
-            grid-template-columns: 20% 20% 20% 20% 20%; /* 嚴格對齊 5 欄背景線 */
-            width: 100%;
-        }
-
-        /* 1. 主圖 (左側兩欄) */
-        .mag-main-img {
-            grid-column: 1 / span 2;
-            padding: 40px;
-            border-right: 1px solid #eeeeee;
-        }
-        .mag-main-img img {
-            width: 100%;
-            filter: grayscale(100%);
-            transition: 1s;
-        }
-        .mag-main-img:hover img { filter: grayscale(0%); }
-
-        /* 2. 文字區 (中間一欄) */
-        .mag-text {
-            grid-column: 3 / span 1;
-            padding: 60px 30px;
-            border-right: 1px solid #eeeeee;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .mag-text p {
+        .info-text {
             font-size: 0.9rem;
-            text-align: justify;
-            color: #444;
+            color: #555;
             line-height: 1.8;
-            margin-bottom: 30px;
+            text-align: justify;
         }
-        .mag-quote {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.5rem;
-            font-style: italic;
-            color: #000;
-            margin-top: auto;
-        }
+        .info-list span { display: block; font-size: 0.8rem; color: #888; margin-bottom: 5px; text-transform: uppercase; }
 
-        /* 3. 視覺混合區 (右側兩欄) */
-        .mag-visuals {
-            grid-column: 4 / span 2;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* 影片 A：風吹 */
-        .mag-video-top {
-            width: 100%;
-            height: 350px;
-            border-bottom: 1px solid #eeeeee;
-            overflow: hidden;
+        /* 2. 錯落網格區 (模仿圖片的散落感) */
+        .swiss-grid {
             position: relative;
-        }
-        .mag-video-top video {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            /* 畫出 4 條垂直線背景 */
+            background-image: linear-gradient(to right, #f0f0f0 1px, transparent 1px);
+            background-size: 25% 100%; /* 25% = 4欄 */
+            border-top: 1px solid #f0f0f0;
+            
+            /* Grid 設定 */
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4欄 */
+            grid-auto-rows: minmax(100px, auto);
         }
 
-        /* 下方混合：左邊放藝術字，右邊放蝴蝶影片 */
-        .mag-visual-bottom {
-            flex: 1;
-            display: flex;
-        }
-        .mag-art-box {
-            width: 50%;
-            border-right: 1px solid #eeeeee;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .mag-art-box img { width: 80%; }
+        /* --- 圖片錯位設定 (完全復刻參考圖) --- */
         
-        .mag-video-small {
-            width: 50%;
-            overflow: hidden;
+        /* 左 1：大張人像 (about-main.jpg) */
+        .grid-item-1 {
+            grid-column: 1;
+            padding: 40px 20px 0 40px; /* 左邊留白 */
         }
-        .mag-video-small video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: sepia(20%); /* 增加一點復古感 */
+        
+        /* 左 2：風吹影片 (about-wind.mp4) - 與左1並排 */
+        .grid-item-2 {
+            grid-column: 2;
+            padding: 40px 20px 0 0;
+            margin-top: 50px; /* 稍微低一點，製造層次 */
         }
 
-        /* --- Grid Section (藝廊) --- */
-        .grid-section { padding: 100px 60px 150px; background-color: #fff; }
+        /* 右 1：蝴蝶影片 (about-butterfly.mp4) - 沉到底部右側 */
+        .grid-item-3 {
+            grid-column: 4;
+            padding: 0 40px 0 20px;
+            margin-top: 400px; /* ★ 往下推，製造大留白 */
+        }
+
+        /* 中下：藝術字 (about-art.jpg) - 介於中間 */
+        .grid-item-4 {
+            grid-column: 2;
+            padding: 0 20px 0 0;
+            margin-top: 150px; /* 接在風吹影片下面，但有距離 */
+            margin-bottom: 100px;
+        }
+
+        /* 圖片樣式 */
+        .swiss-img { width: 100%; filter: grayscale(100%); transition: 1s; display: block; }
+        .swiss-img:hover { filter: grayscale(0%); }
+        
+        .swiss-video { width: 100%; height: auto; display: block; }
+
+        /* 圖片下方的小標題 */
+        .caption {
+            font-size: 0.7rem;
+            margin-top: 10px;
+            color: #999;
+            font-family: monospace;
+        }
+
+
+        /* --- Gallery Section --- */
+        .grid-section { padding: 100px 60px 150px; background-color: #fff; border-top: 1px solid #000; }
         .project-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 80px; align-items: start; }
         .col-right { margin-top: 250px; } 
         .project-item { margin-bottom: 220px; cursor: pointer; transition: opacity 0.3s; }
@@ -186,7 +168,7 @@
         .project-title { font-size: 0.9rem; font-weight: 600; text-transform: uppercase; }
         .project-id { font-size: 0.8rem; color: #888; font-family: 'Cormorant Garamond', serif; font-style: italic; }
 
-        /* --- Experience Section (經歷) --- */
+        /* --- Experience Section --- */
         .experience-section { padding: 120px 60px; border-top: 1px solid #000; background: #fff; }
         .exp-header { font-size: 3.5rem; font-family: 'Cormorant Garamond', serif; margin-bottom: 80px; }
         .exp-list { max-width: 900px; margin-left: auto; margin-right: auto; }
@@ -206,15 +188,18 @@
         /* RWD 手機版 */
         @media (max-width: 768px) {
             header { padding: 20px; }
-            .magazine-section { background-image: none; }
-            .mag-header { padding: 50px 20px 30px; display: block; }
-            .mag-title { font-size: 3rem; margin-bottom: 20px; }
-            .mag-grid { display: block; }
-            .mag-main-img, .mag-text, .mag-visuals { border-right: none; padding: 30px 20px; border-bottom: 1px solid #eee; }
-            .mag-video-top { height: 250px; }
-            .mag-visual-bottom { flex-direction: column; }
-            .mag-art-box, .mag-video-small { width: 100%; border-right: none; border-bottom: 1px solid #eee; }
-            .mag-video-small { height: 200px; }
+            .swiss-header { padding: 60px 20px; }
+            .swiss-info-row { flex-direction: column; gap: 40px; }
+            .info-col { width: 100%; }
+            
+            .swiss-grid { display: block; background-image: none; } /* 手機版取消格線 */
+            .grid-item-1, .grid-item-2, .grid-item-3, .grid-item-4 {
+                grid-column: auto;
+                padding: 0 20px;
+                margin-top: 40px;
+                margin-bottom: 40px;
+            }
+            .grid-item-3 { margin-top: 40px; } /* 取消大留白 */
             
             .grid-section { padding: 80px 20px; }
             .project-grid { grid-template-columns: 1fr; gap: 0; }
@@ -238,54 +223,68 @@
         </video>
     </section>
 
-    <section class="magazine-section">
+    <section class="swiss-section">
         
-        <div class="mag-header">
-            <h2 class="mag-title">About Me</h2>
-            <div class="mag-meta">
-                Visual Director<br>
-                Based in Taipei
+        <div class="swiss-header">
+            <h2 class="swiss-title">JAY POSH</h2>
+            
+            <div class="swiss-info-row">
+                <div class="info-col">
+                    <span class="info-label">Creative Visual Director</span>
+                    <p class="info-text">
+                        Specializing in brand identity,<br>
+                        editorial photography,<br>
+                        and cinematic narratives.
+                    </p>
+                </div>
+                
+                <div class="info-col" style="width: 40%;">
+                    <span class="info-label">About</span>
+                    <p class="info-text">
+                        Driven by a profound love for art, cinema, and music, I seek inspiration in the diverse narratives of life. I believe that good imagery is not merely a visual presentation, but an artistic language capable of conveying deep emotions and stories.
+                        <br><br>
+                        With keen observation and acute aesthetics, I specialize in capturing subtle visual details and translating them into textured designs.
+                    </p>
+                </div>
+
+                <div class="info-col" style="text-align: right;">
+                    <span class="info-label">Services</span>
+                    <div class="info-list">
+                        <span>01 Art Direction</span>
+                        <span>02 Photography</span>
+                        <span>03 Graphic Design</span>
+                        <span>04 Video Production</span>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="mag-grid">
+        <div class="swiss-grid">
             
-            <div class="mag-main-img">
-                <img src="images/about-main.jpg" alt="Portrait">
+            <div class="grid-item-1">
+                <img src="images/about-main.jpg" class="swiss-img" alt="Portrait">
+                <div class="caption">Gallery — a.</div>
             </div>
 
-            <div class="mag-text">
-                <p>
-                    Driven by a profound love for art, cinema, and music, I seek inspiration in the diverse narratives of life. I believe that good imagery is not merely a visual presentation, but an artistic language capable of conveying deep emotions and stories.
-                </p>
-                <p>
-                    With keen observation and acute aesthetics, I specialize in capturing subtle visual details and translating them into textured designs.
-                </p>
-                <div class="mag-quote">
-                    "Creating narratives<br>without words."
-                </div>
+            <div class="grid-item-2">
+                <video class="swiss-video" autoplay loop muted playsinline>
+                    <source src="images/about-wind.mp4" type="video/mp4">
+                </video>
+                <div class="caption">Motion — b.</div>
             </div>
 
-            <div class="mag-visuals">
-                
-                <div class="mag-video-top">
-                    <video autoplay loop muted playsinline>
-                        <source src="images/about-wind.mp4" type="video/mp4">
-                    </video>
-                </div>
-
-                <div class="mag-visual-bottom">
-                    <div class="mag-art-box">
-                        <img src="images/about-art.jpg" alt="Art Text">
-                    </div>
-                    <div class="mag-video-small">
-                        <video autoplay loop muted playsinline>
-                            <source src="images/about-butterfly.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                </div>
-
+            <div class="grid-item-4">
+                <img src="images/about-art.jpg" class="swiss-img" alt="Typography">
+                <div class="caption">Gallery — d.</div>
             </div>
+
+            <div class="grid-item-3">
+                <video class="swiss-video" autoplay loop muted playsinline>
+                    <source src="images/about-butterfly.mp4" type="video/mp4">
+                </video>
+                <div class="caption">Visual — c.</div>
+            </div>
+
         </div>
     </section>
 
