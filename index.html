@@ -13,11 +13,11 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
-            background-color: #ffffff; /* 全白背景 */
-            color: #000000; /* 全黑文字 */
+            background-color: #ffffff; 
+            color: #000000; 
             font-family: 'Inter', sans-serif; 
             overflow-x: hidden; 
-            line-height: 1.2;
+            line-height: 1.6;
         }
 
         a { text-decoration: none; color: inherit; }
@@ -27,26 +27,73 @@
         header {
             position: fixed; top: 0; left: 0; width: 100%; padding: 30px 50px;
             display: flex; justify-content: space-between; align-items: center;
-            z-index: 100; background: rgba(255,255,255,0.95); /* 不透明度高一點，蓋住內容 */
+            z-index: 100; 
+            background: transparent; /* 預設全透明 */
+            transition: background 0.3s, padding 0.3s;
         }
+        /* 滾動時 Header 變白底 */
+        header.scrolled { background: rgba(255,255,255,0.95); padding: 20px 50px; }
+
         .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 700; text-transform: uppercase; color: #000; }
         .menu-btn { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; color: #000; }
 
-        /* --- Hero Section (影片開場) --- */
+        /* --- Hero Section (滿版影片去背) --- */
         .hero-section {
-            width: 100%; height: 100vh; 
-            background-color: #ffffff; /* 白底 */
-            display: flex; justify-content: center; align-items: center; padding: 0;
+            width: 100%; 
+            height: 100vh; /* 滿版高度 */
+            background-color: #ffffff;
+            position: relative;
             overflow: hidden;
+            display: flex; justify-content: center; align-items: center;
         }
         
         .hero-video {
-            /* 讓影片稍微縮小一點，看起來更像 Logo */
-            width: 60vw; 
-            max-width: 900px;
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%; 
+            min-height: 100%;
+            width: auto;
             height: auto;
-            /* 因為你的影片本身是白底黑字，直接放上去就會融合 */
+            object-fit: cover; /* 關鍵：填滿螢幕 */
+            
+            /* ★★★ 魔法代碼：讓影片白底變透明，消除邊框 ★★★ */
+            mix-blend-mode: multiply; 
         }
+
+        /* --- About Section (自介) --- */
+        .about-section {
+            padding: 150px 60px 100px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 0.8fr; /* 左寬右窄 */
+            gap: 80px;
+            align-items: start;
+        }
+
+        .about-text h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            margin-bottom: 30px;
+            line-height: 1.1;
+        }
+
+        .about-text p {
+            font-size: 0.95rem;
+            color: #444;
+            margin-bottom: 25px;
+            text-align: justify;
+            line-height: 1.8;
+        }
+
+        /* 自介右側圖片 (選用 work67.jpg 這種人物照更有感覺) */
+        .about-image img {
+            width: 100%;
+            filter: grayscale(100%); 
+            transition: 0.8s;
+        }
+        .about-image:hover img { filter: grayscale(0%); }
 
         /* --- Grid Section (藝廊) --- */
         .grid-section { padding: 100px 60px 150px; background-color: #fff; }
@@ -58,33 +105,74 @@
         .project-title { font-size: 0.9rem; font-weight: 600; text-transform: uppercase; }
         .project-id { font-size: 0.8rem; color: #888; font-family: 'Cormorant Garamond', serif; font-style: italic; }
 
-        /* --- Experience --- */
-        .experience-section { padding: 100px 60px; border-top: 1px solid #eee; }
-        .exp-header { font-size: 4rem; font-family: 'Cormorant Garamond', serif; margin-bottom: 80px; }
-        .exp-item { display: flex; align-items: baseline; padding: 35px 0; border-bottom: 1px solid #000; transition: 0.3s; }
-        .exp-item:hover { background: #f0f0f0; padding-left: 20px; }
-        .exp-year { flex: 0 0 100px; font-weight: 600; font-size: 1rem; }
-        .exp-role { flex: 0 0 350px; font-size: 2rem; font-family: 'Cormorant Garamond', serif; font-style: italic; }
-        .exp-desc { font-size: 0.95rem; color: #444; line-height: 1.6; max-width: 500px; }
+        /* --- Experience Section (經歷) --- */
+        .experience-section { padding: 120px 60px; border-top: 1px solid #eee; background: #fafafa; }
+        .exp-header { font-size: 3.5rem; font-family: 'Cormorant Garamond', serif; margin-bottom: 80px; }
+        .exp-list { max-width: 900px; margin-left: auto; margin-right: auto; }
+        
+        .exp-item { 
+            display: flex; 
+            padding: 40px 0; 
+            border-bottom: 1px solid #ddd; 
+            transition: 0.3s;
+        }
+        .exp-item:hover { transform: translateX(10px); }
+        
+        .exp-year { 
+            flex: 0 0 150px; 
+            font-weight: 600; 
+            font-size: 1rem; 
+            color: #000; 
+            font-family: 'Inter', sans-serif;
+            padding-top: 5px;
+        }
+        
+        .exp-content { flex: 1; }
+        .exp-role { 
+            font-size: 1.8rem; 
+            font-family: 'Cormorant Garamond', serif; 
+            font-weight: 600;
+            margin-bottom: 5px; 
+            display: block; 
+        }
+        .exp-company {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #666;
+            margin-bottom: 15px;
+            display: block;
+        }
+        .exp-desc { 
+            font-size: 0.9rem; 
+            color: #555; 
+            line-height: 1.6; 
+        }
+        .exp-desc ul { list-style: none; padding: 0; }
+        .exp-desc li { position: relative; padding-left: 15px; margin-bottom: 5px; }
+        .exp-desc li::before { content: "-"; position: absolute; left: 0; color: #999; }
 
-        footer { padding: 50px 60px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 0.8rem; text-transform: uppercase; color: #000; border-top: 1px solid #eee; }
+        footer { padding: 50px 60px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 0.8rem; text-transform: uppercase; color: #000; border-top: 1px solid #eee; background: #fff;}
 
+        /* RWD */
         @media (max-width: 768px) {
-            header { padding: 20px; }
-            .hero-video { width: 90vw; }
+            header { padding: 20px; background: rgba(255,255,255,0.8); }
+            .hero-section { height: 100vh; }
+            .about-section { grid-template-columns: 1fr; padding: 80px 20px; gap: 40px; }
+            .about-text h2 { font-size: 2.5rem; }
             .grid-section { padding: 80px 20px; }
             .project-grid { grid-template-columns: 1fr; gap: 0; }
             .col-right { margin-top: 0; }
             .project-item { margin-bottom: 100px; }
             .experience-section { padding: 60px 20px; }
             .exp-item { flex-direction: column; gap: 10px; }
-            .exp-role { margin-bottom: 10px; font-size: 1.8rem; }
+            .exp-role { font-size: 1.5rem; }
         }
     </style>
 </head>
 <body>
 
-    <header>
+    <header id="main-header">
         <div class="logo">JAY POSH</div>
         <div class="menu-btn">Profile</div>
     </header>
@@ -95,42 +183,52 @@
         </video>
     </section>
 
+    <section class="about-section">
+        <div class="about-text">
+            <h2>Visual Director &<br>Graphic Designer</h2>
+            <p>
+                Driven by a profound love for art, cinema, and music, I seek inspiration in the diverse narratives of life. I believe that good imagery is not merely a visual presentation, but an artistic language capable of conveying deep emotions and stories.
+            </p>
+            <p>
+                With keen observation and acute aesthetics, I specialize in capturing subtle visual details and translating them into textured designs. From photography to graphic layout, I orchestrate every project with precision—from conceptual planning to the final visual delivery.
+            </p>
+            <p>
+                My expertise lies in photography and flat aesthetic design, utilizing composition and color to craft unique, high-end visual styles for brands. 
+            </p>
+        </div>
+        <div class="about-image">
+            <img src="images/work67.jpg" alt="Profile">
+        </div>
+    </section>
+
     <section class="grid-section">
         <div class="project-grid">
-            
             <div class="col-left">
                 <div class="project-item"><img src="images/work3.jpg"><div class="project-meta"><span class="project-title">Noir Studio</span><span class="project-id">01</span></div></div>
                 <div class="project-item"><img src="images/work49.jpg"><div class="project-meta"><span class="project-title">Night Walker</span><span class="project-id">03</span></div></div>
                 <div class="project-item"><img src="images/work52.jpg"><div class="project-meta"><span class="project-title">Metropolis</span><span class="project-id">05</span></div></div>
                 <div class="project-item"><img src="images/work55.jpg"><div class="project-meta"><span class="project-title">Urban Angle</span><span class="project-id">07</span></div></div>
-                
                 <div class="project-item"><img src="images/p2.jpg"><div class="project-meta"><span class="project-title">Blue Horizon</span><span class="project-id">09</span></div></div>
                 <div class="project-item"><img src="images/work14.jpg"><div class="project-meta"><span class="project-title">Ice Cold</span><span class="project-id">11</span></div></div>
                 <div class="project-item"><img src="images/work60.jpg"><div class="project-meta"><span class="project-title">Valerian</span><span class="project-id">13</span></div></div>
-
                 <div class="project-item"><img src="images/p5.jpg"><div class="project-meta"><span class="project-title">Purple Haze</span><span class="project-id">15</span></div></div>
                 <div class="project-item"><img src="images/work11.jpg"><div class="project-meta"><span class="project-title">Magazine</span><span class="project-id">17</span></div></div>
                 <div class="project-item"><img src="images/work36.jpg"><div class="project-meta"><span class="project-title">Dynamic</span><span class="project-id">19</span></div></div>
-
                 <div class="project-item"><img src="images/p3.jpg"><div class="project-meta"><span class="project-title">Desert Storm</span><span class="project-id">21</span></div></div>
                 <div class="project-item"><img src="images/work38.jpg"><div class="project-meta"><span class="project-title">Organic</span><span class="project-id">23</span></div></div>
                 <div class="project-item"><img src="images/work77.jpg"><div class="project-meta"><span class="project-title">Portrait</span><span class="project-id">25</span></div></div>
             </div>
-
             <div class="col-right">
                 <div class="project-item"><img src="images/work50.jpg"><div class="project-meta"><span class="project-title">Edge</span><span class="project-id">02</span></div></div>
                 <div class="project-item"><img src="images/work53.jpg"><div class="project-meta"><span class="project-title">City Blue</span><span class="project-id">04</span></div></div>
                 <div class="project-item"><img src="images/work54.jpg"><div class="project-meta"><span class="project-title">Steel Structure</span><span class="project-id">06</span></div></div>
                 <div class="project-item"><img src="images/work74.jpg"><div class="project-meta"><span class="project-title">Attitude</span><span class="project-id">08</span></div></div>
-
                 <div class="project-item"><img src="images/work13.jpg"><div class="project-meta"><span class="project-title">VR</span><span class="project-id">10</span></div></div>
                 <div class="project-item"><img src="images/work35.jpg"><div class="project-meta"><span class="project-title">Minimalism</span><span class="project-id">12</span></div></div>
                 <div class="project-item"><img src="images/work65.jpg"><div class="project-meta"><span class="project-title">Future</span><span class="project-id">14</span></div></div>
-
                 <div class="project-item"><img src="images/p9.jpg"><div class="project-meta"><span class="project-title">Alien Chic</span><span class="project-id">16</span></div></div>
                 <div class="project-item"><img src="images/work12.jpg"><div class="project-meta"><span class="project-title">Pink Studio</span><span class="project-id">18</span></div></div>
                 <div class="project-item"><img src="images/work33.jpg"><div class="project-meta"><span class="project-title">Neon</span><span class="project-id">20</span></div></div>
-
                 <div class="project-item"><img src="images/p4.jpg"><div class="project-meta"><span class="project-title">Wasteland</span><span class="project-id">22</span></div></div>
                 <div class="project-item"><img src="images/work39.jpg"><div class="project-meta"><span class="project-title">Botanical</span><span class="project-id">24</span></div></div>
                 <div class="project-item"><img src="images/work72.jpg"><div class="project-meta"><span class="project-title">Warmth</span><span class="project-id">26</span></div></div>
@@ -141,21 +239,56 @@
     <section class="experience-section">
         <h2 class="exp-header">Experience</h2>
         <div class="exp-list">
+            
             <div class="exp-item">
-                <div class="exp-year">2025</div>
-                <div class="exp-role">Visual Direction</div>
-                <div class="exp-desc">Current exploration in cinematic visual narratives and advanced branding strategies for modern industries.</div>
+                <div class="exp-year">2023 - Present</div>
+                <div class="exp-content">
+                    <span class="exp-role">Brand Visual Design Lead</span>
+                    <span class="exp-company">PINKSELFIE</span>
+                    <div class="exp-desc">
+                        <ul>
+                            <li>Planned and executed brand image campaigns and catalog photography.</li>
+                            <li>Directed visual strategies for seasonal campaigns and mood boards.</li>
+                            <li>Managed social media visuals, video production, and high-end retouching.</li>
+                            <li>Orchestrated official website UI/UX visuals and physical store displays.</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
+
             <div class="exp-item">
-                <div class="exp-year">2023</div>
-                <div class="exp-role">Pinkselfie Lead</div>
-                <div class="exp-desc">Orchestrating visual assets and editorial layouts for fashion-forward digital platforms.</div>
+                <div class="exp-year">2021 - 2022</div>
+                <div class="exp-content">
+                    <span class="exp-role">Graphic Designer</span>
+                    <span class="exp-company">MUFAN</span>
+                    <div class="exp-desc">
+                        Specialized in diverse cover designs and visual presentation, honing Illustrator skills and print production knowledge.
+                    </div>
+                </div>
             </div>
+
             <div class="exp-item">
-                <div class="exp-year">2021</div>
-                <div class="exp-role">CYCU Design</div>
-                <div class="exp-desc">Foundational years focusing on technical precision, commercial arts, and the intersection of technology.</div>
+                <div class="exp-year">2020</div>
+                <div class="exp-content">
+                    <span class="exp-role">Workshop Organizer & Creator</span>
+                    <span class="exp-company">Moon Rise Studio / Island Editor</span>
+                    <div class="exp-desc">
+                        Facilitated "Eco-Printing" and "Outdoor Pottery" workshops. Guided participants in natural dyeing, foraging, and pottery making, bridging the connection between art, nature, and daily life.
+                    </div>
+                </div>
             </div>
+
+            <div class="exp-item">
+                <div class="exp-year">2019 - 2020</div>
+                <div class="exp-content">
+                    <span class="exp-role">Digital Marketing</span>
+                    <span class="exp-company">ZOGGS</span>
+                    <div class="exp-desc">
+                        Executed marketing plans, market analysis, and brand image management.
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -165,8 +298,19 @@
     </footer>
 
     <script>
+        // Back to top
         document.querySelector('.footer-left span').addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
         });
     </script>
 </body>
