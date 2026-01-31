@@ -6,7 +6,7 @@
     <title>JAY POSH | Portfolio</title>
     
     <link rel="icon" type="image/png" href="images/favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Cormorant+Garamond:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     
     <style>
         /* --- 全局設定 --- */
@@ -28,72 +28,145 @@
             position: fixed; top: 0; left: 0; width: 100%; padding: 30px 50px;
             display: flex; justify-content: space-between; align-items: center;
             z-index: 100; 
-            background: transparent; /* 預設全透明 */
+            background: transparent;
             transition: background 0.3s, padding 0.3s;
         }
-        /* 滾動時 Header 變白底 */
-        header.scrolled { background: rgba(255,255,255,0.95); padding: 20px 50px; }
+        header.scrolled { background: rgba(255,255,255,0.9); padding: 20px 50px; border-bottom: 1px solid #eee; }
 
         .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 700; text-transform: uppercase; color: #000; }
         .menu-btn { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; color: #000; }
 
-        /* --- Hero Section (滿版影片去背) --- */
+        /* --- Hero Section (滿版影片) --- */
         .hero-section {
-            width: 100%; 
-            height: 100vh; /* 滿版高度 */
-            background-color: #ffffff;
+            width: 100%; height: 100vh; background-color: #ffffff;
+            position: relative; overflow: hidden;
+            border-bottom: 1px solid #000; /* 底部黑線 */
+        }
+        .hero-video {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            min-width: 100%; min-height: 100%; width: auto; height: auto;
+            object-fit: cover; mix-blend-mode: multiply; 
+        }
+
+        /* =========================================
+           ★ 雜誌格線 About Section (Magazine Grid) ★
+           ========================================= */
+        .magazine-section {
+            width: 100%;
+            background-color: #fff;
+            /* ★ 魔法代碼：用 CSS 畫出垂直格線 */
+            background-image: linear-gradient(to right, #e5e5e5 1px, transparent 1px);
+            background-size: 20% 100%; /* 每 20% 一條線，共 5 欄 */
+            border-bottom: 1px solid #000;
+            padding-bottom: 100px;
             position: relative;
-            overflow: hidden;
-            display: flex; justify-content: center; align-items: center;
+        }
+
+        /* 頂部標題區 */
+        .mag-header {
+            padding: 80px 50px 40px;
+            border-bottom: 1px solid #000;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            background-color: #fff; /* 蓋住背景線 */
+            position: relative;
+        }
+        .mag-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .mag-meta {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            color: #666;
+            text-align: right;
+            line-height: 1.5;
+        }
+
+        /* 內容網格區 */
+        .mag-content {
+            display: grid;
+            grid-template-columns: 20% 20% 20% 20% 20%; /* 嚴格對齊背景格線 */
+            width: 100%;
+        }
+
+        /* 1. 左側大圖 (跨越前兩欄) */
+        .mag-img-large {
+            grid-column: 1 / span 2;
+            padding: 40px;
+            border-right: 1px solid #e5e5e5;
+        }
+        .mag-img-large img {
+            width: 100%;
+            filter: grayscale(20%);
+        }
+
+        /* 2. 中間文字區 (跨越第三欄) */
+        .mag-text-col {
+            grid-column: 3 / span 1;
+            padding: 60px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-right: 1px solid #e5e5e5;
+        }
+        .mag-text-col h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+        .mag-text-col p {
+            font-size: 0.85rem;
+            text-align: justify;
+            color: #444;
+            margin-bottom: 20px;
+        }
+        .small-code {
+            font-family: monospace;
+            font-size: 0.7rem;
+            color: #aaa;
+            margin-top: 30px;
+            display: block;
+        }
+
+        /* 3. 右側混合區 (跨越後兩欄) */
+        .mag-media-col {
+            grid-column: 4 / span 2;
+            display: flex;
+            flex-direction: column;
         }
         
-        .hero-video {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            min-width: 100%; 
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            object-fit: cover; /* 關鍵：填滿螢幕 */
-            
-            /* ★★★ 魔法代碼：讓影片白底變透明，消除邊框 ★★★ */
-            mix-blend-mode: multiply; 
-        }
-
-        /* --- About Section (自介) --- */
-        .about-section {
-            padding: 150px 60px 100px;
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 0.8fr; /* 左寬右窄 */
-            gap: 80px;
-            align-items: start;
-        }
-
-        .about-text h2 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 3rem;
-            margin-bottom: 30px;
-            line-height: 1.1;
-        }
-
-        .about-text p {
-            font-size: 0.95rem;
-            color: #444;
-            margin-bottom: 25px;
-            text-align: justify;
-            line-height: 1.8;
-        }
-
-        /* 自介右側圖片 (選用 work67.jpg 這種人物照更有感覺) */
-        .about-image img {
+        /* 右上：影片區 */
+        .mag-video-box {
             width: 100%;
-            filter: grayscale(100%); 
-            transition: 0.8s;
+            height: 300px;
+            overflow: hidden;
+            border-bottom: 1px solid #e5e5e5;
         }
-        .about-image:hover img { filter: grayscale(0%); }
+        .mag-video-box video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.1); /* 稍微放大特寫 */
+        }
+
+        /* 右下：圖片 + 裝飾 */
+        .mag-art-box {
+            padding: 40px;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .mag-art-box img {
+            width: 80%;
+            box-shadow: 10px 10px 0px rgba(0,0,0,0.1);
+        }
 
         /* --- Grid Section (藝廊) --- */
         .grid-section { padding: 100px 60px 150px; background-color: #fff; }
@@ -106,67 +179,43 @@
         .project-id { font-size: 0.8rem; color: #888; font-family: 'Cormorant Garamond', serif; font-style: italic; }
 
         /* --- Experience Section (經歷) --- */
-        .experience-section { padding: 120px 60px; border-top: 1px solid #eee; background: #fafafa; }
+        .experience-section { padding: 120px 60px; border-top: 1px solid #000; background: #fff; }
         .exp-header { font-size: 3.5rem; font-family: 'Cormorant Garamond', serif; margin-bottom: 80px; }
         .exp-list { max-width: 900px; margin-left: auto; margin-right: auto; }
-        
-        .exp-item { 
-            display: flex; 
-            padding: 40px 0; 
-            border-bottom: 1px solid #ddd; 
-            transition: 0.3s;
-        }
+        .exp-item { display: flex; padding: 40px 0; border-bottom: 1px solid #ddd; transition: 0.3s; }
         .exp-item:hover { transform: translateX(10px); }
-        
-        .exp-year { 
-            flex: 0 0 150px; 
-            font-weight: 600; 
-            font-size: 1rem; 
-            color: #000; 
-            font-family: 'Inter', sans-serif;
-            padding-top: 5px;
-        }
-        
+        .exp-year { flex: 0 0 150px; font-weight: 600; font-size: 1rem; padding-top: 5px; }
         .exp-content { flex: 1; }
-        .exp-role { 
-            font-size: 1.8rem; 
-            font-family: 'Cormorant Garamond', serif; 
-            font-weight: 600;
-            margin-bottom: 5px; 
-            display: block; 
-        }
-        .exp-company {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #666;
-            margin-bottom: 15px;
-            display: block;
-        }
-        .exp-desc { 
-            font-size: 0.9rem; 
-            color: #555; 
-            line-height: 1.6; 
-        }
+        .exp-role { font-size: 1.8rem; font-family: 'Cormorant Garamond', serif; font-weight: 600; margin-bottom: 5px; display: block; }
+        .exp-company { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: #666; margin-bottom: 15px; display: block; }
+        .exp-desc { font-size: 0.9rem; color: #555; line-height: 1.6; }
         .exp-desc ul { list-style: none; padding: 0; }
         .exp-desc li { position: relative; padding-left: 15px; margin-bottom: 5px; }
         .exp-desc li::before { content: "-"; position: absolute; left: 0; color: #999; }
 
-        footer { padding: 50px 60px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 0.8rem; text-transform: uppercase; color: #000; border-top: 1px solid #eee; background: #fff;}
+        footer { padding: 50px 60px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 0.8rem; text-transform: uppercase; color: #000; border-top: 1px solid #000; background: #fff;}
 
-        /* RWD */
+        /* RWD: 手機版調整 */
         @media (max-width: 768px) {
-            header { padding: 20px; background: rgba(255,255,255,0.8); }
-            .hero-section { height: 100vh; }
-            .about-section { grid-template-columns: 1fr; padding: 80px 20px; gap: 40px; }
-            .about-text h2 { font-size: 2.5rem; }
+            header { padding: 20px; }
+            /* 雜誌區塊手機版變垂直 */
+            .magazine-section { background-image: none; /* 手機版取消格線，太亂 */ }
+            .mag-content { display: block; }
+            .mag-img-large, .mag-text-col, .mag-media-col { 
+                grid-column: auto; 
+                border-right: none; 
+                padding: 30px 20px;
+                border-bottom: 1px solid #eee;
+            }
+            .mag-video-box { height: 250px; }
+            
+            /* 其他 RWD */
             .grid-section { padding: 80px 20px; }
             .project-grid { grid-template-columns: 1fr; gap: 0; }
             .col-right { margin-top: 0; }
             .project-item { margin-bottom: 100px; }
             .experience-section { padding: 60px 20px; }
             .exp-item { flex-direction: column; gap: 10px; }
-            .exp-role { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -183,21 +232,47 @@
         </video>
     </section>
 
-    <section class="about-section">
-        <div class="about-text">
-            <h2>Visual Director &<br>Graphic Designer</h2>
-            <p>
-                Driven by a profound love for art, cinema, and music, I seek inspiration in the diverse narratives of life. I believe that good imagery is not merely a visual presentation, but an artistic language capable of conveying deep emotions and stories.
-            </p>
-            <p>
-                With keen observation and acute aesthetics, I specialize in capturing subtle visual details and translating them into textured designs. From photography to graphic layout, I orchestrate every project with precision—from conceptual planning to the final visual delivery.
-            </p>
-            <p>
-                My expertise lies in photography and flat aesthetic design, utilizing composition and color to craft unique, high-end visual styles for brands. 
-            </p>
+    <section class="magazine-section">
+        
+        <div class="mag-header">
+            <div class="mag-title">Visual Director</div>
+            <div class="mag-meta">
+                001 — CREATIVE<br>
+                002 — DESIGN<br>
+                003 — PHOTOGRAPHY
+            </div>
         </div>
-        <div class="about-image">
-            <img src="images/work67.jpg" alt="Profile">
+
+        <div class="mag-content">
+            
+            <div class="mag-img-large">
+                <img src="images/about-main.jpg" alt="Fashion Portrait">
+            </div>
+
+            <div class="mag-text-col">
+                <div>
+                    <h3>Vision &<br>Narrative</h3>
+                    <p>
+                        Driven by a profound love for art, cinema, and music, I seek inspiration in the diverse narratives of life. Good imagery is an artistic language conveying deep emotions.
+                    </p>
+                    <p>
+                        My expertise lies in photography and flat aesthetic design, utilizing composition and color to craft unique, high-end visual styles for brands.
+                    </p>
+                </div>
+                <span class="small-code">EST. 2026 / TAIPEI, TAIWAN</span>
+            </div>
+
+            <div class="mag-media-col">
+                <div class="mag-video-box">
+                    <video autoplay loop muted playsinline>
+                        <source src="images/about-eye.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="mag-art-box">
+                    <img src="images/about-art.jpg" alt="Art Typography">
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -239,7 +314,6 @@
     <section class="experience-section">
         <h2 class="exp-header">Experience</h2>
         <div class="exp-list">
-            
             <div class="exp-item">
                 <div class="exp-year">2023 - Present</div>
                 <div class="exp-content">
@@ -250,45 +324,26 @@
                             <li>Planned and executed brand image campaigns and catalog photography.</li>
                             <li>Directed visual strategies for seasonal campaigns and mood boards.</li>
                             <li>Managed social media visuals, video production, and high-end retouching.</li>
-                            <li>Orchestrated official website UI/UX visuals and physical store displays.</li>
                         </ul>
                     </div>
                 </div>
             </div>
-
             <div class="exp-item">
                 <div class="exp-year">2021 - 2022</div>
                 <div class="exp-content">
                     <span class="exp-role">Graphic Designer</span>
                     <span class="exp-company">MUFAN</span>
-                    <div class="exp-desc">
-                        Specialized in diverse cover designs and visual presentation, honing Illustrator skills and print production knowledge.
-                    </div>
+                    <div class="exp-desc">Specialized in diverse cover designs and visual presentation.</div>
                 </div>
             </div>
-
             <div class="exp-item">
                 <div class="exp-year">2020</div>
                 <div class="exp-content">
-                    <span class="exp-role">Workshop Organizer & Creator</span>
+                    <span class="exp-role">Workshop Creator</span>
                     <span class="exp-company">Moon Rise Studio / Island Editor</span>
-                    <div class="exp-desc">
-                        Facilitated "Eco-Printing" and "Outdoor Pottery" workshops. Guided participants in natural dyeing, foraging, and pottery making, bridging the connection between art, nature, and daily life.
-                    </div>
+                    <div class="exp-desc">Facilitated "Eco-Printing" and "Outdoor Pottery" workshops.</div>
                 </div>
             </div>
-
-            <div class="exp-item">
-                <div class="exp-year">2019 - 2020</div>
-                <div class="exp-content">
-                    <span class="exp-role">Digital Marketing</span>
-                    <span class="exp-company">ZOGGS</span>
-                    <div class="exp-desc">
-                        Executed marketing plans, market analysis, and brand image management.
-                    </div>
-                </div>
-            </div>
-
         </div>
     </section>
 
@@ -298,12 +353,10 @@
     </footer>
 
     <script>
-        // Back to top
         document.querySelector('.footer-left span').addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // Header scroll effect
         window.addEventListener('scroll', () => {
             const header = document.getElementById('main-header');
             if (window.scrollY > 50) {
