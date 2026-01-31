@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JAY POSH | Portfolio</title>
+    
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Cormorant+Garamond:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* =========================================
+           全局設定
+           ========================================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            background-color: #ffffff; /* 全白背景 */
+            color: #000000; /* 全黑文字 */
+            font-family: 'Inter', sans-serif; 
+            overflow-x: hidden; 
+            line-height: 1.2;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        img { display: block; width: 100%; height: auto; transition: opacity 0.5s ease; }
+
+        /* =========================================
+           1. Header (導航列)
+           ========================================= */
+        header {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 30px 50px;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 100;
+            background: rgba(255,255,255,0.95); /* 背景微透明白 */
+            color: #000; /* 文字黑色 */
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem; font-weight: 600; letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .menu-btn { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; }
+
+        /* =========================================
+           2. Hero Section (霸氣開場：白底 + 巨大黑 Logo)
+           ========================================= */
+        .hero-section {
+            width: 100%;
+            height: 100vh; /* 滿版高度 */
+            background-color: #ffffff; /* ★ 全白背景 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        .hero-logo-img {
+            /* ★ 這裡控制 LOGO 大小 */
+            width: 85vw; /* 設為螢幕寬度的 85%，非常巨大且霸氣 */
+            max-width: 1400px; /* 限制最大寬度，避免在大螢幕過大 */
+            height: auto;
+            
+            /* ★★★ 關鍵魔法：反轉顏色 ★★★ */
+            /* 因為你的圖是白色的，這行代碼會把它變成黑色！ */
+            filter: invert(1); 
+        }
+
+        /* =========================================
+           3. Grid Section (藝廊作品區)
+           ========================================= */
+        .grid-section {
+            padding: 100px 60px 150px; /* 調整間距 */
+            background-color: #fff;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* 兩欄 */
+            column-gap: 80px; /* 左右間距 */
+            align-items: start;
+        }
+
+        /* 右欄整體下移，製造錯落感 */
+        .col-right { margin-top: 300px; }
+
+        .project-item { 
+            margin-bottom: 220px; /* ★ 增加留白，讓畫面更乾淨 */
+            cursor: pointer; 
+        }
+        
+        .project-item:hover img { opacity: 0.7; } /* 滑鼠移過去稍微變淡 */
+
+        .project-meta {
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-top: 1px solid #000; /* 黑線 */
+            padding-top: 12px;
+        }
+
+        .project-title { font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .project-id { font-size: 0.8rem; color: #888; font-family: 'Cormorant Garamond', serif; font-style: italic; }
+
+        /* =========================================
+           4. Experience (經歷)
+           ========================================= */
+        .experience-section { padding: 100px 60px; border-top: 1px solid #eee; }
+        .exp-header { font-size: 4rem; font-family: 'Cormorant Garamond', serif; margin-bottom: 80px; letter-spacing: -2px; }
+        .exp-item { display: flex; align-items: baseline; padding: 35px 0; border-bottom: 1px solid #000; transition: 0.3s; }
+        .exp-item:hover { background: #f0f0f0; padding-left: 20px; }
+        .exp-year { flex: 0 0 100px; font-weight: 600; font-size: 1rem; }
+        .exp-role { flex: 0 0 350px; font-size: 2rem; font-family: 'Cormorant Garamond', serif; font-style: italic; }
+        .exp-desc { font-size: 0.95rem; color: #444; line-height: 1.6; max-width: 500px; }
+
+        /* Footer */
+        footer { padding: 50px 60px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #000; border-top: 1px solid #eee; }
+
+        /* 手機版 RWD */
+        @media (max-width: 768px) {
+            header { padding: 20px; }
+            .hero-logo-img { width: 90vw; } /* 手機版 Logo 佔滿 90% */
+            .grid-section { padding: 80px 20px; }
+            .project-grid { grid-template-columns: 1fr; gap: 0; }
+            .col-right { margin-top: 0; }
+            .project-item { margin-bottom: 100px; }
+            .experience-section { padding: 60px 20px; }
+            .exp-item { flex-direction: column; gap: 10px; border-bottom: 1px solid #eee; }
+            .exp-role { margin-bottom: 10px; font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">JAY POSH</div>
+        <div class="menu-btn">Profile</div>
+    </header>
+
+    <section class="hero-section">
+        <img src="images/logo-white.png" alt="JAY POSH Logo" class="hero-logo-img">
+    </section>
+
+    <section class="grid-section">
+        <div class="project-grid">
+            
+            <div class="col-left">
+                <div class="project-item"><img src="images/work3.jpg"><div class="project-meta"><span class="project-title">Noir Studio</span><span class="project-id">01</span></div></div>
+                <div class="project-item"><img src="images/work49.jpg"><div class="project-meta"><span class="project-title">Night Walker</span><span class="project-id">03</span></div></div>
+                <div class="project-item"><img src="images/work52.jpg"><div class="project-meta"><span class="project-title">Metropolis</span><span class="project-id">05</span></div></div>
+                <div class="project-item"><img src="images/work55.jpg"><div class="project-meta"><span class="project-title">Urban Angle</span><span class="project-id">07</span></div></div>
+                <div class="project-item"><img src="images/work69.jpg"><div class="project-meta"><span class="project-title">Street Noir</span><span class="project-id">09</span></div></div>
+                <div class="project-item"><img src="images/work73.jpg"><div class="project-meta"><span class="project-title">Modern Edge</span><span class="project-id">11</span></div></div>
+
+                <div class="project-item"><img src="images/p2.jpg"><div class="project-meta"><span class="project-title">Blue Horizon</span><span class="project-id">13</span></div></div>
+                <div class="project-item"><img src="images/work10.jpg"><div class="project-meta"><span class="project-title">Structure</span><span class="project-id">15</span></div></div>
+                <div class="project-item"><img src="images/work14.jpg"><div class="project-meta"><span class="project-title">Ice Cold</span><span class="project-id">17</span></div></div>
+                <div class="project-item"><img src="images/work34.jpg"><div class="project-meta"><span class="project-title">Clean Lines</span><span class="project-id">19</span></div></div>
+                <div class="project-item"><img src="images/work60.jpg"><div class="project-meta"><span class="project-title">Valerian</span><span class="project-id">21</span></div></div>
+                <div class="project-item"><img src="images/work65.jpg"><div class="project-meta"><span class="project-title">Future Wear</span><span class="project-id">23</span></div></div>
+
+                <div class="project-item"><img src="images/p5.jpg"><div class="project-meta"><span class="project-title">Purple Haze</span><span class="project-id">25</span></div></div>
+                <div class="project-item"><img src="images/work11.jpg"><div class="project-meta"><span class="project-title">Magazine Spread</span><span class="project-id">27</span></div></div>
+                <div class="project-item"><img src="images/work29.jpg"><div class="project-meta"><span class="project-title">Satin Pink</span><span class="project-id">29</span></div></div>
+                <div class="project-item"><img src="images/work36.jpg"><div class="project-meta"><span class="project-title">Dynamic</span><span class="project-id">31</span></div></div>
+                <div class="project-item"><img src="images/work57.jpg"><div class="project-meta"><span class="project-title">Vivid Art</span><span class="project-id">33</span></div></div>
+
+                <div class="project-item"><img src="images/p3.jpg"><div class="project-meta"><span class="project-title">Desert Storm</span><span class="project-id">35</span></div></div>
+                <div class="project-item"><img src="images/work19.jpg"><div class="project-meta"><span class="project-title">Rocky Shore</span><span class="project-id">37</span></div></div>
+                <div class="project-item"><img src="images/work38.jpg"><div class="project-meta"><span class="project-title">Organic</span><span class="project-id">39</span></div></div>
+                <div class="project-item"><img src="images/work45.jpg"><div class="project-meta"><span class="project-title">Sand Texture</span><span class="project-id">41</span></div></div>
+                <div class="project-item"><img src="images/work67.jpg"><div class="project-meta"><span class="project-title">Soft Light</span><span class="project-id">43</span></div></div>
+                <div class="project-item"><img src="images/work71.jpg"><div class="project-meta"><span class="project-title">Reflection</span><span class="project-id">45</span></div></div>
+                <div class="project-item"><img src="images/work77.jpg"><div class="project-meta"><span class="project-title">Close Up</span><span class="project-id">47</span></div></div>
+            </div>
+
+            <div class="col-right">
+                <div class="project-item"><img src="images/work6.jpg"><div class="project-meta"><span class="project-title">Shadow Play</span><span class="project-id">02</span></div></div>
+                <div class="project-item"><img src="images/work50.jpg"><div class="project-meta"><span class="project-title">Edge</span><span class="project-id">04</span></div></div>
+                <div class="project-item"><img src="images/work53.jpg"><div class="project-meta"><span class="project-title">City Blue</span><span class="project-id">06</span></div></div>
+                <div class="project-item"><img src="images/work54.jpg"><div class="project-meta"><span class="project-title">Steel Structure</span><span class="project-id">08</span></div></div>
+                <div class="project-item"><img src="images/work70.jpg"><div class="project-meta"><span class="project-title">Silhouette</span><span class="project-id">10</span></div></div>
+                <div class="project-item"><img src="images/work74.jpg"><div class="project-meta"><span class="project-title">Attitude</span><span class="project-id">12</span></div></div>
+
+                <div class="project-item"><img src="images/p1.jpg"><div class="project-meta"><span class="project-title">Tech Wear</span><span class="project-id">14</span></div></div>
+                <div class="project-item"><img src="images/work13.jpg"><div class="project-meta"><span class="project-title">Virtual Reality</span><span class="project-id">16</span></div></div>
+                <div class="project-item"><img src="images/work31.jpg"><div class="project-meta"><span class="project-title">Denim Flow</span><span class="project-id">18</span></div></div>
+                <div class="project-item"><img src="images/work35.jpg"><div class="project-meta"><span class="project-title">Minimalism</span><span class="project-id">20</span></div></div>
+                <div class="project-item"><img src="images/work61.jpg"><div class="project-meta"><span class="project-title">Atmosphere</span><span class="project-id">22</span></div></div>
+
+                <div class="project-item"><img src="images/p9.jpg"><div class="project-meta"><span class="project-title">Alien Chic</span><span class="project-id">24</span></div></div>
+                <div class="project-item"><img src="images/work12.jpg"><div class="project-meta"><span class="project-title">Pink Studio</span><span class="project-id">26</span></div></div>
+                <div class="project-item"><img src="images/work33.jpg"><div class="project-meta"><span class="project-title">Neon Nights</span><span class="project-id">28</span></div></div>
+                <div class="project-item"><img src="images/work56.jpg"><div class="project-meta"><span class="project-title">Distortion</span><span class="project-id">30</span></div></div>
+                <div class="project-item"><img src="images/work76.jpg"><div class="project-meta"><span class="project-title">Deep Emotion</span><span class="project-id">32</span></div></div>
+
+                <div class="project-item"><img src="images/p4.jpg"><div class="project-meta"><span class="project-title">Wasteland</span><span class="project-id">34</span></div></div>
+                <div class="project-item"><img src="images/work23.jpg"><div class="project-meta"><span class="project-title">Golden Hour</span><span class="project-id">36</span></div></div>
+                <div class="project-item"><img src="images/work39.jpg"><div class="project-meta"><span class="project-title">Botanical</span><span class="project-id">38</span></div></div>
+                <div class="project-item"><img src="images/work66.jpg"><div class="project-meta"><span class="project-title">Cave Light</span><span class="project-id">40</span></div></div>
+                <div class="project-item"><img src="images/work68.jpg"><div class="project-meta"><span class="project-title">Casual</span><span class="project-id">42</span></div></div>
+                <div class="project-item"><img src="images/work72.jpg"><div class="project-meta"><span class="project-title">Warmth</span><span class="project-id">44</span></div></div>
+                <div class="project-item"><img src="images/work78.jpg"><div class="project-meta"><span class="project-title">Sunlight</span><span class="project-id">46</span></div></div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="experience-section">
+        <h2 class="exp-header">Experience</h2>
+        <div class="exp-list">
+            <div class="exp-item">
+                <div class="exp-year">2025</div>
+                <div class="exp-role">Visual Direction</div>
+                <div class="exp-desc">Current exploration in cinematic visual narratives and advanced branding strategies for modern industries.</div>
+            </div>
+            <div class="exp-item">
+                <div class="exp-year">2023</div>
+                <div class="exp-role">Pinkselfie Lead</div>
+                <div class="exp-desc">Orchestrating visual assets and editorial layouts for fashion-forward digital platforms.</div>
+            </div>
+            <div class="exp-item">
+                <div class="exp-year">2021</div>
+                <div class="exp-role">CYCU Design</div>
+                <div class="exp-desc">Foundational years focusing on technical precision, commercial arts, and the intersection of technology.</div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-left">
+            <span>Back to Top</span>
+            <span style="margin-left: 20px;">Contact</span>
+        </div>
+        <div class="footer-right">
+            <span>&copy; 2026 JAY POSH</span>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelector('.footer-left span').addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+
+</body>
+</html>
