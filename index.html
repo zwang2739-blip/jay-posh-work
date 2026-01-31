@@ -15,7 +15,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
-            background-color: #ffffff; /* 全白背景 */
+            background-color: #ffffff; /* ★ 確保全白背景 */
             color: #000000; /* 全黑文字 */
             font-family: 'Inter', sans-serif; 
             overflow-x: hidden; 
@@ -26,7 +26,7 @@
         img { display: block; width: 100%; height: auto; transition: opacity 0.5s ease; }
 
         /* =========================================
-           1. Header (導航列)
+           Header (導航列)
            ========================================= */
         header {
             position: fixed;
@@ -34,25 +34,25 @@
             padding: 30px 50px;
             display: flex; justify-content: space-between; align-items: center;
             z-index: 100;
-            background: rgba(255,255,255,0.95); /* 背景微透明白 */
-            color: #000; /* 文字黑色 */
+            background: rgba(255,255,255,0.9); /* 白底微透明 */
+            backdrop-filter: blur(5px);
         }
 
         .logo {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.2rem; font-weight: 600; letter-spacing: 0.5px;
-            text-transform: uppercase;
+            font-size: 1.3rem; font-weight: 700; letter-spacing: 0.5px;
+            text-transform: uppercase; color: #000;
         }
 
-        .menu-btn { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; }
+        .menu-btn { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; color: #000; }
 
         /* =========================================
-           2. Hero Section (霸氣開場：白底 + 巨大黑 Logo)
+           Hero Section (修正：全白背景 + 黑 Logo)
            ========================================= */
         .hero-section {
             width: 100%;
             height: 100vh; /* 滿版高度 */
-            background-color: #ffffff; /* ★ 全白背景 */
+            background-color: #ffffff; /* ★★★ 修正：白色背景 ★★★ */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -60,71 +60,65 @@
         }
 
         .hero-logo-img {
-            /* ★ 這裡控制 LOGO 大小 */
-            width: 85vw; /* 設為螢幕寬度的 85%，非常巨大且霸氣 */
-            max-width: 1400px; /* 限制最大寬度，避免在大螢幕過大 */
+            width: 85vw; /* 巨大 Logo */
+            max-width: 1400px;
             height: auto;
             
-            /* ★★★ 關鍵魔法：反轉顏色 ★★★ */
-            /* 因為你的圖是白色的，這行代碼會把它變成黑色！ */
+            /* ★★★ 關鍵修正：反轉顏色 ★★★ */
+            /* 你的圖是白字，這行會把它變成「純黑色」，完美搭配白底 */
             filter: invert(1); 
         }
 
         /* =========================================
-           3. Grid Section (藝廊作品區)
+           Grid Section (藝廊作品區)
            ========================================= */
         .grid-section {
-            padding: 100px 60px 150px; /* 調整間距 */
+            padding: 100px 60px 150px; 
             background-color: #fff;
         }
 
         .project-grid {
             display: grid;
             grid-template-columns: 1fr 1fr; /* 兩欄 */
-            column-gap: 80px; /* 左右間距 */
+            column-gap: 80px; 
             align-items: start;
         }
 
-        /* 右欄整體下移，製造錯落感 */
-        .col-right { margin-top: 300px; }
+        /* 右欄下移，製造錯落感 */
+        .col-right { margin-top: 250px; }
 
         .project-item { 
-            margin-bottom: 220px; /* ★ 增加留白，讓畫面更乾淨 */
+            margin-bottom: 220px; /* 留白呼吸感 */
             cursor: pointer; 
         }
         
-        .project-item:hover img { opacity: 0.7; } /* 滑鼠移過去稍微變淡 */
+        .project-item:hover img { opacity: 0.7; }
 
         .project-meta {
             margin-top: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            border-top: 1px solid #000; /* 黑線 */
-            padding-top: 12px;
+            display: flex; justify-content: space-between; align-items: baseline;
+            border-top: 1px solid #000; padding-top: 12px;
         }
 
         .project-title { font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
         .project-id { font-size: 0.8rem; color: #888; font-family: 'Cormorant Garamond', serif; font-style: italic; }
 
         /* =========================================
-           4. Experience (經歷)
+           Experience (經歷)
            ========================================= */
         .experience-section { padding: 100px 60px; border-top: 1px solid #eee; }
-        .exp-header { font-size: 4rem; font-family: 'Cormorant Garamond', serif; margin-bottom: 80px; letter-spacing: -2px; }
+        .exp-header { font-size: 4rem; font-family: 'Cormorant Garamond', serif; margin-bottom: 80px; }
         .exp-item { display: flex; align-items: baseline; padding: 35px 0; border-bottom: 1px solid #000; transition: 0.3s; }
         .exp-item:hover { background: #f0f0f0; padding-left: 20px; }
         .exp-year { flex: 0 0 100px; font-weight: 600; font-size: 1rem; }
         .exp-role { flex: 0 0 350px; font-size: 2rem; font-family: 'Cormorant Garamond', serif; font-style: italic; }
         .exp-desc { font-size: 0.95rem; color: #444; line-height: 1.6; max-width: 500px; }
 
-        /* Footer */
         footer { padding: 50px 60px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #000; border-top: 1px solid #eee; }
 
-        /* 手機版 RWD */
         @media (max-width: 768px) {
             header { padding: 20px; }
-            .hero-logo-img { width: 90vw; } /* 手機版 Logo 佔滿 90% */
+            .hero-logo-img { width: 90vw; }
             .grid-section { padding: 80px 20px; }
             .project-grid { grid-template-columns: 1fr; gap: 0; }
             .col-right { margin-top: 0; }
