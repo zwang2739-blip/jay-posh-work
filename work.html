@@ -9,278 +9,311 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     
     <style>
-        /* --- 全局設定 (與首頁相同) --- */
+        /* --- 全局設定 --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
         body { 
-            background-color: #ffffff; 
+            background-color: #f4f4f0; /* 參考影片的米灰色背景，更有藝廊感 */
             color: #000000; 
             font-family: 'Inter', sans-serif; 
-            overflow-x: hidden; 
-            line-height: 1.6;
+            overflow: hidden; /* 隱藏捲軸，改用拖曳 */
+            height: 100vh;
+            width: 100vw;
+            user-select: none; /* 防止拖曳時選取文字 */
         }
-        a { text-decoration: none; color: inherit; cursor: pointer; }
-        img { display: block; width: 100%; height: auto; }
-
-        /* --- Header (與首頁相同設定) --- */
+        
+        /* --- Header (固定在上方) --- */
         header {
             position: fixed; top: 0; left: 0; width: 100%; 
-            display: flex; flex-direction: column; align-items: center;
+            display: flex; justify-content: space-between; align-items: center;
             padding: 30px 50px;
-            z-index: 100; 
-            background: transparent;
-            transition: all 0.4s ease;
-            /* 在白底頁面，difference 模式會讓字變黑色，剛好符合需求 */
-            mix-blend-mode: difference; 
-            color: #fff;
+            z-index: 1000; 
+            pointer-events: none; /* 讓點擊穿透 header，除非點到連結 */
         }
-        header.scrolled { 
-            background: rgba(255,255,255,0.98);
-            padding: 20px 50px; 
-            mix-blend-mode: normal;
-            color: #000;
-            border-bottom: 1px solid #f0f0f0;
+        .header-content { pointer-events: auto; display: flex; width: 100%; justify-content: space-between; align-items: center; }
+        
+        .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 700; text-transform: uppercase; color: #000; text-decoration: none;}
+        
+        .nav-links { display: flex; gap: 30px; }
+        .nav-link { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #000; text-decoration: none; position: relative; }
+        .nav-link.active::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 1px; background: #000; }
+
+        /* --- 互動畫布區域 --- */
+        #gallery-canvas {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            cursor: grab; /* 抓取手勢 */
         }
-        .header-top { width: 100%; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
-        .main-nav { display: flex; gap: 35px; }
-        .nav-link-main { font-size: 0.85rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; position: relative; }
-        .nav-link-main::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 1px; background: currentColor; transition: width 0.3s; }
-        .nav-link-main:hover::after { width: 100%; }
-        /* 當前頁面標示 */
-        .nav-link-main.active::after { width: 100%; }
+        #gallery-canvas.grabbing { cursor: grabbing; }
 
-        .header-bottom { margin-top: 18px; }
-        .sub-nav { display: flex; gap: 25px; }
-        .nav-link-sub { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; transition: opacity 0.3s; }
-        .nav-link-sub:hover { opacity: 1; }
-
-        /* =========================================
-           ★ 全新雙欄作品集樣式 (參考範例圖) ★
-           ========================================= */
-        .work-gallery-section {
-            padding: 200px 60px 150px; /* 上方留多一點空間給 Header */
-            max-width: 1600px; /* 限制最大寬度，避免在大螢幕太散 */
-            margin: 0 auto;
-        }
-
-        .gallery-grid-2col {
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* 標準兩欄 */
-            column-gap: 60px; /* 左右間距 */
-            row-gap: 120px;   /* 上下間距加大，增加呼吸感 */
-            align-items: start;
-        }
-
-        /* 單個作品項目 */
-        .work-item {
-            display: flex;
-            flex-direction: column;
-            text-decoration: none;
-            group; /* 用於 hover group */
-        }
-
-        /* 圖片容器 */
-        .work-image-box {
-            width: 100%;
+        /* --- 圖片樣式 --- */
+        .gallery-img-container {
+            position: absolute;
+            top: 50%; left: 50%;
+            /* 關鍵動畫設定 */
+            transition: transform 1s cubic-bezier(0.2, 0.8, 0.2, 1), width 1s ease, height 1s ease;
+            transform-origin: center center;
             overflow: hidden;
-            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
-        .work-image-box img {
-            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s;
-            transform-origin: center;
-        }
-        /* Hover 效果：輕微放大且透明度變化 */
-        .work-item:hover .work-image-box img {
-            transform: scale(1.03);
-            opacity: 0.9;
+        
+        .gallery-img-container img {
+            width: 100%; height: 100%; object-fit: cover;
+            display: block;
+            pointer-events: none; /* 防止拖曳圖片本身 */
         }
 
-        /* 文字描述區 (參考範例圖的極簡風格) */
-        .work-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            padding-top: 15px;
-            border-top: 1px solid #eee; /* 極細的分隔線 */
+        /* Hover 效果 (只在隨機模式下明顯) */
+        .gallery-img-container:hover {
+            z-index: 100; /* 懸停時浮到最上層 */
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+
+        /* --- 底部控制列 (Toggle Switch) --- */
+        .controls {
+            position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
+            z-index: 1000;
+            display: flex; gap: 20px; align-items: center;
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(5px);
+            padding: 10px 25px;
+            border-radius: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .mode-btn {
             font-family: 'Inter', sans-serif;
-        }
-        .work-title {
-            font-size: 1rem;
-            font-weight: 500;
+            font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #000;
+            cursor: pointer;
+            color: #aaa;
+            transition: color 0.3s;
         }
-        .work-meta {
-            font-size: 0.85rem;
-            color: #888;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .mode-btn.active { color: #000; font-weight: 600; }
+        
+        /* 開關滑軌 */
+        .toggle-track {
+            width: 40px; height: 20px;
+            background: #eee;
+            border-radius: 20px;
+            position: relative;
+            cursor: pointer;
         }
+        .toggle-thumb {
+            width: 16px; height: 16px;
+            background: #000;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px; left: 2px;
+            transition: left 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        /* Linear 狀態 */
+        .toggle-track.linear-mode .toggle-thumb { left: 22px; }
 
-        /* Footer (與首頁相同) */
-        footer { padding: 50px 60px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 0.8rem; text-transform: uppercase; color: #000; border-top: 1px solid #eee; background: #fff;}
-
-        /* RWD 手機版 */
-        @media (max-width: 768px) {
-            header { padding: 20px; flex-direction: row; }
-            .header-bottom, .main-nav { display: none; }
-            
-            .work-gallery-section { padding: 120px 20px 80px; }
-            .gallery-grid-2col { 
-                grid-template-columns: 1fr; /* 手機版變單欄 */
-                row-gap: 80px;
-            }
-            .work-info { padding-top: 12px; }
-            .work-title { font-size: 0.9rem; }
-        }
     </style>
 </head>
 <body>
 
-    <header id="main-header">
-        <div class="header-top">
+    <header>
+        <div class="header-content">
             <a href="index.html" class="logo">JAY POSH</a>
-            <nav class="main-nav">
-                <a href="index.html#narrative" class="nav-link-main">ABOUT</a>
-                <a href="work.html" class="nav-link-main active">WORK</a>
-                <a href="index.html#experience" class="nav-link-main">EXPERIENCE</a>
-                <a href="#" class="nav-link-main">CONTACT</a>
-            </nav>
-        </div>
-        <div class="header-bottom">
-            <nav class="sub-nav">
-                <a href="#" class="nav-link-sub">ALL</a>
-                <a href="#" class="nav-link-sub">EDITORIAL</a>
-                <a href="#" class="nav-link-sub">COMMERCIAL</a>
-                <a href="#" class="nav-link-sub">MOTION</a>
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="#" class="nav-link active">Work</a>
+                <a href="index.html#experience" class="nav-link">Info</a>
             </nav>
         </div>
     </header>
 
-    <section class="work-gallery-section">
-        <div class="gallery-grid-2col">
-            
-            <a href="#" class="work-item">
-                <div class="work-image-box"><img src="images/split-1.jpg" alt="Project"></div>
-                <div class="work-info">
-                    <span class="work-title">Noir Tone</span>
-                    <span class="work-meta">Editorial / 2025</span>
-                </div>
-            </a>
+    <div id="gallery-canvas">
+        <div class="gallery-img-container" data-type="portrait"><img src="images/split-1.jpg"></div>
+        <div class="gallery-img-container" data-type="landscape"><img src="images/split-2.jpg"></div>
+        <div class="gallery-img-container" data-type="portrait"><img src="images/work3.jpg"></div>
+        <div class="gallery-img-container" data-type="landscape"><img src="images/work49.jpg"></div>
+        <div class="gallery-img-container" data-type="portrait"><img src="images/work60.jpg"></div>
+        <div class="gallery-img-container" data-type="landscape"><img src="images/p5.jpg"></div>
+        <div class="gallery-img-container" data-type="portrait"><img src="images/split-3.jpg"></div>
+        <div class="gallery-img-container" data-type="landscape"><img src="images/split-4.jpg"></div>
+        <div class="gallery-img-container" data-type="portrait"><img src="images/work50.jpg"></div>
+        <div class="gallery-img-container" data-type="landscape"><img src="images/work55.jpg"></div>
+        <div class="gallery-img-container" data-type="portrait"><img src="images/p2.jpg"></div>
+        <div class="gallery-img-container" data-type="landscape"><img src="images/work35.jpg"></div>
+        <div class="gallery-img-container" data-type="portrait"><img src="images/work14.jpg"></div>
+        <div class="gallery-img-container" data-type="landscape"><img src="images/work36.jpg"></div>
+    </div>
 
-            <a href="#" class="work-item">
-                <div class="work-image-box"><img src="images/split-2.jpg" alt="Project"></div>
-                <div class="work-info">
-                    <span class="work-title">Clean Profile</span>
-                    <span class="work-meta">Portrait / 2025</span>
-                </div>
-            </a>
-
-            <a href="#" class="work-item">
-                <div class="work-image-box"><img src="images/work3.jpg" alt="Project"></div>
-                <div class="work-info">
-                    <span class="work-title">Noir Studio</span>
-                    <span class="work-meta">Fashion / 2024</span>
-                </div>
-            </a>
-
-            <a href="#" class="work-item">
-                <div class="work-image-box"><img src="images/work49.jpg" alt="Project"></div>
-                <div class="work-info">
-                    <span class="work-title">Night Walker</span>
-                    <span class="work-meta">Editorial / 2024</span>
-                </div>
-            </a>
-
-            <a href="#" class="work-item">
-                <div class="work-image-box"><img src="images/work60.jpg" alt="Project"></div>
-                <div class="work-info">
-                    <span class="work-title">Valerian Future</span>
-                    <span class="work-meta">Creative / 2024</span>
-                </div>
-            </a>
-
-            <a href="#" class="work-item">
-                <div class="work-image-box"><img src="images/p5.jpg" alt="Project"></div>
-                <div class="work-info">
-                    <span class="work-title">Purple Haze</span>
-                    <span class="work-meta">Beauty / 2023</span>
-                </div>
-            </a>
-
-             <a href="#" class="work-item">
-                <div class="work-image-box"><img src="images/split-3.jpg" alt="Project"></div>
-                <div class="work-info">
-                    <span class="work-title">Texture Study I</span>
-                    <span class="work-meta">Still Life / 2023</span>
-                </div>
-            </a>
-
-             <a href="#" class="work-item">
-                <div class="work-image-box"><img src="images/split-4.jpg" alt="Project"></div>
-                <div class="work-info">
-                    <span class="work-title">Texture Study II</span>
-                    <span class="work-meta">Still Life / 2023</span>
-                </div>
-            </a>
-
-            <a href="#" class="work-item">
-                <div class="work-image-box"><img src="images/work50.jpg" alt="Project"></div>
-                <div class="work-info">
-                    <span class="work-title">The Edge</span>
-                    <span class="work-meta">Editorial / 2023</span>
-                </div>
-            </a>
-
-            <a href="#" class="work-item">
-                <div class="work-image-box"><img src="images/work55.jpg" alt="Project"></div>
-                <div class="work-info">
-                    <span class="work-title">Urban Angle</span>
-                    <span class="work-meta">Street / 2023</span>
-                </div>
-            </a>
-
-            <a href="#" class="work-item">
-                <div class="work-image-box"><img src="images/p2.jpg" alt="Project"></div>
-                <div class="work-info">
-                    <span class="work-title">Blue Horizon</span>
-                    <span class="work-meta">Commercial / 2022</span>
-                </div>
-            </a>
-
-            <a href="#" class="work-item">
-                <div class="work-image-box"><img src="images/work35.jpg" alt="Project"></div>
-                <div class="work-info">
-                    <span class="work-title">Minimalism</span>
-                    <span class="work-meta">Lookbook / 2022</span>
-                </div>
-            </a>
-
+    <div class="controls">
+        <div class="mode-btn active" id="btn-random">Random</div>
+        <div class="toggle-track" id="mode-toggle">
+            <div class="toggle-thumb"></div>
         </div>
-    </section>
-
-    <footer>
-        <div class="footer-left"><span>Back to Top</span></div>
-        <div class="footer-right"><span>&copy; 2026 JAY POSH</span></div>
-    </footer>
+        <div class="mode-btn" id="btn-linear">Linear</div>
+    </div>
 
     <script>
-        // Back to Top
-        document.querySelector('.footer-left span').addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        const canvas = document.getElementById('gallery-canvas');
+        const items = document.querySelectorAll('.gallery-img-container');
+        const toggle = document.getElementById('mode-toggle');
+        const btnRandom = document.getElementById('btn-random');
+        const btnLinear = document.getElementById('btn-linear');
+
+        let isLinear = false;
+        
+        // 拖曳相關變數
+        let isDragging = false;
+        let startX, startY;
+        let currentX = 0, currentY = 0; // 畫布目前的偏移量
+        let dragX = 0, dragY = 0;       // 拖曳中的臨時偏移量
+
+        // 初始化：設定隨機位置
+        function setRandomLayout() {
+            const viewportW = window.innerWidth;
+            const viewportH = window.innerHeight;
+
+            items.forEach((item, index) => {
+                // 隨機寬度，增加層次感
+                const width = Math.floor(Math.random() * (350 - 200) + 200); 
+                const height = item.dataset.type === 'portrait' ? width * 1.4 : width * 0.7; // 保持比例
+
+                // 隨機位置 (範圍設大一點，製造"無限畫布"的感覺)
+                // 讓圖片分布在 -50% 到 150% 的螢幕範圍內
+                const x = (Math.random() * 1.5 - 0.25) * viewportW - (width / 2);
+                const y = (Math.random() * 1.5 - 0.25) * viewportH - (height / 2);
+                
+                // 隨機重疊順序
+                const z = Math.floor(Math.random() * 10);
+
+                item.style.width = `${width}px`;
+                item.style.height = `${height}px`;
+                // 使用 transform 來定位，這是效能最好的動畫方式
+                // 注意：這裡不加 currentX/Y，因為隨機模式下我們不希望整個畫布被鎖定在線性模式的捲動位置
+                item.style.transform = `translate(${x}px, ${y}px)`;
+                item.style.zIndex = z;
+            });
+        }
+
+        // 切換：設定線性排列 (Carousel)
+        function setLinearLayout() {
+            const viewportH = window.innerHeight;
+            let currentLeft = 100; // 起始左邊距
+
+            items.forEach((item, index) => {
+                // 固定高度，讓它們整齊排列
+                const height = 400; // 線性模式統一高度
+                // 根據原本比例計算寬度 (假設直式 0.7, 橫式 1.4)
+                // 這裡簡單判定，如果是 portrait 就窄一點
+                const width = item.dataset.type === 'portrait' ? 285 : 570; 
+
+                // 垂直置中
+                const y = (viewportH / 2) - (height / 2);
+                const x = currentLeft;
+
+                item.style.width = `${width}px`;
+                item.style.height = `${height}px`;
+                
+                // 套用位置 (這裡加上 currentX，讓拖曳可以控制捲動)
+                item.style.transform = `translate(${x + dragX}px, ${y}px)`;
+                item.style.zIndex = 10; // 線性模式不重疊，層級一樣
+
+                currentLeft += width + 40; // 下一張圖的左邊位置 (40px 間距)
+            });
+        }
+
+        // 更新畫布位置 (用於拖曳)
+        function updateTransform() {
+            if (isLinear) {
+                // 線性模式：只允許水平拖曳
+                // 我們重新呼叫 setLinearLayout，但帶入偏移量
+                // 為了效能，我們其實應該只改變父容器的 transform，但為了無縫切換，我們直接改每個 item
+                
+                // 簡單版：只更新 transform，不重算寬高
+                const viewportH = window.innerHeight;
+                let currentLeft = 100;
+                
+                items.forEach(item => {
+                    const height = 400;
+                    const width = item.dataset.type === 'portrait' ? 285 : 570; 
+                    const y = (viewportH / 2) - (height / 2);
+                    const x = currentLeft + currentX + dragX; // 加上拖曳位移
+                    
+                    item.style.transform = `translate(${x}px, ${y}px)`;
+                    currentLeft += width + 40;
+                });
+
+            } else {
+                // 隨機模式：允許自由拖曳
+                // 這裡我們簡單移動整個畫布的參考點，但因為上面 setRandom 是絕對定位
+                // 我們可以用一個簡單的 hack：移動所有圖片
+                // (進階做法是移動 canvas container，但會影響 layout 切換計算)
+                // 為了保持簡單，隨機模式下暫時不支援"無限拖曳"，只支援視覺上的散落。
+                // 如果你想在隨機模式下也能拖曳畫面，可以告訴我，我再加強這部分。
+                // 目前先讓隨機模式保持靜態散落。
+            }
+        }
+
+        // --- 拖曳事件處理 (Drag Logic) ---
+        canvas.addEventListener('mousedown', e => {
+            if (!isLinear) return; // 目前只在線性模式開啟拖曳(捲動)
+            isDragging = true;
+            startX = e.clientX;
+            canvas.classList.add('grabbing');
         });
 
-        // Header Scroll Effect
-        window.addEventListener('scroll', () => {
-            const header = document.getElementById('main-header');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
+        window.addEventListener('mouseup', () => {
+            if (!isDragging) return;
+            isDragging = false;
+            currentX += dragX; // 儲存這次拖曳的距離
+            dragX = 0;
+            canvas.classList.remove('grabbing');
         });
+
+        window.addEventListener('mousemove', e => {
+            if (!isDragging) return;
+            const x = e.clientX;
+            dragX = x - startX;
+            // 限制拖曳動畫頻率
+            requestAnimationFrame(updateTransform);
+        });
+
+
+        // --- 切換開關邏輯 ---
+        function switchMode(linear) {
+            isLinear = linear;
+            
+            // UI 更新
+            if (isLinear) {
+                toggle.classList.add('linear-mode');
+                btnLinear.classList.add('active');
+                btnRandom.classList.remove('active');
+                // 重置拖曳位置回起點，或者保留? 這裡先重置回起點比較整齊
+                currentX = 0; dragX = 0;
+                setLinearLayout();
+            } else {
+                toggle.classList.remove('linear-mode');
+                btnRandom.classList.add('active');
+                btnLinear.classList.remove('active');
+                setRandomLayout();
+            }
+        }
+
+        // 綁定點擊事件
+        toggle.addEventListener('click', () => switchMode(!isLinear));
+        btnRandom.addEventListener('click', () => switchMode(false));
+        btnLinear.addEventListener('click', () => switchMode(true));
+
+        // --- 視窗縮放時重算 ---
+        window.addEventListener('resize', () => {
+            if (isLinear) setLinearLayout();
+            else setRandomLayout();
+        });
+
+        // --- 啟動！ ---
+        // 預設先跑隨機模式
+        setTimeout(() => {
+            setRandomLayout();
+        }, 100); // 稍微延遲確保 DOM 載入
+
     </script>
 </body>
 </html>
