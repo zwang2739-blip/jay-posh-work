@@ -12,7 +12,7 @@
         /* --- 全局設定 --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
-            background-color: #f8f8f6; /* 極淺的米灰色，比純白更有質感 */
+            background-color: #f8f8f6;
             color: #000000; 
             font-family: 'Inter', sans-serif; 
             overflow: hidden; 
@@ -40,35 +40,39 @@
             top: 0; left: 0;
             width: 100%; height: 100%;
             cursor: grab;
+            /* 關鍵：初始隱藏，等 JS 計算完比例後再顯示 */
+            opacity: 0; 
+            transition: opacity 1s ease-out;
         }
+        #gallery-canvas.loaded { opacity: 1; } /* JS 控制顯示 */
         #gallery-canvas.grabbing { cursor: grabbing; }
 
         /* --- 圖片樣式 --- */
         .gallery-img-container {
             position: absolute;
-            /* 預設位置：螢幕正中央 (這樣JS載入前不會亂跑) */
             top: 0; left: 0; 
-            
-            /* 動畫設定：讓位移、旋轉、寬高變化都很滑順 */
-            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), width 0.8s ease, height 0.8s ease;
-            
+            /* 動畫設定 */
+            transition: transform 1s cubic-bezier(0.25, 0.8, 0.25, 1), width 1s ease, height 1s ease;
             transform-origin: center center;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08); /* 輕微陰影 */
-            background: #ddd; /* 圖片載入前的佔位色 */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            background: #e0e0e0; /* 載入佔位色 */
         }
         
         .gallery-img-container img {
-            width: 100%; height: 100%; object-fit: cover;
+            width: 100%; height: 100%; 
+            /* 關鍵修改：改用 contain 確保不裁切，或者在容器尺寸計算精準後用 cover 也可以 */
+            /* 由於我們現在會精準計算容器比例，這裡用 cover 效果更好，不會有留白邊 */
+            object-fit: cover;
             display: block;
             pointer-events: none; 
         }
 
-        /* Hover: 只有在 Random 模式下才會有明顯浮起效果 (由JS控制 class) */
+        /* Hover 效果 (僅 Random 模式) */
         .gallery-img-container.random-hover:hover {
-            z-index: 999 !important; /* 強制浮到最上層 */
-            transform: scale(1.05) !important; /* 微微放大，這裡用 !important 覆蓋 inline style */
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            z-index: 9999 !important;
+            transform: scale(1.08) !important;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            transition: all 0.3s ease-out; /* Hover 反應快一點 */
         }
 
         /* --- 底部控制列 --- */
@@ -81,39 +85,17 @@
             padding: 12px 30px;
             border-radius: 50px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            border: 1px solid rgba(0,0,0,0.05);
         }
-
         .mode-btn {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            cursor: pointer;
-            color: #999;
-            transition: color 0.3s;
-            font-weight: 500;
+            font-family: 'Inter', sans-serif; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px; cursor: pointer; color: #999; transition: color 0.3s; font-weight: 500;
         }
         .mode-btn.active { color: #000; font-weight: 700; }
-        
         .toggle-track {
-            width: 44px; height: 24px;
-            background: #e0e0e0;
-            border-radius: 20px;
-            position: relative;
-            cursor: pointer;
-            transition: background 0.3s;
+            width: 44px; height: 24px; background: #e0e0e0; border-radius: 20px; position: relative; cursor: pointer; transition: background 0.3s;
         }
         .toggle-thumb {
-            width: 18px; height: 18px;
-            background: #fff;
-            border-radius: 50%;
-            position: absolute;
-            top: 3px; left: 3px;
-            transition: left 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            width: 18px; height: 18px; background: #fff; border-radius: 50%; position: absolute; top: 3px; left: 3px; transition: left 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
-        /* Linear 狀態 */
         .toggle-track.linear-mode { background: #000; }
         .toggle-track.linear-mode .toggle-thumb { left: 23px; }
 
@@ -133,20 +115,32 @@
     </header>
 
     <div id="gallery-canvas">
-        <div class="gallery-img-container" data-type="portrait"><img src="images/split-1.jpg"></div>
-        <div class="gallery-img-container" data-type="landscape"><img src="images/split-2.jpg"></div>
-        <div class="gallery-img-container" data-type="portrait"><img src="images/work3.jpg"></div>
-        <div class="gallery-img-container" data-type="landscape"><img src="images/work49.jpg"></div>
-        <div class="gallery-img-container" data-type="portrait"><img src="images/work60.jpg"></div>
-        <div class="gallery-img-container" data-type="landscape"><img src="images/p5.jpg"></div>
-        <div class="gallery-img-container" data-type="portrait"><img src="images/split-3.jpg"></div>
-        <div class="gallery-img-container" data-type="landscape"><img src="images/split-4.jpg"></div>
-        <div class="gallery-img-container" data-type="portrait"><img src="images/work50.jpg"></div>
-        <div class="gallery-img-container" data-type="landscape"><img src="images/work55.jpg"></div>
-        <div class="gallery-img-container" data-type="portrait"><img src="images/p2.jpg"></div>
-        <div class="gallery-img-container" data-type="landscape"><img src="images/work35.jpg"></div>
-        <div class="gallery-img-container" data-type="portrait"><img src="images/work14.jpg"></div>
-        <div class="gallery-img-container" data-type="landscape"><img src="images/work36.jpg"></div>
+        <div class="gallery-img-container"><img src="images/split-1.jpg"></div>
+        <div class="gallery-img-container"><img src="images/split-2.jpg"></div>
+        <div class="gallery-img-container"><img src="images/split-3.jpg"></div>
+        <div class="gallery-img-container"><img src="images/split-4.jpg"></div>
+        <div class="gallery-img-container"><img src="images/work3.jpg"></div>
+        <div class="gallery-img-container"><img src="images/work49.jpg"></div>
+        <div class="gallery-img-container"><img src="images/work60.jpg"></div>
+        <div class="gallery-img-container"><img src="images/work50.jpg"></div>
+        <div class="gallery-img-container"><img src="images/work55.jpg"></div>
+        <div class="gallery-img-container"><img src="images/work35.jpg"></div>
+        <div class="gallery-img-container"><img src="images/work14.jpg"></div>
+        <div class="gallery-img-container"><img src="images/work36.jpg"></div>
+        <div class="gallery-img-container"><img src="images/p5.jpg"></div>
+        <div class="gallery-img-container"><img src="images/p2.jpg"></div>
+        <div class="gallery-img-container"><img src="images/work11.jpg"></div>
+        <div class="gallery-img-container"><img src="images/work12.jpg"></div>
+        <div class="gallery-img-container"><img src="images/work13.jpg"></div>
+        <div class="gallery-img-container"><img src="images/work33.jpg"></div>
+        <div class="gallery-img-container"><img src="images/work38.jpg"></div>
+        <div class="gallery-img-container"><img src="images/work39.jpg"></div>
+        <div class="gallery-img-container"><img src="images/work52.jpg"></div>
+        <div class="gallery-img-container"><img src="images/work53.jpg"></div>
+        <div class="gallery-img-container"><img src="images/work54.jpg"></div>
+        <div class="gallery-img-container"><img src="images/work65.jpg"></div>
+        <div class="gallery-img-container"><img src="images/work72.jpg"></div>
+        <div class="gallery-img-container"><img src="images/work74.jpg"></div>
     </div>
 
     <div class="controls">
@@ -159,166 +153,151 @@
 
     <script>
         const canvas = document.getElementById('gallery-canvas');
-        const items = document.querySelectorAll('.gallery-img-container');
+        // 將 NodeList 轉為 Array 以便使用更多陣列方法
+        const items = Array.from(document.querySelectorAll('.gallery-img-container'));
         const toggle = document.getElementById('mode-toggle');
         const btnRandom = document.getElementById('btn-random');
         const btnLinear = document.getElementById('btn-linear');
 
         let isLinear = false;
-        
-        // 拖曳變數
         let isDragging = false;
         let startX;
         let currentX = 0; 
         let dragX = 0;    
 
-        // --- 核心計算：Random 佈局 (修正版：更平均、不靠邊) ---
+        // ==========================================
+        // ★ 關鍵新功能：圖片預載入與比例計算 ★
+        // ==========================================
+        let imagesLoadedCount = 0;
+        const totalImages = items.length;
+
+        // 遍歷所有項目，等待圖片載入
+        items.forEach(item => {
+            const img = item.querySelector('img');
+            
+            // 定義載入完成後的動作
+            const imageLoaded = () => {
+                // 計算原始比例 (寬 / 高)
+                const ratio = img.naturalWidth / img.naturalHeight;
+                // 將比例存在 dataset 中供後續使用
+                item.dataset.ratio = ratio;
+
+                imagesLoadedCount++;
+                // 如果全部都載入完成了
+                if (imagesLoadedCount === totalImages) {
+                    // 開始佈局
+                    setRandomLayout();
+                    // 淡入顯示畫布
+                    canvas.classList.add('loaded');
+                }
+            };
+
+            if (img.complete) {
+                // 如果圖片已經在快取中，直接執行
+                imageLoaded();
+            } else {
+                // 否則等待 onload 事件
+                img.onload = imageLoaded;
+            }
+        });
+
+
+        // --- Random 佈局計算 (使用動態比例) ---
         function setRandomLayout() {
             const vw = window.innerWidth;
             const vh = window.innerHeight;
 
             items.forEach((item, index) => {
-                // 1. 啟用 Hover 放大效果
                 item.classList.add('random-hover');
 
-                // 2. 隨機大小 (稍微縮小一點，避免太擠)
-                const width = Math.floor(Math.random() * (300 - 180) + 180); 
-                const height = item.dataset.type === 'portrait' ? width * 1.35 : width * 0.7;
+                // 1. 隨機決定高度 (在 200px 到 450px 之間)
+                const height = Math.floor(Math.random() * (450 - 200) + 200);
+                // 2. 根據原始比例算出對應寬度 (重點!)
+                const ratio = parseFloat(item.dataset.ratio);
+                const width = height * ratio;
 
-                // 3. 隨機位置 (限制範圍：螢幕寬度的 10%~80%，高度的 10%~70%)
-                // 這樣就不會太靠下面，也不會太靠邊邊
-                const minX = vw * 0.05;
-                const maxX = vw * 0.75; // 留出右邊空間
-                const minY = vh * 0.1;  // 避開 Header
-                const maxY = vh * 0.6;  // 避開底部 Controls
+                // 3. 隨機位置 (保持在安全範圍內)
+                const minX = vw * 0.02;
+                const maxX = vw * 0.7; 
+                const minY = vh * 0.05;  
+                const maxY = vh * 0.55;  
 
                 const x = Math.random() * (maxX - minX) + minX;
                 const y = Math.random() * (maxY - minY) + minY;
-                
-                // 4. 隨機旋轉 (讓散落感更強)
-                const rot = Math.random() * 20 - 10; // -10度 到 10度
+                const rot = Math.random() * 30 - 15; // 加大旋轉角度
 
-                // 5. 隨機層級
-                const z = Math.floor(Math.random() * 20);
+                // 4. 隨機層級，但保留原始順序的權重，減少完全遮擋
+                const z = index + Math.floor(Math.random() * 10);
 
-                // 應用樣式
                 item.style.width = `${width}px`;
                 item.style.height = `${height}px`;
-                // 這裡使用 translate3d 啟用硬體加速
                 item.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${rot}deg)`;
                 item.style.zIndex = z;
             });
         }
 
-        // --- 核心計算：Linear 佈局 (修正版：垂直絕對置中) ---
+        // --- Linear 佈局計算 (使用動態比例) ---
         function setLinearLayout() {
             const vh = window.innerHeight;
-            let currentLeft = window.innerWidth * 0.15; // 起始點從左邊 15% 開始
+            let currentLeft = window.innerWidth * 0.1; // 起始左邊距
 
             items.forEach((item, index) => {
-                // 1. 關閉 Hover 放大 (因為要整齊排列)
                 item.classList.remove('random-hover');
 
-                // 2. 統一高度 (這樣才會整齊)
-                const fixedHeight = 350; 
-                // 根據比例算寬度 (直式較窄，橫式較寬)
-                const width = item.dataset.type === 'portrait' ? 250 : 500; 
+                // 1. 固定高度 (例如 400px)
+                const fixedHeight = 400;
+                // 2. 根據原始比例算出對應寬度 (重點!)
+                const ratio = parseFloat(item.dataset.ratio);
+                const width = fixedHeight * ratio;
 
-                // 3. 垂直置中公式：(螢幕高度 - 圖片高度) / 2
+                // 3. 垂直置中
                 const y = (vh - fixedHeight) / 2;
                 const x = currentLeft;
 
-                // 應用樣式
                 item.style.width = `${width}px`;
                 item.style.height = `${fixedHeight}px`;
-                // 這裡加上 dragX 實現拖曳捲動
-                // 旋轉歸零 rotate(0deg)
+                // 加上拖曳位移
                 item.style.transform = `translate3d(${x + currentX + dragX}px, ${y}px, 0) rotate(0deg)`;
-                
-                // 讓所有圖片層級一樣，避免重疊順序怪怪的
-                item.style.zIndex = 10 + index; 
+                // 依序排列層級，確保不會少一張
+                item.style.zIndex = 100 + index; 
 
-                // 累加左邊距 (圖片寬度 + 40px 間距)
-                currentLeft += width + 40; 
+                // 累加左邊距
+                currentLeft += width + 60; // 間距加大到 60px
             });
         }
 
-        // 更新拖曳位置 (只用於 Linear 模式)
+        // 更新拖曳位置
         function updateDragPosition() {
             if (!isLinear) return;
-            // 重新執行 Linear 排列，但帶入新的 dragX
             const vh = window.innerHeight;
-            let currentLeft = window.innerWidth * 0.15;
+            let currentLeft = window.innerWidth * 0.1;
 
             items.forEach((item) => {
-                // 重新抓取剛才設定的寬高 (為了效能，這裡假設寬高不變)
-                // 但為了精準，我們簡單重算一次位置
                 const width = parseFloat(item.style.width);
                 const height = parseFloat(item.style.height);
                 const y = (vh - height) / 2;
                 
                 item.style.transform = `translate3d(${currentLeft + currentX + dragX}px, ${y}px, 0) rotate(0deg)`;
-                currentLeft += width + 40;
+                currentLeft += width + 60;
             });
         }
 
-        // --- 拖曳事件 ---
-        canvas.addEventListener('mousedown', e => {
-            if (!isLinear) return;
-            isDragging = true;
-            startX = e.clientX;
-            canvas.classList.add('grabbing');
-        });
+        // --- 事件監聽 ---
+        canvas.addEventListener('mousedown', e => { if (!isLinear) return; isDragging = true; startX = e.clientX; canvas.classList.add('grabbing'); });
+        window.addEventListener('mouseup', () => { if (!isDragging) return; isDragging = false; currentX += dragX; dragX = 0; canvas.classList.remove('grabbing'); });
+        window.addEventListener('mousemove', e => { if (!isDragging) return; e.preventDefault(); dragX = e.clientX - startX; requestAnimationFrame(updateDragPosition); });
+        canvas.addEventListener('touchstart', e => { if (!isLinear) return; isDragging = true; startX = e.touches[0].clientX; });
+        canvas.addEventListener('touchend', () => { if (!isDragging) return; isDragging = false; currentX += dragX; dragX = 0; });
+        canvas.addEventListener('touchmove', e => { if (!isDragging) return; dragX = e.touches[0].clientX - startX; requestAnimationFrame(updateDragPosition); });
 
-        window.addEventListener('mouseup', () => {
-            if (!isDragging) return;
-            isDragging = false;
-            currentX += dragX; // 儲存位移
-            dragX = 0;
-            canvas.classList.remove('grabbing');
-        });
-
-        window.addEventListener('mousemove', e => {
-            if (!isDragging) return;
-            e.preventDefault();
-            dragX = e.clientX - startX;
-            requestAnimationFrame(updateDragPosition);
-        });
-
-        // 支援觸控 (手機版)
-        canvas.addEventListener('touchstart', e => {
-            if (!isLinear) return;
-            isDragging = true;
-            startX = e.touches[0].clientX;
-        });
-        canvas.addEventListener('touchend', () => {
-            if (!isDragging) return;
-            isDragging = false;
-            currentX += dragX;
-            dragX = 0;
-        });
-        canvas.addEventListener('touchmove', e => {
-            if (!isDragging) return;
-            dragX = e.touches[0].clientX - startX;
-            requestAnimationFrame(updateDragPosition);
-        });
-
-
-        // --- 切換開關 ---
         function switchMode(linear) {
             isLinear = linear;
-            
             if (isLinear) {
-                toggle.classList.add('linear-mode');
-                btnLinear.classList.add('active');
-                btnRandom.classList.remove('active');
-                // 重置拖曳位置回起點
+                toggle.classList.add('linear-mode'); btnLinear.classList.add('active'); btnRandom.classList.remove('active');
                 currentX = 0; dragX = 0;
                 setLinearLayout();
             } else {
-                toggle.classList.remove('linear-mode');
-                btnRandom.classList.add('active');
-                btnLinear.classList.remove('active');
+                toggle.classList.remove('linear-mode'); btnRandom.classList.add('active'); btnLinear.classList.remove('active');
                 setRandomLayout();
             }
         }
@@ -326,16 +305,9 @@
         toggle.addEventListener('click', () => switchMode(!isLinear));
         btnRandom.addEventListener('click', () => switchMode(false));
         btnLinear.addEventListener('click', () => switchMode(true));
+        window.addEventListener('resize', () => { if (isLinear) setLinearLayout(); else setRandomLayout(); });
 
-        window.addEventListener('resize', () => {
-            if (isLinear) setLinearLayout();
-            else setRandomLayout();
-        });
-
-        // 初始執行
-        setTimeout(() => {
-            setRandomLayout();
-        }, 100);
+        // 不再需要 setTimeout，因為我們改用圖片載入偵測了
 
     </script>
 </body>
