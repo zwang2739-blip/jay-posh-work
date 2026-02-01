@@ -30,165 +30,124 @@
             z-index: 100; 
             background: transparent;
             transition: background 0.3s, padding 0.3s;
+            /* 讓 Header 文字永遠反色，確保在影片上看得見 */
             mix-blend-mode: difference; 
             color: #fff;
         }
-        header.scrolled { background: rgba(255,255,255,0.95); padding: 20px 50px; color: #000; mix-blend-mode: normal; }
+        header.scrolled { background: rgba(0,0,0,0.3); backdrop-filter: blur(5px); padding: 20px 50px; mix-blend-mode: normal; color: #fff;}
 
         .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 700; text-transform: uppercase; }
         .menu-btn { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; }
 
-        /* --- Hero Section --- */
+        /* =========================================
+           ★ Hero Section: 影片輪播 + 動態字疊加 ★
+           ========================================= */
         .hero-section {
-            width: 100%; height: 100vh; background-color: #ffffff;
-            position: relative; overflow: hidden;
-            border-bottom: 1px solid #e0e0e0;
+            width: 100%; height: 100vh; 
+            position: relative; 
+            overflow: hidden;
+            background-color: #000; /* 底色設黑，避免影片切換間隙 */
         }
-        .hero-video {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            min-width: 100%; min-height: 100%; width: auto; height: auto;
-            object-fit: cover; mix-blend-mode: multiply; 
+
+        /* 1. 背景輪播影片 (Background Carousel) */
+        .bg-video {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0; /* 預設隱藏 */
+            transition: opacity 1.5s ease-in-out; /* 淡入淡出效果 */
+            z-index: 1; /* 最底層 */
+        }
+        .bg-video.active {
+            opacity: 1; /* 顯示當前影片 */
+        }
+
+        /* 2. 上層 Logo 動態字 (Overlay Logo) */
+        .overlay-logo-container {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            z-index: 10; /* 在背景影片之上 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none; /* 讓滑鼠可以穿透點擊 */
+        }
+
+        .logo-video {
+            width: 70vw; /* Logo 大小 */
+            max-width: 1000px;
+            height: auto;
+            
+            /* ★★★ 混合模式魔法 ★★★ */
+            /* 1. invert(1): 把白底黑字 -> 變成黑底白字 */
+            /* 2. screen: 把黑色背景變透明，只留下白色文字 */
+            filter: invert(1);
+            mix-blend-mode: screen; 
         }
 
         /* =========================================
-           ★ 核心結構修正：更乾淨的圖片 + 密集格線 ★
+           ★ 瑞士網格佈局 (Swiss Grid Layout) ★
            ========================================= */
+        .swiss-section {
+            width: 100%;
+            background-color: #fff;
+            padding-bottom: 150px;
+        }
+
+        .swiss-header {
+            padding: 100px 50px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .swiss-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            margin-bottom: 80px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
         
-        /* 1. 開頭雙圖 (Split Header) */
-        .split-image-section {
+        .swiss-info-row {
+            display: flex; justify-content: space-between; text-align: left;
+            border-top: 1px solid #ddd; padding-top: 20px; margin-bottom: 60px;
+        }
+        .info-col { width: 30%; }
+        .info-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; display: block; }
+        .info-text { font-size: 0.9rem; color: #555; line-height: 1.8; text-align: justify; }
+        .info-list span { display: block; font-size: 0.8rem; color: #888; margin-bottom: 5px; text-transform: uppercase; }
+
+        .swiss-grid {
+            position: relative; width: 100%;
+            background-image: linear-gradient(to right, #f0f0f0 1px, transparent 1px);
+            background-size: 25% 100%; 
+            border-top: 1px solid #f0f0f0;
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            width: 100%;
-            height: 90vh; /* 稍微加高，更有氣勢 */
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: minmax(100px, auto);
         }
-        .split-img-box {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-        .split-img-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* 確保滿版不變形 */
-            transition: transform 1s ease;
-        }
+
+        .grid-item-1 { grid-column: 1; padding: 40px 20px 0 40px; }
+        .grid-item-2 { grid-column: 2; padding: 40px 20px 0 0; margin-top: 50px; }
+        .grid-item-3 { grid-column: 4; padding: 0 40px 0 20px; margin-top: 400px; }
+        .grid-item-4 { grid-column: 2; padding: 0 20px 0 0; margin-top: 150px; margin-bottom: 100px; }
+
+        .swiss-img { width: 100%; filter: grayscale(100%); transition: 1s; display: block; }
+        .swiss-img:hover { filter: grayscale(0%); }
+        .swiss-video { width: 100%; height: auto; display: block; }
+        .caption { font-size: 0.7rem; margin-top: 10px; color: #999; font-family: monospace; }
+
+        /* Split Images */
+        .split-image-section { display: grid; grid-template-columns: 1fr 1fr; width: 100%; height: 90vh; }
+        .split-img-box { width: 100%; height: 100%; overflow: hidden; }
+        .split-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s ease; }
         .split-img-box:hover img { transform: scale(1.03); }
 
-        /* 2. 文字敘述區 */
-        .narrative-section {
-            padding: 120px 50px;
-            text-align: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .narrative-title {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 80px;
-            font-weight: 600;
-            opacity: 0.6;
-        }
-        .narrative-content {
-            display: grid;
-            grid-template-columns: 1fr 1.5fr 1fr; /* 三欄比例 */
-            gap: 40px;
-            text-align: left;
-            font-size: 0.85rem;
-            color: #333;
-            line-height: 1.8;
-            border-top: 1px solid #ddd;
-            padding-top: 30px;
-        }
-        .narrative-list span { display: block; margin-bottom: 8px; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; color: #888; }
-
-        /* ★ 3. 筆記本格線區 (Notebook Grid - 修正版) ★ */
-        .notebook-section {
-            width: 100%;
-            position: relative;
-            
-            /* ★★★ 修正點：密集格線 ★★★ */
-            /* 每 30px 一條線，看起來像真正的設計稿紙 */
-            background-image: linear-gradient(to right, #f2f2f2 1px, transparent 1px);
-            background-size: 30px 100%; 
-            
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-            
-            /* Grid 設定 */
-            display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 分4大區塊 */
-            /* 自動高度，避免內容重疊 */
-            grid-auto-rows: minmax(100px, auto); 
-            
-            /* 增加底部留白，確保蝴蝶影片不會撞到下面 */
-            padding-bottom: 150px; 
-        }
-
-        /* 內容容器 */
-        .nb-item {
-            position: relative;
-            padding: 0 15px; /* 稍微留點左右邊距，不要黏死格線 */
-        }
-        .nb-item img, .nb-item video {
-            width: 100%;
-            display: block;
-            filter: grayscale(100%);
-            transition: 0.6s;
-        }
-        .nb-item:hover img, .nb-item:hover video { filter: grayscale(0%); }
-        
-        .nb-caption {
-            font-family: 'Cormorant Garamond', serif;
-            font-style: italic;
-            font-size: 0.85rem;
-            margin-top: 15px;
-            color: #888;
-        }
-
-        /* --- 錯位佈局設定 (修正重疊問題) --- */
-        
-        /* A. 左一：人物 (grid-a.jpg) */
-        .pos-a {
-            grid-column: 1;
-            grid-row: 1; 
-            margin-top: 100px; /* 起始位置 */
-            padding-left: 30px; /* 靠左一點 */
-        }
-
-        /* B. 左二：風吹影片 (grid-b.mp4) */
-        .pos-b {
-            grid-column: 2;
-            grid-row: 1;
-            margin-top: 50px; /* 比左一高一點 */
-        }
-
-        /* D. 左二下方：藝術字 (grid-d.jpg) */
-        .pos-d {
-            grid-column: 2;
-            grid-row: 2;
-            margin-top: 50px; /* 與上方影片的距離 */
-            width: 80%; /*稍微縮小一點 */
-        }
-
-        /* C. 右側沉底：蝴蝶影片 (grid-c.mp4) */
-        .pos-c {
-            grid-column: 4; /* 最右欄 */
-            grid-row: 2; /* 第二列開始 */
-            margin-top: 150px; /* ★ 往下沉，製造錯落感 */
-            padding-right: 30px;
-            /* 這裡不需要擔心重疊，因為父層 .notebook-section 沒有設死高度 */
-        }
-
-
-        /* 4. 結尾雙圖 (Split Footer) */
-        .split-image-section {
-            /* 樣式同上，確保一致性 */
-        }
-
-        /* --- Gallery Section --- */
-        .grid-section { padding: 150px 60px; background-color: #fff; } /* 增加與上方的距離 */
+        /* Gallery */
+        .grid-section { padding: 150px 60px; background-color: #fff; }
         .project-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 80px; align-items: start; }
         .col-right { margin-top: 250px; } 
         .project-item { margin-bottom: 220px; cursor: pointer; transition: opacity 0.3s; }
@@ -197,7 +156,7 @@
         .project-title { font-size: 0.9rem; font-weight: 600; text-transform: uppercase; }
         .project-id { font-size: 0.8rem; color: #888; font-family: 'Cormorant Garamond', serif; font-style: italic; }
 
-        /* --- Experience Section --- */
+        /* Experience */
         .experience-section { padding: 120px 60px; border-top: 1px solid #000; background: #fff; }
         .exp-header { font-size: 3.5rem; font-family: 'Cormorant Garamond', serif; margin-bottom: 80px; }
         .exp-list { max-width: 900px; margin-left: auto; margin-right: auto; }
@@ -214,17 +173,16 @@
 
         footer { padding: 50px 60px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 0.8rem; text-transform: uppercase; color: #000; border-top: 1px solid #000; background: #fff;}
 
-        /* RWD 手機版 */
+        /* RWD */
         @media (max-width: 768px) {
             header { padding: 20px; }
+            .logo-video { width: 90vw; }
             .split-image-section { grid-template-columns: 1fr; height: auto; }
             .split-img-box { height: 60vh; }
-            
-            .narrative-content { grid-template-columns: 1fr; gap: 30px; }
-            
-            .notebook-section { display: block; background-image: none; padding-bottom: 50px; } /* 手機版取消格線 */
-            .pos-a, .pos-b, .pos-c, .pos-d { grid-column: auto; grid-row: auto; margin: 0; padding: 20px; margin-bottom: 20px; width: 100%; }
-            
+            .swiss-info-row { flex-direction: column; gap: 40px; }
+            .info-col { width: 100%; }
+            .swiss-grid { display: block; background-image: none; }
+            .grid-item-1, .grid-item-2, .grid-item-3, .grid-item-4 { padding: 20px; margin-top: 40px; width: 100%; }
             .grid-section { padding: 80px 20px; }
             .project-grid { grid-template-columns: 1fr; gap: 0; }
             .col-right { margin-top: 0; }
@@ -242,78 +200,60 @@
     </header>
 
     <section class="hero-section">
-        <video class="hero-video" autoplay loop muted playsinline>
-            <source src="images/logo.mp4" type="video/mp4">
-        </video>
+        
+        <div id="hero-carousel">
+            <video id="bg-video-1" class="bg-video active" autoplay muted loop playsinline></video>
+            <video id="bg-video-2" class="bg-video" autoplay muted loop playsinline></video>
+        </div>
+
+        <div class="overlay-logo-container">
+            <video class="logo-video" autoplay loop muted playsinline>
+                <source src="images/logo.mp4" type="video/mp4">
+            </video>
+        </div>
+
     </section>
 
     <section class="split-image-section">
-        <div class="split-img-box">
-            <img src="images/split-1.jpg" alt="Visual 1">
-        </div>
-        <div class="split-img-box">
-            <img src="images/split-2.jpg" alt="Visual 2">
-        </div>
+        <div class="split-img-box"><img src="images/split-1.jpg" alt="Visual 1"></div>
+        <div class="split-img-box"><img src="images/split-2.jpg" alt="Visual 2"></div>
     </section>
 
     <section class="narrative-section">
         <div class="narrative-title">JAY POSH — VISUAL DIRECTOR</div>
         <div class="narrative-content">
-            <div>
+            <div class="narrative-col">
+                <span class="info-label">Vision</span>
                 <p>Sculpting personalized masterpieces that reflect your unique style and personality.</p>
             </div>
-            <div>
-                <p>
-                    Driven by a profound love for art, cinema, and music, I seek inspiration in the diverse narratives of life. I believe that good imagery is not merely a visual presentation, but an artistic language capable of conveying deep emotions and stories.
-                </p>
+            <div class="narrative-col" style="width: 40%;">
+                <span class="info-label">About</span>
+                <p>Driven by a profound love for art, cinema, and music, I seek inspiration in the diverse narratives of life. I believe that good imagery is not merely a visual presentation, but an artistic language capable of conveying deep emotions and stories.</p>
             </div>
-            <div style="text-align: right;">
+            <div class="narrative-col" style="text-align: right;">
+                <span class="info-label">Services</span>
                 <div class="narrative-list">
                     <span>001 Creative Direction</span>
                     <span>002 Photography</span>
                     <span>003 Graphic Design</span>
                     <span>004 Branding</span>
-                    <span>005 Get in Touch</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="notebook-section">
-        
-        <div class="nb-item pos-a">
-            <img src="images/grid-a.jpg" alt="Gallery a">
-            <div class="nb-caption">Gallery — a.</div>
+    <section class="swiss-section">
+        <div class="swiss-grid">
+            <div class="grid-item-1 pos-a"><img src="images/grid-a.jpg" class="swiss-img"><div class="caption">Gallery — a.</div></div>
+            <div class="grid-item-2 pos-b"><video class="swiss-video" autoplay loop muted playsinline><source src="images/grid-b.mp4" type="video/mp4"></video><div class="caption">Motion — b.</div></div>
+            <div class="grid-item-4 pos-d"><img src="images/grid-d.jpg" class="swiss-img"><div class="caption">Typography — d.</div></div>
+            <div class="grid-item-3 pos-c"><video class="swiss-video" autoplay loop muted playsinline><source src="images/grid-c.mp4" type="video/mp4"></video><div class="caption">Visual — c.</div></div>
         </div>
-
-        <div class="nb-item pos-b">
-            <video autoplay loop muted playsinline>
-                <source src="images/grid-b.mp4" type="video/mp4">
-            </video>
-            <div class="nb-caption">Motion — b.</div>
-        </div>
-
-        <div class="nb-item pos-d">
-            <img src="images/grid-d.jpg" alt="Gallery d">
-            <div class="nb-caption">Typography — d.</div>
-        </div>
-
-        <div class="nb-item pos-c">
-            <video autoplay loop muted playsinline>
-                <source src="images/grid-c.mp4" type="video/mp4">
-            </video>
-            <div class="nb-caption">Visual — c.</div>
-        </div>
-
     </section>
 
     <section class="split-image-section">
-        <div class="split-img-box">
-            <img src="images/split-3.jpg" alt="Texture 1">
-        </div>
-        <div class="split-img-box">
-            <img src="images/split-4.jpg" alt="Texture 2">
-        </div>
+        <div class="split-img-box"><img src="images/split-3.jpg"></div>
+        <div class="split-img-box"><img src="images/split-4.jpg"></div>
     </section>
 
     <section class="grid-section">
@@ -389,6 +329,7 @@
     </footer>
 
     <script>
+        // --- 1. 頁面滾動效果 ---
         document.querySelector('.footer-left span').addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
@@ -401,6 +342,43 @@
                 header.classList.remove('scrolled');
             }
         });
+
+        // --- 2. 背景影片輪播邏輯 (JS Video Carousel) ---
+        const videoSources = [
+            'images/hero-1.mp4', 'images/hero-2.mp4', 'images/hero-3.mp4', 'images/hero-4.mp4',
+            'images/hero-5.mp4', 'images/hero-6.mp4', 'images/hero-7.mp4', 'images/hero-8.mp4'
+        ];
+        
+        let currentIdx = 0;
+        const v1 = document.getElementById('bg-video-1');
+        const v2 = document.getElementById('bg-video-2');
+        let activeVideo = v1;
+        let nextVideo = v2;
+
+        // 初始化第一個影片
+        v1.src = videoSources[0];
+
+        function rotateVideo() {
+            const nextIdx = (currentIdx + 1) % videoSources.length;
+            
+            // 預載下一個影片
+            nextVideo.src = videoSources[nextIdx];
+            nextVideo.play();
+
+            // 交換 Active 狀態 (CSS transition 會處理淡入淡出)
+            nextVideo.classList.add('active');
+            activeVideo.classList.remove('active');
+
+            // 更新變數參考
+            const temp = activeVideo;
+            activeVideo = nextVideo;
+            nextVideo = temp;
+            currentIdx = nextIdx;
+        }
+
+        // 每 4 秒切換一次
+        setInterval(rotateVideo, 4000);
+
     </script>
 </body>
 </html>
