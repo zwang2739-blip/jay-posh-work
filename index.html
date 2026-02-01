@@ -30,7 +30,7 @@
             z-index: 100; 
             background: transparent;
             transition: background 0.3s, padding 0.3s;
-            mix-blend-mode: difference; /* 讓文字在任何背景都可見 */
+            mix-blend-mode: difference; 
             color: #fff;
         }
         header.scrolled { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 20px 50px; mix-blend-mode: normal; color: #fff; }
@@ -39,7 +39,7 @@
         .menu-btn { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; }
 
         /* =========================================
-           ★ Hero Section: 修正黑底問題 ★
+           ★ Hero Section: 影片輪播 + 圖片疊加(修正版) ★
            ========================================= */
         .hero-section {
             width: 100%; height: 100vh; 
@@ -54,10 +54,10 @@
             width: 100%; height: 100%;
             object-fit: cover;
             opacity: 0;
-            transition: opacity 2s ease-in-out; /* 放慢淡入淡出更優雅 */
+            transition: opacity 2s ease-in-out;
             z-index: 1;
         }
-        .bg-video.active { opacity: 0.6; } /* 稍微降低亮度，讓上面的字更明顯 */
+        .bg-video.active { opacity: 0.8; }
 
         /* Logo 容器 */
         .overlay-logo-container {
@@ -70,120 +70,59 @@
             pointer-events: none;
         }
 
-        .logo-video {
+        /* ★★★ 修正後的 Logo 圖片樣式 ★★★ */
+        .logo-overlay-img {
             width: 80vw;
-            max-width: 1100px;
+            max-width: 1200px;
             height: auto;
             
-            /* ★★★ 關鍵修正：加強對比度 ★★★ */
-            /* contrast(1.5) 會把不純的黑色變成純黑，確保去背乾淨 */
-            filter: invert(1) contrast(1.5); 
-            mix-blend-mode: screen; /* 黑色變透明，只留白色字 */
+            /* 步驟1：先反轉顏色 (白底黑字 -> 黑底白字)，並加強對比 */
+            filter: invert(1) contrast(2);
+            
+            /* 步驟2：再將黑色背景變透明，只留白色文字 */
+            mix-blend-mode: screen; 
         }
 
         /* =========================================
-           ★ Narrative Section: 修正排版跑位 ★
+           ★ Narrative Section (自介) ★
            ========================================= */
-        
         .narrative-section {
             padding: 120px 60px;
             max-width: 1400px;
             margin: 0 auto;
             border-bottom: 1px solid #eee;
         }
-        
-        /* 最上方的標題 */
         .narrative-main-title {
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 600;
-            margin-bottom: 80px;
-            color: #000;
+            font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin-bottom: 80px; color: #000;
         }
-
-        /* 三欄排版容器 (改用 Flex 確保比例固定) */
         .narrative-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            width: 100%;
-            gap: 60px; /* 欄位間距 */
+            display: flex; justify-content: space-between; align-items: flex-start; width: 100%; gap: 60px;
         }
-
-        /* 左欄：Vision */
-        .narrative-col-left {
-            width: 25%; /* 固定寬度 */
-        }
-
-        /* 中欄：About (最寬) */
-        .narrative-col-mid {
-            width: 45%; /* 固定寬度 */
-        }
-
-        /* 右欄：Services */
-        .narrative-col-right {
-            width: 25%; /* 固定寬度 */
-            text-align: right; /* 文字靠右對齊 */
-        }
-
-        /* 欄位內的小標題 */
+        .narrative-col-left { width: 25%; }
+        .narrative-col-mid { width: 45%; }
+        .narrative-col-right { width: 25%; text-align: right; }
         .info-label {
-            display: block;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 20px;
-            color: #000;
-            border-bottom: 1px solid #000; /* 裝飾線 */
-            padding-bottom: 10px;
-            width: fit-content;
+            display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px; color: #000; border-bottom: 1px solid #000; padding-bottom: 10px; width: fit-content;
         }
-        .narrative-col-right .info-label {
-            margin-left: auto; /* 靠右對齊時的線條處理 */
-        }
-
-        /* 內文樣式 */
-        .info-text {
-            font-size: 0.95rem;
-            color: #444;
-            line-height: 1.7;
-            text-align: justify; /* 左右對齊 */
-        }
-
-        /* 列表樣式 */
-        .narrative-list span {
-            display: block;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            color: #555;
-        }
-
+        .narrative-col-right .info-label { margin-left: auto; }
+        .info-text { font-size: 0.95rem; color: #444; line-height: 1.7; text-align: justify; }
+        .narrative-list span { display: block; margin-bottom: 8px; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; color: #555; }
 
         /* =========================================
-           ★ 其他區塊維持原樣 ★
+           ★ 其他區塊 (保持不變) ★
            ========================================= */
-
-        /* Split Images */
         .split-image-section { display: grid; grid-template-columns: 1fr 1fr; width: 100%; height: 90vh; }
         .split-img-box { width: 100%; height: 100%; overflow: hidden; }
         .split-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s ease; }
         .split-img-box:hover img { transform: scale(1.03); }
 
-        /* Notebook Grid */
         .swiss-section { width: 100%; background-color: #fff; padding-bottom: 150px; }
         .swiss-grid {
             position: relative; width: 100%;
             background-image: linear-gradient(to right, #f2f2f2 1px, transparent 1px);
             background-size: 30px 100%; 
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-auto-rows: minmax(100px, auto);
+            border-top: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0;
+            display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: minmax(100px, auto);
             padding-bottom: 150px; 
         }
         .nb-item { position: relative; padding: 0 15px; }
@@ -195,7 +134,6 @@
         .pos-d { grid-column: 2; grid-row: 2; margin-top: 50px; width: 80%; }
         .pos-c { grid-column: 4; grid-row: 2; margin-top: 150px; padding-right: 30px; }
 
-        /* Gallery */
         .grid-section { padding: 150px 60px; background-color: #fff; }
         .project-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 80px; align-items: start; }
         .col-right { margin-top: 250px; } 
@@ -205,7 +143,6 @@
         .project-title { font-size: 0.9rem; font-weight: 600; text-transform: uppercase; }
         .project-id { font-size: 0.8rem; color: #888; font-family: 'Cormorant Garamond', serif; font-style: italic; }
 
-        /* Experience */
         .experience-section { padding: 120px 60px; border-top: 1px solid #000; background: #fff; }
         .exp-header { font-size: 3.5rem; font-family: 'Cormorant Garamond', serif; margin-bottom: 80px; }
         .exp-list { max-width: 900px; margin-left: auto; margin-right: auto; }
@@ -225,15 +162,12 @@
         /* RWD */
         @media (max-width: 768px) {
             header { padding: 20px; }
-            .logo-video { width: 90vw; }
+            .logo-overlay-img { width: 90vw; } 
             .split-image-section { grid-template-columns: 1fr; height: auto; }
             .split-img-box { height: 60vh; }
-            
-            /* 手機版自介排版修正 */
             .narrative-content { flex-direction: column; gap: 40px; }
             .narrative-col-left, .narrative-col-mid, .narrative-col-right { width: 100%; text-align: left; }
-            .narrative-col-right .info-label { margin-left: 0; } /* 手機版標題靠左 */
-            
+            .narrative-col-right .info-label { margin-left: 0; }
             .swiss-grid { display: block; background-image: none; padding-bottom: 50px; }
             .pos-a, .pos-b, .pos-c, .pos-d { grid-column: auto; grid-row: auto; margin: 0; padding: 20px; margin-bottom: 20px; width: 100%; }
             .grid-section { padding: 80px 20px; }
@@ -258,9 +192,7 @@
             <video id="bg-video-2" class="bg-video" autoplay muted loop playsinline></video>
         </div>
         <div class="overlay-logo-container">
-            <video class="logo-video" autoplay loop muted playsinline>
-                <source src="images/logo.mp4" type="video/mp4">
-            </video>
+            <img src="images/hero-logo.jpg" alt="JAY POSH" class="logo-overlay-img">
         </div>
     </section>
 
@@ -271,7 +203,6 @@
 
     <section class="narrative-section">
         <div class="narrative-main-title">JAY POSH — VISUAL DIRECTOR</div>
-        
         <div class="narrative-content">
             <div class="narrative-col-left">
                 <span class="info-label">Vision</span>
@@ -395,10 +326,11 @@
             }
         });
 
-        // 影片輪播邏輯
+        // 影片輪播邏輯 (11部影片)
         const videoSources = [
             'images/hero-1.mp4', 'images/hero-2.mp4', 'images/hero-3.mp4', 'images/hero-4.mp4',
-            'images/hero-5.mp4', 'images/hero-6.mp4', 'images/hero-7.mp4', 'images/hero-8.mp4'
+            'images/hero-5.mp4', 'images/hero-6.mp4', 'images/hero-7.mp4', 'images/hero-8.mp4',
+            'images/hero-9.mp4', 'images/hero-10.mp4', 'images/hero-11.mp4'
         ];
         
         let currentIdx = 0;
