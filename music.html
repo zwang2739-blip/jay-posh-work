@@ -12,7 +12,7 @@
         /* --- 全局設定 --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
-            background-color: #f4f4f0; /* 米灰色背景 */
+            background-color: #f4f4f0; 
             color: #000000; 
             font-family: 'Inter', sans-serif; 
             overflow-x: hidden; 
@@ -21,253 +21,116 @@
         a { text-decoration: none; color: inherit; cursor: pointer; }
         img { display: block; width: 100%; height: auto; }
 
-        /* --- Header (與其他頁面一致) --- */
+        /* --- Header --- */
         header {
             position: fixed; top: 0; left: 0; width: 100%; 
-            display: flex; flex-direction: column; align-items: center;
             padding: 30px 50px;
             z-index: 100; 
             background: transparent;
-            mix-blend-mode: difference; 
-            color: #fff;
+            /* 讓 Header 在淺色背景上顯示黑色文字 */
+            color: #000; 
         }
-        header.scrolled { 
-            background: rgba(255,255,255,0.95);
-            padding: 20px 50px; 
-            mix-blend-mode: normal;
-            color: #000;
-        }
-        .header-top { width: 100%; display: flex; justify-content: space-between; align-items: center; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
         .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
-        .main-nav { display: flex; gap: 35px; }
-        .nav-link-main { font-size: 0.85rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; position: relative; }
-        .nav-link-main::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 1px; background: currentColor; transition: width 0.3s; }
-        .nav-link-main:hover::after { width: 100%; }
-        /* Active 狀態 */
-        .nav-link-main.active::after { width: 100%; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-link { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #000; position: relative; }
+        .nav-link.active::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 1px; background: currentColor; }
 
         /* =========================================
-           ★ Music Player Section (黑膠播放器) ★
+           ★ Music Player UI ★
            ========================================= */
         .music-section {
-            width: 100%;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            width: 100%; min-height: 100vh;
+            display: flex; justify-content: center; align-items: center;
             padding: 100px 50px;
-            position: relative;
         }
 
-        /* 播放器容器 */
         .player-container {
-            display: flex;
-            align-items: center;
-            gap: 100px; /* 封面與歌單的距離 */
-            max-width: 1200px;
-            width: 100%;
+            display: flex; align-items: center; gap: 100px;
+            max-width: 1200px; width: 100%;
         }
 
-        /* --- 左側：黑膠唱片區 --- */
+        /* 左側：黑膠區 */
         .vinyl-wrapper {
-            position: relative;
-            width: 450px;
-            height: 450px;
-            flex-shrink: 0;
-            cursor: pointer;
+            position: relative; width: 450px; height: 450px; flex-shrink: 0; cursor: pointer;
         }
-
-        /* 專輯封面 (Sleeve) */
         .album-cover {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            z-index: 10; /* 在黑膠上面 */
-            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-            transition: transform 0.5s ease;
-            background-color: #fff;
+            position: relative; width: 100%; height: 100%; z-index: 10;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            background-color: #eee; /* 預設背景，防破圖 */
         }
-        .album-cover img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .album-cover img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* 黑膠唱片 (Vinyl Record) - CSS 畫出來的！ */
         .vinyl-record {
-            position: absolute;
-            top: 2%; 
-            right: 2%; /* 初始藏在封面後面 */
-            width: 96%;
-            height: 96%;
+            position: absolute; top: 2%; right: 2%; width: 96%; height: 96%;
             border-radius: 50%;
-            /* 黑膠紋理漸層 */
-            background: 
-                radial-gradient(circle, #111 10%, transparent 10%),
-                radial-gradient(circle, #111 10%, #333 40%, #000 45%, #222 50%, #000 55%, #333 60%, #111 70%, #000 100%);
-            z-index: 1; /* 在封面下面 */
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background: radial-gradient(circle, #111 10%, transparent 10%), radial-gradient(circle, #111 10%, #333 40%, #000 45%, #222 50%, #000 55%, #333 60%, #111 70%, #000 100%);
+            z-index: 1; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; justify-content: center; align-items: center;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
-
-        /* 黑膠中間的貼紙 */
         .vinyl-label {
-            width: 35%;
-            height: 35%;
-            background-color: #ff4d4d; /* 貼紙顏色 */
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 0.6rem;
-            color: #fff;
-            text-align: center;
-            border: 2px solid #111;
-        }
-
-        /* ★ 動畫效果：滑出 + 旋轉 ★ */
-        
-        /* 狀態 1: Playing (滑出) */
-        .vinyl-wrapper.playing .vinyl-record {
-            transform: translateX(50%); /* 向右滑出一半 */
-        }
-        
-        /* 狀態 2: Spinning (旋轉) */
-        .vinyl-wrapper.playing .vinyl-record {
-            animation: spin 3s linear infinite; /* 無限旋轉 */
-        }
-        /* 為了讓滑出動畫和旋轉動畫不衝突，我們需要一個內部容器來負責旋轉 */
-        /* 修正：CSS transform 衝突問題，改為用 JS 控制 */
-
-        @keyframes spin {
-            0% { transform: translateX(50%) rotate(0deg); }
-            100% { transform: translateX(50%) rotate(360deg); }
-        }
-
-
-        /* --- 右側：播放清單與資訊 --- */
-        .player-info {
-            flex: 1;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .small-tag {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #888;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        .track-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 4rem;
-            line-height: 1;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .track-artist {
-            font-size: 1.2rem;
-            color: #555;
-            margin-bottom: 40px;
-            display: block;
-        }
-
-        /* 播放控制列 (模擬參考圖的橘色條) */
-        .control-bar {
-            width: 100%;
-            height: 60px;
-            background-color: #000; /* 改成黑色比較搭你的網站 */
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            color: #fff;
-            margin-top: 50px;
-        }
-        
-        .play-btn {
-            width: 40px; height: 40px;
-            background: #fff;
-            border-radius: 50%;
-            color: #000;
+            width: 35%; height: 35%; background-color: #ff4d4d; border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
-            cursor: pointer;
-            transition: transform 0.2s;
+            font-size: 0.6rem; color: #fff; border: 2px solid #111;
+        }
+
+        /* 動畫狀態 */
+        .vinyl-wrapper.playing .vinyl-record { transform: translateX(50%); }
+        .vinyl-wrapper.playing .vinyl-record .vinyl-label { animation: spin 3s linear infinite; }
+        
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* 右側：資訊區 */
+        .player-info { flex: 1; font-family: 'Inter', sans-serif; }
+        .small-tag { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: #888; margin-bottom: 20px; display: block; }
+        .track-title { font-family: 'Cormorant Garamond', serif; font-size: 4rem; line-height: 1; margin-bottom: 10px; text-transform: uppercase; }
+        .track-artist { font-size: 1.2rem; color: #555; margin-bottom: 40px; display: block; }
+
+        /* 播放控制條 */
+        .control-bar {
+            width: 100%; height: 60px; background-color: #000;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 20px; color: #fff; margin-top: 50px;
+        }
+        .play-btn {
+            width: 40px; height: 40px; background: #fff; border-radius: 50%; color: #000;
+            display: flex; justify-content: center; align-items: center; cursor: pointer; transition: transform 0.2s;
         }
         .play-btn:hover { transform: scale(1.1); }
         
-        .progress-line {
-            flex: 1;
-            height: 1px;
-            background: rgba(255,255,255,0.3);
-            margin: 0 20px;
-            position: relative;
-        }
-        .progress-line::after {
-            content: '';
-            position: absolute; top: -2px; left: 0;
-            width: 30%; /* 假進度 */
-            height: 5px;
-            background: #fff;
-        }
-
-        .spotify-link {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 1px solid #fff;
-            padding-bottom: 2px;
-        }
+        .progress-line { flex: 1; height: 1px; background: rgba(255,255,255,0.3); margin: 0 20px; position: relative; }
+        .progress-line::after { content: ''; position: absolute; top: -2px; left: 0; width: 0%; height: 5px; background: #fff; transition: width 0.5s; }
+        
+        /* 連結樣式 */
+        .spotify-link { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #fff; padding-bottom: 2px; cursor: pointer; }
 
         /* 歌單列表 */
-        .playlist {
-            margin-top: 60px;
-            border-top: 1px solid #ddd;
-        }
+        .playlist { margin-top: 60px; border-top: 1px solid #ddd; }
         .playlist-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 15px 0;
-            border-bottom: 1px solid #eee;
-            cursor: pointer;
-            transition: padding-left 0.3s, color 0.3s;
-            font-size: 0.9rem;
-            color: #666;
+            display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #eee;
+            cursor: pointer; transition: padding-left 0.3s, color 0.3s; font-size: 0.9rem; color: #666;
         }
-        .playlist-item:hover, .playlist-item.active {
-            padding-left: 10px;
-            color: #000;
-            font-weight: 600;
-            border-bottom: 1px solid #000;
-        }
+        .playlist-item:hover, .playlist-item.active { padding-left: 10px; color: #000; font-weight: 600; border-bottom: 1px solid #000; }
 
-        /* RWD */
         @media (max-width: 768px) {
             header { padding: 20px; }
             .player-container { flex-direction: column; gap: 50px; }
             .vinyl-wrapper { width: 300px; height: 300px; }
             .track-title { font-size: 2.5rem; }
-            .control-bar { margin-top: 30px; }
         }
     </style>
 </head>
 <body>
 
-    <header id="main-header">
-        <div class="header-top">
+    <header>
+        <div class="header-content">
             <a href="index.html" class="logo">JAY POSH</a>
-            <nav class="main-nav">
-                <a href="index.html#narrative" class="nav-link-main">ABOUT</a>
-                <a href="work.html" class="nav-link-main">WORK</a>
-                <a href="music.html" class="nav-link-main active">MUSIC</a>
-                <a href="index.html#experience" class="nav-link-main">EXPERIENCE</a>
-                <a href="#" class="nav-link-main">CONTACT</a>
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="work.html" class="nav-link">Work</a>
+                <a href="music.html" class="nav-link active">Music</a>
+                <a href="index.html#experience" class="nav-link">Info</a>
             </nav>
         </div>
     </header>
@@ -276,9 +139,7 @@
         <div class="player-container">
             
             <div class="vinyl-wrapper" id="vinyl-wrapper">
-                <div class="vinyl-record">
-                    <div class="vinyl-label">JP</div>
-                </div>
+                <div class="vinyl-record"><div class="vinyl-label">JP</div></div>
                 <div class="album-cover">
                     <img src="images/work60.jpg" id="current-cover" alt="Album Cover">
                 </div>
@@ -291,8 +152,8 @@
 
                 <div class="control-bar">
                     <div class="play-btn" id="play-btn">▶</div>
-                    <div class="progress-line"></div>
-                    <a href="https://open.spotify.com/" target="_blank" class="spotify-link" id="spotify-link">Listen on Spotify ↗</a>
+                    <div class="progress-line" id="progress-bar"></div>
+                    <a href="https://open.spotify.com/track/1eyzqe2QqGZUmfcPZtrIyt" target="_blank" class="spotify-link" id="spotify-link">Listen on Spotify ↗</a>
                 </div>
 
                 <div class="playlist">
@@ -318,7 +179,7 @@
                          data-img="images/work50.jpg" 
                          data-title="Gosh" 
                          data-artist="Jamie xx"
-                         data-link="https://open.spotify.com/track/7w3P1G4J2225a1Q7h27361">
+                         data-link="https://open.spotify.com/track/7JH9r1977D2f8Qx7Q67654">
                         <span>03. Gosh</span>
                         <span>04:51</span>
                     </div>
@@ -339,15 +200,15 @@
 
     <footer>
         <div class="footer-left"><span>Back to Top</span></div>
-        <div class="footer-right"><span>&copy; 2026 JAY POSH</span></div>
+        <div class="footer-right"><span>© 2026 JAY POSH</span></div>
     </footer>
 
     <script>
         const vinylWrapper = document.getElementById('vinyl-wrapper');
         const playBtn = document.getElementById('play-btn');
         const playlistItems = document.querySelectorAll('.playlist-item');
+        const progressBar = document.getElementById('progress-bar');
         
-        // 顯示元件
         const coverImg = document.getElementById('current-cover');
         const titleEl = document.getElementById('track-title');
         const artistEl = document.getElementById('track-artist');
@@ -355,35 +216,41 @@
 
         let isPlaying = false;
 
-        // 播放/暫停功能
+        // 播放按鈕邏輯：開啟 Spotify
         playBtn.addEventListener('click', () => {
+            // 視覺上切換狀態
             isPlaying = !isPlaying;
             if (isPlaying) {
                 vinylWrapper.classList.add('playing');
-                playBtn.textContent = 'II'; // 暫停圖示
+                playBtn.textContent = 'II';
+                // 模擬進度條跑動
+                progressBar.style.width = "100%"; 
+                // ★ 關鍵：直接打開連結
+                window.open(spotifyLink.href, '_blank');
             } else {
                 vinylWrapper.classList.remove('playing');
-                playBtn.textContent = '▶'; // 播放圖示
+                playBtn.textContent = '▶';
+                progressBar.style.width = "0%";
             }
         });
 
-        // 點擊黑膠也可以播放
+        // 點擊黑膠也可觸發
         vinylWrapper.addEventListener('click', () => playBtn.click());
 
-        // 切換歌單功能
+        // 切換歌單
         playlistItems.forEach(item => {
             item.addEventListener('click', () => {
-                // 1. 更新 Active 狀態
+                // UI 更新
                 document.querySelector('.playlist-item.active').classList.remove('active');
                 item.classList.add('active');
 
-                // 2. 更新內容
+                // 抓取資料
                 const newImg = item.dataset.img;
                 const newTitle = item.dataset.title;
                 const newArtist = item.dataset.artist;
                 const newLink = item.dataset.link;
 
-                // 圖片切換動畫：先透明 -> 換圖 -> 顯示
+                // 換圖動畫
                 coverImg.style.opacity = 0;
                 
                 setTimeout(() => {
@@ -394,22 +261,19 @@
                     coverImg.style.opacity = 1;
                 }, 300);
 
-                // 如果還沒播放，自動開始播放
-                if (!isPlaying) {
-                    playBtn.click();
-                }
+                // 切換歌後重置播放狀態
+                isPlaying = false;
+                vinylWrapper.classList.remove('playing');
+                playBtn.textContent = '▶';
+                progressBar.style.width = "0%";
             });
         });
-
-        // Header Scroll
-        window.addEventListener('scroll', () => {
-            const header = document.getElementById('main-header');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
+        
+        // 修正：確保第一張圖載入正確
+        window.onload = function() {
+            // 確保預設圖片路徑正確 (可根據你實際喜歡的圖修改)
+            // coverImg.src = "images/work60.jpg"; 
+        };
     </script>
 </body>
 </html>
