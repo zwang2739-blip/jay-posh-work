@@ -36,7 +36,7 @@
         .nav-link.active::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 1px; background: currentColor; }
 
         /* =========================================
-           ★ Music Player UI (麵包字歸位版) ★
+           ★ Music Player UI (Logo 放大版) ★
            ========================================= */
         .music-section {
             width: 100%; min-height: 100vh;
@@ -46,7 +46,7 @@
 
         .player-container {
             display: flex; align-items: flex-start;
-            gap: 200px; /* 稍微縮小間距，讓兩邊緊密一點 */
+            gap: 200px; 
             max-width: 1400px; 
             width: 100%;
             position: relative;
@@ -79,10 +79,10 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
-        /* 黑膠中間的標籤 (還原成簡單樣式) */
+        /* 黑膠中間的標籤 */
         .vinyl-label {
             width: 35%; height: 35%; 
-            background-color: #ff4d4d; /* 你可以改這個顏色，例如 #e5e5e5 */
+            background-color: #ff4d4d; 
             border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
             border: 2px solid #111;
@@ -95,17 +95,17 @@
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
 
-        /* --- 右側：資訊區 (重點修改區) --- */
+        /* --- 右側：資訊區 --- */
         .player-info { flex: 1; font-family: 'Inter', sans-serif; z-index: 5; }
 
-        /* ★★★ 麵包字 Logo 樣式 ★★★ */
+        /* ★★★ 麵包字 Logo 樣式 (修改處) ★★★ */
         .bread-logo {
-            width: 280px; /* 控制麵包字的大小 */
+            /* 改為 100% 寬度，與下方播放條切齊 */
+            width: 100%; 
             height: auto;
             display: block;
-            margin-bottom: 30px; /* 與下方歌名的距離 */
-            /* 讓它稍微向左對齊一點，因為字體有透視感 */
-            margin-left: -5px; 
+            margin-bottom: 30px; 
+            /* 移除了原本的 margin-left: -5px */
         }
 
         .track-title { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; line-height: 1; margin-bottom: 10px; text-transform: uppercase; }
@@ -159,9 +159,6 @@
             .track-title { font-size: 2.5rem; }
             .playlist-container { max-height: 400px; }
             .vinyl-wrapper.playing .vinyl-record { transform: translateX(45%); }
-            
-            /* 手機版 logo 大小調整 */
-            .bread-logo { width: 220px; margin-bottom: 20px; }
         }
     </style>
 </head>
