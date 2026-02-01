@@ -39,7 +39,7 @@
         .menu-btn { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; }
 
         /* =========================================
-           ★ Hero Section: 影片輪播 + 圖片疊加(修正版) ★
+           ★ Hero Section: 最終完美版 (PNG 直出) ★
            ========================================= */
         .hero-section {
             width: 100%; height: 100vh; 
@@ -57,7 +57,7 @@
             transition: opacity 2s ease-in-out;
             z-index: 1;
         }
-        .bg-video.active { opacity: 0.8; }
+        .bg-video.active { opacity: 0.7; } /* 稍微壓暗背景，讓白字更凸顯 */
 
         /* Logo 容器 */
         .overlay-logo-container {
@@ -70,21 +70,17 @@
             pointer-events: none;
         }
 
-        /* ★★★ 修正後的 Logo 圖片樣式 ★★★ */
+        /* ★★★ 最終 Logo 樣式：純淨無濾鏡 ★★★ */
         .logo-overlay-img {
             width: 80vw;
             max-width: 1200px;
             height: auto;
-            
-            /* 步驟1：先反轉顏色 (白底黑字 -> 黑底白字)，並加強對比 */
-            filter: invert(1) contrast(2);
-            
-            /* 步驟2：再將黑色背景變透明，只留白色文字 */
-            mix-blend-mode: screen; 
+            /* 這裡什麼濾鏡都不加，直接顯示你原本的透明 PNG */
+            display: block;
         }
 
         /* =========================================
-           ★ Narrative Section (自介) ★
+           ★ 其他區塊 (保持不變) ★
            ========================================= */
         .narrative-section {
             padding: 120px 60px;
@@ -108,9 +104,6 @@
         .info-text { font-size: 0.95rem; color: #444; line-height: 1.7; text-align: justify; }
         .narrative-list span { display: block; margin-bottom: 8px; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; color: #555; }
 
-        /* =========================================
-           ★ 其他區塊 (保持不變) ★
-           ========================================= */
         .split-image-section { display: grid; grid-template-columns: 1fr 1fr; width: 100%; height: 90vh; }
         .split-img-box { width: 100%; height: 100%; overflow: hidden; }
         .split-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s ease; }
@@ -192,7 +185,7 @@
             <video id="bg-video-2" class="bg-video" autoplay muted loop playsinline></video>
         </div>
         <div class="overlay-logo-container">
-            <img src="images/hero-logo.jpg" alt="JAY POSH" class="logo-overlay-img">
+            <img src="images/hero-logo.png" alt="JAY POSH" class="logo-overlay-img">
         </div>
     </section>
 
@@ -326,7 +319,7 @@
             }
         });
 
-        // 影片輪播邏輯 (11部影片)
+        // 影片輪播邏輯
         const videoSources = [
             'images/hero-1.mp4', 'images/hero-2.mp4', 'images/hero-3.mp4', 'images/hero-4.mp4',
             'images/hero-5.mp4', 'images/hero-6.mp4', 'images/hero-7.mp4', 'images/hero-8.mp4',
