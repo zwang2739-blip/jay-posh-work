@@ -27,7 +27,6 @@
             padding: 30px 50px;
             z-index: 100; 
             background: transparent;
-            /* 讓 Header 在淺色背景上顯示黑色文字 */
             color: #000; 
         }
         .header-content { display: flex; justify-content: space-between; align-items: center; }
@@ -57,7 +56,7 @@
         .album-cover {
             position: relative; width: 100%; height: 100%; z-index: 10;
             box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-            background-color: #eee; /* 預設背景，防破圖 */
+            background-color: #eee;
         }
         .album-cover img { width: 100%; height: 100%; object-fit: cover; }
 
@@ -70,9 +69,9 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
         .vinyl-label {
-            width: 35%; height: 35%; background-color: #ff4d4d; border-radius: 50%;
+            width: 35%; height: 35%; background-color: #e5e5e5; border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
-            font-size: 0.6rem; color: #fff; border: 2px solid #111;
+            font-size: 0.6rem; color: #000; border: 2px solid #111; font-weight: bold;
         }
 
         /* 動畫狀態 */
@@ -84,8 +83,8 @@
         /* 右側：資訊區 */
         .player-info { flex: 1; font-family: 'Inter', sans-serif; }
         .small-tag { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: #888; margin-bottom: 20px; display: block; }
-        .track-title { font-family: 'Cormorant Garamond', serif; font-size: 4rem; line-height: 1; margin-bottom: 10px; text-transform: uppercase; }
-        .track-artist { font-size: 1.2rem; color: #555; margin-bottom: 40px; display: block; }
+        .track-title { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; line-height: 1; margin-bottom: 10px; text-transform: uppercase; }
+        .track-artist { font-size: 1.1rem; color: #555; margin-bottom: 40px; display: block; }
 
         /* 播放控制條 */
         .control-bar {
@@ -102,11 +101,10 @@
         .progress-line { flex: 1; height: 1px; background: rgba(255,255,255,0.3); margin: 0 20px; position: relative; }
         .progress-line::after { content: ''; position: absolute; top: -2px; left: 0; width: 0%; height: 5px; background: #fff; transition: width 0.5s; }
         
-        /* 連結樣式 */
         .spotify-link { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #fff; padding-bottom: 2px; cursor: pointer; }
 
         /* 歌單列表 */
-        .playlist { margin-top: 60px; border-top: 1px solid #ddd; }
+        .playlist { margin-top: 50px; border-top: 1px solid #ccc; }
         .playlist-item {
             display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #eee;
             cursor: pointer; transition: padding-left 0.3s, color 0.3s; font-size: 0.9rem; color: #666;
@@ -139,58 +137,67 @@
         <div class="player-container">
             
             <div class="vinyl-wrapper" id="vinyl-wrapper">
-                <div class="vinyl-record"><div class="vinyl-label">JP</div></div>
+                <div class="vinyl-record"><div class="vinyl-label">JAY</div></div>
                 <div class="album-cover">
                     <img src="images/work60.jpg" id="current-cover" alt="Album Cover">
                 </div>
             </div>
 
             <div class="player-info">
-                <span class="small-tag">Current Mood / Selection</span>
-                <h1 class="track-title" id="track-title">Midnight City</h1>
-                <span class="track-artist" id="track-artist">M83 — Hurry Up, We're Dreaming</span>
+                <span class="small-tag">JAYPØSH — Thoughts leaked.</span>
+                <h1 class="track-title" id="track-title">N Side</h1>
+                <span class="track-artist" id="track-artist">Steve Lacy — Apollo XXI</span>
 
                 <div class="control-bar">
                     <div class="play-btn" id="play-btn">▶</div>
                     <div class="progress-line" id="progress-bar"></div>
-                    <a href="https://open.spotify.com/track/1eyzqe2QqGZUmfcPZtrIyt" target="_blank" class="spotify-link" id="spotify-link">Listen on Spotify ↗</a>
+                    <a href="https://open.spotify.com/playlist/37i9dQZF1E4vJvVbF5s5g5" target="_blank" class="spotify-link" id="spotify-link">Open Spotify ↗</a>
                 </div>
 
                 <div class="playlist">
                     <div class="playlist-item active" 
                          data-img="images/work60.jpg" 
-                         data-title="Midnight City" 
-                         data-artist="M83"
-                         data-link="https://open.spotify.com/track/1eyzqe2QqGZUmfcPZtrIyt">
-                        <span>01. Midnight City</span>
-                        <span>04:03</span>
+                         data-title="N Side" 
+                         data-artist="Steve Lacy — Apollo XXI"
+                         data-link="https://open.spotify.com/track/24222">
+                        <span>01. N Side</span>
+                        <span>03:44</span>
                     </div>
                     
                     <div class="playlist-item" 
                          data-img="images/work49.jpg" 
-                         data-title="After Hours" 
-                         data-artist="The Weeknd"
-                         data-link="https://open.spotify.com/track/2p8IUWQDrpjuFltbdgLOag">
-                        <span>02. After Hours</span>
-                        <span>06:01</span>
+                         data-title="Girls Just Want to Have Fun" 
+                         data-artist="Bladee, Ecco2k — Crest"
+                         data-link="https://open.spotify.com/track/15151">
+                        <span>02. Girls Just Want to Have Fun</span>
+                        <span>02:15</span>
                     </div>
 
                     <div class="playlist-item" 
                          data-img="images/work50.jpg" 
-                         data-title="Gosh" 
-                         data-artist="Jamie xx"
-                         data-link="https://open.spotify.com/track/7JH9r1977D2f8Qx7Q67654">
-                        <span>03. Gosh</span>
-                        <span>04:51</span>
+                         data-title="Bound" 
+                         data-artist="Wet, Blood Orange — Letter Blue"
+                         data-link="https://open.spotify.com/track/33333">
+                        <span>03. Bound</span>
+                        <span>03:40</span>
                     </div>
 
                     <div class="playlist-item" 
-                         data-img="images/work35.jpg" 
-                         data-title="Location" 
-                         data-artist="Khalid"
-                         data-link="https://open.spotify.com/track/152lZdxL1OR0ZMW6KquMTS">
-                        <span>04. Location</span>
-                        <span>03:39</span>
+                         data-img="images/split-1.jpg" 
+                         data-title="Good side in" 
+                         data-artist="The Japanese House"
+                         data-link="https://open.spotify.com/track/44444">
+                        <span>04. Good side in</span>
+                        <span>03:50</span>
+                    </div>
+
+                    <div class="playlist-item" 
+                         data-img="images/p5.jpg" 
+                         data-title="fue mejor (feat. SZA)" 
+                         data-artist="Kali Uchis — Sin Miedo"
+                         data-link="https://open.spotify.com/track/55555">
+                        <span>05. fue mejor</span>
+                        <span>03:51</span>
                     </div>
                 </div>
 
@@ -216,16 +223,14 @@
 
         let isPlaying = false;
 
-        // 播放按鈕邏輯：開啟 Spotify
+        // 播放按鈕邏輯
         playBtn.addEventListener('click', () => {
-            // 視覺上切換狀態
             isPlaying = !isPlaying;
             if (isPlaying) {
                 vinylWrapper.classList.add('playing');
                 playBtn.textContent = 'II';
-                // 模擬進度條跑動
                 progressBar.style.width = "100%"; 
-                // ★ 關鍵：直接打開連結
+                // 點擊播放時，直接開啟 Spotify 連結
                 window.open(spotifyLink.href, '_blank');
             } else {
                 vinylWrapper.classList.remove('playing');
@@ -234,23 +239,19 @@
             }
         });
 
-        // 點擊黑膠也可觸發
         vinylWrapper.addEventListener('click', () => playBtn.click());
 
         // 切換歌單
         playlistItems.forEach(item => {
             item.addEventListener('click', () => {
-                // UI 更新
                 document.querySelector('.playlist-item.active').classList.remove('active');
                 item.classList.add('active');
 
-                // 抓取資料
                 const newImg = item.dataset.img;
                 const newTitle = item.dataset.title;
                 const newArtist = item.dataset.artist;
                 const newLink = item.dataset.link;
 
-                // 換圖動畫
                 coverImg.style.opacity = 0;
                 
                 setTimeout(() => {
@@ -261,7 +262,6 @@
                     coverImg.style.opacity = 1;
                 }, 300);
 
-                // 切換歌後重置播放狀態
                 isPlaying = false;
                 vinylWrapper.classList.remove('playing');
                 playBtn.textContent = '▶';
@@ -269,9 +269,8 @@
             });
         });
         
-        // 修正：確保第一張圖載入正確
         window.onload = function() {
-            // 確保預設圖片路徑正確 (可根據你實際喜歡的圖修改)
+            // 確保第一首歌資訊正確
             // coverImg.src = "images/work60.jpg"; 
         };
     </script>
