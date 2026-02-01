@@ -36,7 +36,7 @@
         .nav-link.active::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 1px; background: currentColor; }
 
         /* =========================================
-           ★ Music Player UI (修正版) ★
+           ★ Music Player UI (最終修正版) ★
            ========================================= */
         .music-section {
             width: 100%; min-height: 100vh;
@@ -52,14 +52,11 @@
             position: relative;
         }
 
-        /* 左側：黑膠區 (修改尺寸與位置) */
+        /* 左側：黑膠區 (維持縮小與下移) */
         .vinyl-wrapper {
             position: sticky; 
-            /* ★★★ 修正 1: 下移 (原本 150px) ★★★ */
             top: 250px;
-            /* ★★★ 修正 2: 縮小尺寸 (原本 450px) ★★★ */
-            width: 350px; 
-            height: 350px; 
+            width: 350px; height: 350px; 
             flex-shrink: 0; cursor: pointer;
             z-index: 10;
         }
@@ -69,8 +66,8 @@
             background-color: #000;
             overflow: hidden;
         }
-        /* ★★★ 換回圖片樣式 ★★★ */
-        .album-cover img { width: 100%; height: 100%; object-fit: cover; }
+        /* ★★★ 影片封面 (保留！) ★★★ */
+        .album-cover video { width: 100%; height: 100%; object-fit: cover; opacity: 0.9; }
 
         .vinyl-record {
             position: absolute; top: 2%; right: 2%; width: 96%; height: 96%;
@@ -81,13 +78,24 @@
             display: flex; justify-content: center; align-items: center;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
+
+        /* ★★★ 黑膠中間的標籤 (修改 CSS 以放入圖片) ★★★ */
         .vinyl-label {
-            width: 35%; height: 35%; background-color: #e5e5e5; border-radius: 50%;
+            width: 35%; height: 35%; 
+            background-color: #e5e5e5; /* 標籤背景色，可以改成你喜歡的顏色 */
+            border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
-            font-size: 0.6rem; color: #000; border: 2px solid #111; font-weight: bold;
+            border: 2px solid #111;
+            overflow: hidden; /* 確保圖片不溢出 */
+        }
+        /* 新增：控制中間 Logo 圖片的大小 */
+        .vinyl-label img {
+            width: 85%; /* 調整這個數值可以改變 Logo 在圈圈裡的大小 */
+            height: auto;
+            display: block;
         }
 
-        /* 黑膠滑出距離 */
+        /* 黑膠滑出距離 (30%) */
         .vinyl-wrapper.playing .vinyl-record { transform: translateX(30%); }
         .vinyl-wrapper.playing .vinyl-record .vinyl-label { animation: spin 3s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -142,7 +150,7 @@
             header { padding: 20px; }
             .music-section { padding-top: 100px; }
             .player-container { flex-direction: column; gap: 60px; align-items: center; }
-            /* 手機版也同步調整 */
+            /* 手機版也同步調整尺寸與位置 */
             .vinyl-wrapper { width: 280px; height: 280px; top: 0; position: relative; } 
             .track-title { font-size: 2.5rem; }
             .playlist-container { max-height: 400px; }
@@ -168,9 +176,13 @@
         <div class="player-container">
             
             <div class="vinyl-wrapper" id="vinyl-wrapper">
-                <div class="vinyl-record"><div class="vinyl-label">JAY</div></div>
+                <div class="vinyl-record">
+                    <div class="vinyl-label">
+                        <img src="images/vinyl-logo.png" alt="Vinyl Logo">
+                    </div>
+                </div>
                 <div class="album-cover">
-                    <img src="images/vinyl-cover.png" alt="Album Cover">
+                    <video src="images/vinyl-cover.mp4" autoplay loop muted playsinline></video>
                 </div>
             </div>
 
