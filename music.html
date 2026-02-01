@@ -15,11 +15,11 @@
             background-color: #f4f4f0; 
             color: #000000; 
             font-family: 'Inter', sans-serif; 
-            overflow-x: hidden; 
+            overflow-x: hidden; /* 隱藏水平捲軸 */
             line-height: 1.6;
         }
         a { text-decoration: none; color: inherit; cursor: pointer; }
-        img { display: block; width: 100%; height: auto; }
+        img, video { display: block; width: 100%; height: auto; }
 
         /* --- Header --- */
         header {
@@ -41,30 +41,38 @@
         .music-section {
             width: 100%; min-height: 100vh;
             display: flex; justify-content: center; align-items: center;
-            padding: 100px 50px;
+            padding: 120px 50px; /* 增加上方 padding 避免 header 擋住 */
         }
 
         .player-container {
-            display: flex; align-items: center; gap: 100px;
+            display: flex; align-items: flex-start; /* 改為上方對齊 */
+            gap: 100px;
             max-width: 1200px; width: 100%;
+            position: relative; /* 為了讓黑膠滑出時不被切掉 */
         }
 
         /* 左側：黑膠區 */
         .vinyl-wrapper {
-            position: relative; width: 450px; height: 450px; flex-shrink: 0; cursor: pointer;
+            position: sticky; /* 讓黑膠在捲動時稍微固定一下 */
+            top: 150px;
+            width: 450px; height: 450px; flex-shrink: 0; cursor: pointer;
+            z-index: 10; /* 確保在最上層 */
         }
         .album-cover {
             position: relative; width: 100%; height: 100%; z-index: 10;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-            background-color: #eee;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            background-color: #000;
+            overflow: hidden; /* 確保影片不溢出 */
         }
-        .album-cover img { width: 100%; height: 100%; object-fit: cover; }
+        /* ★★★ 影片封面樣式 ★★★ */
+        .album-cover video { width: 100%; height: 100%; object-fit: cover; opacity: 0.9; }
 
         .vinyl-record {
             position: absolute; top: 2%; right: 2%; width: 96%; height: 96%;
             border-radius: 50%;
             background: radial-gradient(circle, #111 10%, transparent 10%), radial-gradient(circle, #111 10%, #333 40%, #000 45%, #222 50%, #000 55%, #333 60%, #111 70%, #000 100%);
-            z-index: 1; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1; 
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex; justify-content: center; align-items: center;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
@@ -74,14 +82,13 @@
             font-size: 0.6rem; color: #000; border: 2px solid #111; font-weight: bold;
         }
 
-        /* 動畫狀態 */
-        .vinyl-wrapper.playing .vinyl-record { transform: translateX(50%); }
+        /* ★★★ 修正：黑膠滑出距離改成 35%，避免擋字 ★★★ */
+        .vinyl-wrapper.playing .vinyl-record { transform: translateX(35%); }
         .vinyl-wrapper.playing .vinyl-record .vinyl-label { animation: spin 3s linear infinite; }
-        
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         /* 右側：資訊區 */
-        .player-info { flex: 1; font-family: 'Inter', sans-serif; }
+        .player-info { flex: 1; font-family: 'Inter', sans-serif; z-index: 5; }
         .small-tag { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: #888; margin-bottom: 20px; display: block; }
         .track-title { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; line-height: 1; margin-bottom: 10px; text-transform: uppercase; }
         .track-artist { font-size: 1.1rem; color: #555; margin-bottom: 40px; display: block; }
@@ -97,25 +104,57 @@
             display: flex; justify-content: center; align-items: center; cursor: pointer; transition: transform 0.2s;
         }
         .play-btn:hover { transform: scale(1.1); }
-        
         .progress-line { flex: 1; height: 1px; background: rgba(255,255,255,0.3); margin: 0 20px; position: relative; }
         .progress-line::after { content: ''; position: absolute; top: -2px; left: 0; width: 0%; height: 5px; background: #fff; transition: width 0.5s; }
-        
         .spotify-link { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #fff; padding-bottom: 2px; cursor: pointer; }
 
-        /* 歌單列表 */
-        .playlist { margin-top: 50px; border-top: 1px solid #ccc; }
-        .playlist-item {
-            display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #eee;
-            cursor: pointer; transition: padding-left 0.3s, color 0.3s; font-size: 0.9rem; color: #666;
+        /* ★★★ 歌單列表 (可捲動) ★★★ */
+        .playlist-container {
+            margin-top: 50px;
+            border-top: 1px solid #ccc;
+            /* 限制高度並允許垂直捲動 */
+            max-height: 500px; 
+            overflow-y: auto;
+            /* 自訂捲軸樣式 (Webkit browsers) */
+            scrollbar-width: thin;
+            scrollbar-color: #000 #f4f4f0;
         }
-        .playlist-item:hover, .playlist-item.active { padding-left: 10px; color: #000; font-weight: 600; border-bottom: 1px solid #000; }
+        /* Chrome, Safari, Edge 的捲軸樣式 */
+        .playlist-container::-webkit-scrollbar { width: 6px; }
+        .playlist-container::-webkit-scrollbar-track { background: #f4f4f0; }
+        .playlist-container::-webkit-scrollbar-thumb { background-color: #000; border-radius: 10px; border: 2px solid #f4f4f0; }
+
+        .playlist-item {
+            display: flex; justify-content: space-between; padding: 15px 10px; border-bottom: 1px solid #eee;
+            cursor: pointer; transition: all 0.3s; font-size: 0.9rem; color: #666;
+        }
+        .playlist-item:hover, .playlist-item.active { padding-left: 20px; color: #000; font-weight: 600; border-bottom: 1px solid #000; background: rgba(0,0,0,0.02); }
+
+        /* ★★★ 底部 Spotify 總連結按鈕 ★★★ */
+        .full-playlist-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            background: #000;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        .full-playlist-btn:hover { background: #333; }
+
 
         @media (max-width: 768px) {
             header { padding: 20px; }
-            .player-container { flex-direction: column; gap: 50px; }
-            .vinyl-wrapper { width: 300px; height: 300px; }
+            .music-section { padding-top: 100px; }
+            .player-container { flex-direction: column; gap: 50px; align-items: center; }
+            .vinyl-wrapper { width: 300px; height: 300px; top: 0; position: relative; } /* 手機版取消 sticky */
             .track-title { font-size: 2.5rem; }
+            .playlist-container { max-height: 400px; }
         }
     </style>
 </head>
@@ -139,7 +178,7 @@
             <div class="vinyl-wrapper" id="vinyl-wrapper">
                 <div class="vinyl-record"><div class="vinyl-label">JAY</div></div>
                 <div class="album-cover">
-                    <img src="images/work60.jpg" id="current-cover" alt="Album Cover">
+                    <video src="images/vinyl-cover.mp4" autoplay loop muted playsinline></video>
                 </div>
             </div>
 
@@ -151,55 +190,36 @@
                 <div class="control-bar">
                     <div class="play-btn" id="play-btn">▶</div>
                     <div class="progress-line" id="progress-bar"></div>
-                    <a href="https://open.spotify.com/playlist/37i9dQZF1E4vJvVbF5s5g5" target="_blank" class="spotify-link" id="spotify-link">Open Spotify ↗</a>
+                    <a href="https://open.spotify.com/track/1eyzqe2QqGZUmfcPZtrIyt" target="_blank" class="spotify-link" id="spotify-link">Open Spotify ↗</a>
                 </div>
 
-                <div class="playlist">
-                    <div class="playlist-item active" 
-                         data-img="images/work60.jpg" 
-                         data-title="N Side" 
-                         data-artist="Steve Lacy — Apollo XXI"
-                         data-link="https://open.spotify.com/track/24222">
-                        <span>01. N Side</span>
-                        <span>03:44</span>
-                    </div>
-                    
-                    <div class="playlist-item" 
-                         data-img="images/work49.jpg" 
-                         data-title="Girls Just Want to Have Fun" 
-                         data-artist="Bladee, Ecco2k — Crest"
-                         data-link="https://open.spotify.com/track/15151">
-                        <span>02. Girls Just Want to Have Fun</span>
-                        <span>02:15</span>
-                    </div>
+                <div class="playlist-container">
+                    <div class="playlist-item active" data-title="N Side" data-artist="Steve Lacy" data-link="https://open.spotify.com/track/1eyzqe2QqGZUmfcPZtrIyt"><span>01. N Side</span><span>03:44</span></div>
+                    <div class="playlist-item" data-title="Girls Just Want to Have Fun" data-artist="Bladee, Ecco2k" data-link="https://open.spotify.com/track/2p8IUWQDrpjuFltbdgLOag"><span>02. Girls Just Want to Have Fun</span><span>02:15</span></div>
+                    <div class="playlist-item" data-title="Bound" data-artist="Wet, Blood Orange" data-link="https://open.spotify.com/track/7w3P1G4J2225a1Q7h27361"><span>03. Bound</span><span>03:40</span></div>
+                    <div class="playlist-item" data-title="Good side in" data-artist="The Japanese House" data-link="https://open.spotify.com/track/152lZdxL1OR0ZMW6KquMTS"><span>04. Good side in</span><span>03:50</span></div>
+                    <div class="playlist-item" data-title="fue mejor (feat. SZA)" data-artist="Kali Uchis" data-link="https://open.spotify.com/track/7w3P86J0X0x7z5z5z5z5z5"><span>05. fue mejor</span><span>03:51</span></div>
 
-                    <div class="playlist-item" 
-                         data-img="images/work50.jpg" 
-                         data-title="Bound" 
-                         data-artist="Wet, Blood Orange — Letter Blue"
-                         data-link="https://open.spotify.com/track/33333">
-                        <span>03. Bound</span>
-                        <span>03:40</span>
-                    </div>
-
-                    <div class="playlist-item" 
-                         data-img="images/split-1.jpg" 
-                         data-title="Good side in" 
-                         data-artist="The Japanese House"
-                         data-link="https://open.spotify.com/track/44444">
-                        <span>04. Good side in</span>
-                        <span>03:50</span>
-                    </div>
-
-                    <div class="playlist-item" 
-                         data-img="images/p5.jpg" 
-                         data-title="fue mejor (feat. SZA)" 
-                         data-artist="Kali Uchis — Sin Miedo"
-                         data-link="https://open.spotify.com/track/55555">
-                        <span>05. fue mejor</span>
-                        <span>03:51</span>
-                    </div>
+                    <div class="playlist-item" data-title="Track 06" data-artist="Artist Name" data-link="#"><span>06. Track Title Placeholder</span><span>03:00</span></div>
+                    <div class="playlist-item" data-title="Track 07" data-artist="Artist Name" data-link="#"><span>07. Track Title Placeholder</span><span>03:00</span></div>
+                    <div class="playlist-item" data-title="Track 08" data-artist="Artist Name" data-link="#"><span>08. Track Title Placeholder</span><span>03:00</span></div>
+                    <div class="playlist-item" data-title="Track 09" data-artist="Artist Name" data-link="#"><span>09. Track Title Placeholder</span><span>03:00</span></div>
+                    <div class="playlist-item" data-title="Track 10" data-artist="Artist Name" data-link="#"><span>10. Track Title Placeholder</span><span>03:00</span></div>
+                    <div class="playlist-item" data-title="Track 11" data-artist="Artist Name" data-link="#"><span>11. Track Title Placeholder</span><span>03:00</span></div>
+                    <div class="playlist-item" data-title="Track 12" data-artist="Artist Name" data-link="#"><span>12. Track Title Placeholder</span><span>03:00</span></div>
+                    <div class="playlist-item" data-title="Track 13" data-artist="Artist Name" data-link="#"><span>13. Track Title Placeholder</span><span>03:00</span></div>
+                    <div class="playlist-item" data-title="Track 14" data-artist="Artist Name" data-link="#"><span>14. Track Title Placeholder</span><span>03:00</span></div>
+                    <div class="playlist-item" data-title="Track 15" data-artist="Artist Name" data-link="#"><span>15. Track Title Placeholder</span><span>03:00</span></div>
+                    <div class="playlist-item" data-title="Track 16" data-artist="Artist Name" data-link="#"><span>16. Track Title Placeholder</span><span>03:00</span></div>
+                    <div class="playlist-item" data-title="Track 17" data-artist="Artist Name" data-link="#"><span>17. Track Title Placeholder</span><span>03:00</span></div>
+                    <div class="playlist-item" data-title="Track 18" data-artist="Artist Name" data-link="#"><span>18. Track Title Placeholder</span><span>03:00</span></div>
+                    <div class="playlist-item" data-title="Track 19" data-artist="Artist Name" data-link="#"><span>19. Track Title Placeholder</span><span>03:00</span></div>
+                    <div class="playlist-item" data-title="Track 20" data-artist="Artist Name" data-link="#"><span>20. Track Title Placeholder</span><span>03:00</span></div>
                 </div>
+
+                <a href="https://open.spotify.com/track/1eyzqe2QqGZUmfcPZtrIyt8" target="_blank" class="full-playlist-btn">
+                    View Full JAYPØSH Playlist on Spotify ↗
+                </a>
 
             </div>
         </div>
@@ -216,7 +236,7 @@
         const playlistItems = document.querySelectorAll('.playlist-item');
         const progressBar = document.getElementById('progress-bar');
         
-        const coverImg = document.getElementById('current-cover');
+        // 注意：因為現在封面是影片，所以我們不再需要切換封面圖片的 JS
         const titleEl = document.getElementById('track-title');
         const artistEl = document.getElementById('track-artist');
         const spotifyLink = document.getElementById('spotify-link');
@@ -230,7 +250,6 @@
                 vinylWrapper.classList.add('playing');
                 playBtn.textContent = 'II';
                 progressBar.style.width = "100%"; 
-                // 點擊播放時，直接開啟 Spotify 連結
                 window.open(spotifyLink.href, '_blank');
             } else {
                 vinylWrapper.classList.remove('playing');
@@ -247,20 +266,14 @@
                 document.querySelector('.playlist-item.active').classList.remove('active');
                 item.classList.add('active');
 
-                const newImg = item.dataset.img;
                 const newTitle = item.dataset.title;
                 const newArtist = item.dataset.artist;
                 const newLink = item.dataset.link;
 
-                coverImg.style.opacity = 0;
-                
-                setTimeout(() => {
-                    coverImg.src = newImg;
-                    titleEl.textContent = newTitle;
-                    artistEl.textContent = newArtist;
-                    spotifyLink.href = newLink;
-                    coverImg.style.opacity = 1;
-                }, 300);
+                // 更新資訊 (不再切換圖片，因為現在是固定影片)
+                titleEl.textContent = newTitle;
+                artistEl.textContent = newArtist;
+                spotifyLink.href = newLink;
 
                 isPlaying = false;
                 vinylWrapper.classList.remove('playing');
@@ -268,11 +281,6 @@
                 progressBar.style.width = "0%";
             });
         });
-        
-        window.onload = function() {
-            // 確保第一首歌資訊正確
-            // coverImg.src = "images/work60.jpg"; 
-        };
     </script>
 </body>
 </html>
