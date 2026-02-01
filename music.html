@@ -36,7 +36,7 @@
         .nav-link.active::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 1px; background: currentColor; }
 
         /* =========================================
-           ★ Music Player UI (最終修正版) ★
+           ★ Music Player UI (Logo 露出修正版) ★
            ========================================= */
         .music-section {
             width: 100%; min-height: 100vh;
@@ -46,17 +46,18 @@
 
         .player-container {
             display: flex; align-items: flex-start;
-            gap: 220px;
-            max-width: 1400px; 
+            /* ★★★ 修正 1: 間距加大到 280px，留空間給黑膠滑出來 ★★★ */
+            gap: 280px;
+            max-width: 1500px; 
             width: 100%;
             position: relative;
         }
 
-        /* 左側：黑膠區 (維持縮小與下移) */
+        /* 左側：黑膠區 */
         .vinyl-wrapper {
             position: sticky; 
-            top: 250px;
-            width: 350px; height: 350px; 
+            top: 250px; /* 維持下移 */
+            width: 350px; height: 350px; /* 維持縮小 */
             flex-shrink: 0; cursor: pointer;
             z-index: 10;
         }
@@ -66,7 +67,7 @@
             background-color: #000;
             overflow: hidden;
         }
-        /* ★★★ 影片封面 (保留！) ★★★ */
+        /* 影片封面 */
         .album-cover video { width: 100%; height: 100%; object-fit: cover; opacity: 0.9; }
 
         .vinyl-record {
@@ -79,24 +80,24 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
-        /* ★★★ 黑膠中間的標籤 (修改 CSS 以放入圖片) ★★★ */
+        /* ★★★ 黑膠中間的標籤 (麵包 Logo) ★★★ */
         .vinyl-label {
-            width: 35%; height: 35%; 
-            background-color: #e5e5e5; /* 標籤背景色，可以改成你喜歡的顏色 */
+            width: 38%; height: 38%; /* 稍微加大一點點，讓字更清楚 */
+            background-color: #888; /* 暫時背景色，圖片載入後會蓋過 */
             border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
             border: 2px solid #111;
-            overflow: hidden; /* 確保圖片不溢出 */
+            overflow: hidden;
         }
-        /* 新增：控制中間 Logo 圖片的大小 */
         .vinyl-label img {
-            width: 85%; /* 調整這個數值可以改變 Logo 在圈圈裡的大小 */
-            height: auto;
+            width: 100%; 
+            height: 100%;
+            object-fit: cover; /* 充滿圓圈 */
             display: block;
         }
 
-        /* 黑膠滑出距離 (30%) */
-        .vinyl-wrapper.playing .vinyl-record { transform: translateX(30%); }
+        /* ★★★ 修正 2: 滑出距離改為 55% (原本 30% 太少，Logo 轉不出來) ★★★ */
+        .vinyl-wrapper.playing .vinyl-record { transform: translateX(55%); }
         .vinyl-wrapper.playing .vinyl-record .vinyl-label { animation: spin 3s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
@@ -120,7 +121,7 @@
         .progress-line::after { content: ''; position: absolute; top: -2px; left: 0; width: 0%; height: 5px; background: #fff; transition: width 0.5s; }
         .spotify-link { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #fff; padding-bottom: 2px; cursor: pointer; }
 
-        /* 歌單列表 (可捲動) */
+        /* 歌單列表 */
         .playlist-container {
             margin-top: 50px;
             border-top: 1px solid #ccc;
@@ -150,11 +151,10 @@
             header { padding: 20px; }
             .music-section { padding-top: 100px; }
             .player-container { flex-direction: column; gap: 60px; align-items: center; }
-            /* 手機版也同步調整尺寸與位置 */
             .vinyl-wrapper { width: 280px; height: 280px; top: 0; position: relative; } 
             .track-title { font-size: 2.5rem; }
             .playlist-container { max-height: 400px; }
-            .vinyl-wrapper.playing .vinyl-record { transform: translateX(25%); }
+            .vinyl-wrapper.playing .vinyl-record { transform: translateX(45%); /* 手機版滑出稍微少一點 */ }
         }
     </style>
 </head>
@@ -178,7 +178,7 @@
             <div class="vinyl-wrapper" id="vinyl-wrapper">
                 <div class="vinyl-record">
                     <div class="vinyl-label">
-                        <img src="images/vinyl-logo.png" alt="Vinyl Logo">
+                        <img src="images/vinyl-logo.png?v=99" alt="Vinyl Logo">
                     </div>
                 </div>
                 <div class="album-cover">
