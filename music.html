@@ -36,7 +36,7 @@
         .nav-link.active::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 1px; background: currentColor; }
 
         /* =========================================
-           ★ Music Player UI (Logo 露出修正版) ★
+           ★ Music Player UI (麵包字歸位版) ★
            ========================================= */
         .music-section {
             width: 100%; min-height: 100vh;
@@ -46,18 +46,17 @@
 
         .player-container {
             display: flex; align-items: flex-start;
-            /* ★★★ 修正 1: 間距加大到 280px，留空間給黑膠滑出來 ★★★ */
-            gap: 280px;
-            max-width: 1500px; 
+            gap: 200px; /* 稍微縮小間距，讓兩邊緊密一點 */
+            max-width: 1400px; 
             width: 100%;
             position: relative;
         }
 
-        /* 左側：黑膠區 */
+        /* --- 左側：黑膠區 --- */
         .vinyl-wrapper {
             position: sticky; 
-            top: 250px; /* 維持下移 */
-            width: 350px; height: 350px; /* 維持縮小 */
+            top: 250px; 
+            width: 350px; height: 350px; 
             flex-shrink: 0; cursor: pointer;
             z-index: 10;
         }
@@ -80,30 +79,35 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
-        /* ★★★ 黑膠中間的標籤 (麵包 Logo) ★★★ */
+        /* 黑膠中間的標籤 (還原成簡單樣式) */
         .vinyl-label {
-            width: 38%; height: 38%; /* 稍微加大一點點，讓字更清楚 */
-            background-color: #888; /* 暫時背景色，圖片載入後會蓋過 */
+            width: 35%; height: 35%; 
+            background-color: #ff4d4d; /* 你可以改這個顏色，例如 #e5e5e5 */
             border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
             border: 2px solid #111;
-            overflow: hidden;
-        }
-        .vinyl-label img {
-            width: 100%; 
-            height: 100%;
-            object-fit: cover; /* 充滿圓圈 */
-            display: block;
+            font-size: 0.6rem; color: #fff; letter-spacing: 1px;
         }
 
-        /* ★★★ 修正 2: 滑出距離改為 55% (原本 30% 太少，Logo 轉不出來) ★★★ */
+        /* 黑膠滑出 */
         .vinyl-wrapper.playing .vinyl-record { transform: translateX(55%); }
         .vinyl-wrapper.playing .vinyl-record .vinyl-label { animation: spin 3s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* 右側：資訊區 */
+
+        /* --- 右側：資訊區 (重點修改區) --- */
         .player-info { flex: 1; font-family: 'Inter', sans-serif; z-index: 5; }
-        .small-tag { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: #888; margin-bottom: 20px; display: block; }
+
+        /* ★★★ 麵包字 Logo 樣式 ★★★ */
+        .bread-logo {
+            width: 280px; /* 控制麵包字的大小 */
+            height: auto;
+            display: block;
+            margin-bottom: 30px; /* 與下方歌名的距離 */
+            /* 讓它稍微向左對齊一點，因為字體有透視感 */
+            margin-left: -5px; 
+        }
+
         .track-title { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; line-height: 1; margin-bottom: 10px; text-transform: uppercase; }
         .track-artist { font-size: 1.1rem; color: #555; margin-bottom: 40px; display: block; }
 
@@ -154,7 +158,10 @@
             .vinyl-wrapper { width: 280px; height: 280px; top: 0; position: relative; } 
             .track-title { font-size: 2.5rem; }
             .playlist-container { max-height: 400px; }
-            .vinyl-wrapper.playing .vinyl-record { transform: translateX(45%); /* 手機版滑出稍微少一點 */ }
+            .vinyl-wrapper.playing .vinyl-record { transform: translateX(45%); }
+            
+            /* 手機版 logo 大小調整 */
+            .bread-logo { width: 220px; margin-bottom: 20px; }
         }
     </style>
 </head>
@@ -177,9 +184,7 @@
             
             <div class="vinyl-wrapper" id="vinyl-wrapper">
                 <div class="vinyl-record">
-                    <div class="vinyl-label">
-                        <img src="images/vinyl-logo.png?v=99" alt="Vinyl Logo">
-                    </div>
+                    <div class="vinyl-label">JP</div>
                 </div>
                 <div class="album-cover">
                     <video src="images/vinyl-cover.mp4" autoplay loop muted playsinline></video>
@@ -187,7 +192,9 @@
             </div>
 
             <div class="player-info">
-                <span class="small-tag">JAYPØSH — Thoughts leaked.</span>
+                
+                <img src="images/vinyl-logo.png?v=1" alt="JAYPOSH Logo" class="bread-logo">
+
                 <h1 class="track-title" id="track-title">N Side</h1>
                 <span class="track-artist" id="track-artist">Steve Lacy — Apollo XXI</span>
 
