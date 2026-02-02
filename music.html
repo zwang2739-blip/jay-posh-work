@@ -36,12 +36,12 @@
         .nav-link.active::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 1px; background: currentColor; }
 
         /* =========================================
-           ★ Music Player UI (Logo 放大版) ★
+           ★ Music Player UI ★
            ========================================= */
         .music-section {
             width: 100%; min-height: 100vh;
-            display: flex; justify-content: center; align-items: center;
-            padding: 120px 50px;
+            display: flex; justify-content: center; align-items: flex-start; /* 改為上方對齊，配合 sticky 效果 */
+            padding: 120px 50px 50px 50px;
         }
 
         .player-container {
@@ -96,25 +96,40 @@
 
 
         /* --- 右側：資訊區 --- */
-        .player-info { flex: 1; font-family: 'Inter', sans-serif; z-index: 5; }
-
-        /* ★★★ 麵包字 Logo 樣式 (修改處) ★★★ */
-        .bread-logo {
-            /* 改為 100% 寬度，與下方播放條切齊 */
-            width: 100%; 
-            height: auto;
-            display: block;
-            margin-bottom: 30px; 
-            /* 移除了原本的 margin-left: -5px */
+        .player-info { 
+            flex: 1; 
+            font-family: 'Inter', sans-serif; 
+            z-index: 5;
+            position: relative; /* 為了讓 sticky 子元素生效 */
         }
 
-        .track-title { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; line-height: 1; margin-bottom: 10px; text-transform: uppercase; }
+        /* ★★★ 麵包字 Logo 樣式 (關鍵修改) ★★★ */
+        .bread-logo {
+            /* 1. 變大：設定寬度為容器的 140%，並解除最大寬度限制 */
+            width: 140%;
+            max-width: none;
+            height: auto;
+            display: block;
+            
+            /* 2. 往左移：使用負邊距向左拉 */
+            margin-left: -20%;
+            margin-bottom: 40px;
+
+            /* 3. 跟隨畫面滑動 (Sticky) */
+            position: -webkit-sticky; /* Safari 相容 */
+            position: sticky;
+            top: 120px; /* 當距離頂部 120px 時開始固定 */
+            z-index: 20; /* 確保在最上層，蓋過歌單 */
+        }
+
+        .track-title { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; line-height: 1; margin-bottom: 10px; text-transform: uppercase; margin-top: 20px; }
         .track-artist { font-size: 1.1rem; color: #555; margin-bottom: 40px; display: block; }
 
         .control-bar {
             width: 100%; height: 60px; background-color: #000;
             display: flex; align-items: center; justify-content: space-between;
             padding: 0 20px; color: #fff; margin-top: 50px;
+            position: relative; z-index: 10; background: #000;
         }
         .play-btn {
             width: 40px; height: 40px; background: #fff; border-radius: 50%; color: #000;
@@ -129,10 +144,12 @@
         .playlist-container {
             margin-top: 50px;
             border-top: 1px solid #ccc;
-            max-height: 500px; 
+            /* 增加歌單高度，讓滑動效果更明顯 */
+            max-height: 600px; 
             overflow-y: auto;
             scrollbar-width: thin;
             scrollbar-color: #000 #f4f4f0;
+            position: relative; z-index: 5; background: #f4f4f0; /* 確保歌單在 Logo 這裡有背景 */
         }
         .playlist-container::-webkit-scrollbar { width: 6px; }
         .playlist-container::-webkit-scrollbar-track { background: #f4f4f0; }
@@ -159,6 +176,9 @@
             .track-title { font-size: 2.5rem; }
             .playlist-container { max-height: 400px; }
             .vinyl-wrapper.playing .vinyl-record { transform: translateX(45%); }
+            
+            /* 手機版 Logo 調整 */
+            .bread-logo { width: 120%; margin-left: -10%; position: relative; top: 0; }
         }
     </style>
 </head>
@@ -190,7 +210,7 @@
 
             <div class="player-info">
                 
-                <img src="images/vinyl-logo.png?v=1" alt="JAYPOSH Logo" class="bread-logo">
+                <img src="images/vinyl-logo-large.png?v=1" alt="JAYPOSH Logo" class="bread-logo">
 
                 <h1 class="track-title" id="track-title">N Side</h1>
                 <span class="track-artist" id="track-artist">Steve Lacy — Apollo XXI</span>
