@@ -11,7 +11,7 @@
     <style>
         /* --- 全局設定 --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; } /* 加入平滑滾動效果 */
+        html { scroll-behavior: smooth; }
         body { 
             background-color: #ffffff; 
             color: #000000; 
@@ -23,66 +23,40 @@
         img, video { display: block; width: 100%; height: auto; }
 
         /* =========================================
-           ★ 全新雙層 Header 樣式 ★
+           ★ Header 樣式 ★
            ========================================= */
         header {
             position: fixed; top: 0; left: 0; width: 100%; 
-            /* 改為垂直排列，以容納上下兩層 */
             display: flex; flex-direction: column; align-items: center;
             padding: 30px 50px;
             z-index: 100; 
             background: transparent;
-            transition: all 0.4s ease; /* 讓轉換更平滑 */
-            
-            /* 關鍵：在最上方時，利用差值模式讓文字在深色影片上呈現白色 */
+            transition: all 0.4s ease;
             mix-blend-mode: difference; 
             color: #fff;
         }
-
-        /* 滾動後的狀態 (變白底黑字) */
         header.scrolled { 
-            background: rgba(255,255,255,0.95); /* 幾乎不透明的白底 */
-            backdrop-filter: blur(10px); /* 毛玻璃效果增加質感 */
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
             padding: 20px 50px; 
-            mix-blend-mode: normal; /* 回復正常混合模式 */
-            color: #000; /* 強制變成黑字 */
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* 加一點點陰影 */
+            mix-blend-mode: normal;
+            color: #000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-
-        /* --- 第一層：Logo + 主選單 --- */
-        .header-top {
-            width: 100%;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .logo { 
-            font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
-        }
+        .header-top { width: 100%; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
         .main-nav { display: flex; gap: 35px; }
-        .nav-link-main {
-            font-size: 0.85rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; position: relative;
-        }
-        /* 主選單滑鼠懸停效果 (底部線條) */
-        .nav-link-main::after {
-            content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 1px; background: currentColor; transition: width 0.3s;
-        }
+        .nav-link-main { font-size: 0.85rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; position: relative; }
+        .nav-link-main::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 1px; background: currentColor; transition: width 0.3s; }
         .nav-link-main:hover::after { width: 100%; }
-
-
-        /* --- 第二層：次選單 (分類) --- */
-        .header-bottom {
-            margin-top: 18px; /* 與上層的距離 */
-        }
+        
+        .header-bottom { margin-top: 18px; }
         .sub-nav { display: flex; gap: 25px; }
-        .nav-link-sub {
-            font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;
-            opacity: 0.7; /* 稍微透明一點，區分層次 */
-            transition: opacity 0.3s;
-        }
+        .nav-link-sub { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; transition: opacity 0.3s; }
         .nav-link-sub:hover { opacity: 1; }
 
-
         /* =========================================
-           ★ Hero Section (保持不變) ★
+           ★ Hero Section ★
            ========================================= */
         .hero-section {
             width: 100%; height: 100vh; 
@@ -98,7 +72,7 @@
         .logo-overlay-img { width: 80vw; max-width: 1200px; height: auto; display: block; }
 
         /* =========================================
-           ★ 其他內容區塊 (保持不變) ★
+           ★ 內容區塊 ★
            ========================================= */
         .split-image-section { display: grid; grid-template-columns: 1fr 1fr; width: 100%; height: 90vh; }
         .split-img-box { width: 100%; height: 100%; overflow: hidden; }
@@ -134,29 +108,72 @@
         .project-title { font-size: 0.9rem; font-weight: 600; text-transform: uppercase; }
         .project-id { font-size: 0.8rem; color: #888; font-family: 'Cormorant Garamond', serif; font-style: italic; }
 
-        .experience-section { padding: 120px 60px; border-top: 1px solid #000; background: #fff; }
+        /* =========================================
+           ★ Experience Section (更新：背景影片) ★
+           ========================================= */
+        .experience-section { 
+            position: relative; /* 為了放置絕對定位的影片 */
+            padding: 150px 60px; 
+            border-top: 1px solid #000; 
+            background: #fff;
+            overflow: hidden; /* 確保影片不超出範圍 */
+        }
+
+        /* 背景影片容器 */
+        .exp-video-bg {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0; /* 在最底層 */
+            pointer-events: none; /* 讓滑鼠點擊可以穿透 */
+        }
+        
+        /* 影片樣式 */
+        .exp-video-bg video {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            /* 透明度設定：0.3 ~ 0.5 之間比較剛好，才不會讓文字看不清楚 */
+            opacity: 0.4; 
+            /* 讓影片稍微變灰階，更符合網站風格 (可選) */
+            filter: grayscale(50%); 
+        }
+
+        /* ★★★ 底部漸層遮罩 (讓影片慢慢變白) ★★★ */
+        .exp-video-overlay {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%; 
+            height: 40%; /* 遮罩佔底部 40% 的高度 */
+            /* 從透明漸層到純白 */
+            background: linear-gradient(to bottom, transparent, #ffffff);
+            z-index: 1;
+        }
+
+        /* 內容容器 (確保文字在影片上面) */
+        .exp-content-relative {
+            position: relative;
+            z-index: 2; /* 在影片和遮罩之上 */
+        }
+
         .exp-header { font-size: 3.5rem; font-family: 'Cormorant Garamond', serif; margin-bottom: 80px; }
         .exp-list { max-width: 900px; margin-left: auto; margin-right: auto; }
-        .exp-item { display: flex; padding: 40px 0; border-bottom: 1px solid #ddd; transition: 0.3s; }
+        .exp-item { display: flex; padding: 40px 0; border-bottom: 1px solid rgba(0,0,0,0.2); transition: 0.3s; }
         .exp-item:hover { transform: translateX(10px); }
         .exp-year { flex: 0 0 150px; font-weight: 600; font-size: 1rem; padding-top: 5px; }
         .exp-content { flex: 1; }
         .exp-role { font-size: 1.8rem; font-family: 'Cormorant Garamond', serif; font-weight: 600; margin-bottom: 5px; display: block; }
-        .exp-company { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: #666; margin-bottom: 15px; display: block; }
-        .exp-desc { font-size: 0.9rem; color: #555; line-height: 1.6; }
+        .exp-company { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: #444; margin-bottom: 15px; display: block; font-weight: 600; }
+        .exp-desc { font-size: 0.9rem; color: #222; line-height: 1.6; font-weight: 500; } /* 加深文字顏色確保可讀性 */
         .exp-desc ul { list-style: none; padding: 0; }
         .exp-desc li { position: relative; padding-left: 15px; margin-bottom: 5px; }
-        .exp-desc li::before { content: "-"; position: absolute; left: 0; color: #999; }
+        .exp-desc li::before { content: "-"; position: absolute; left: 0; color: #555; }
 
-        footer { padding: 50px 60px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 0.8rem; text-transform: uppercase; color: #000; border-top: 1px solid #000; background: #fff;}
+        footer { padding: 50px 60px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 0.8rem; text-transform: uppercase; color: #000; border-top: 1px solid #000; background: #fff; position: relative; z-index: 10; }
 
-        /* RWD 手機版調整 */
+        /* RWD */
         @media (max-width: 768px) {
-            /* 手機版 Header 簡化：隱藏第二層，第一層改回簡單樣式 */
             header { padding: 20px; flex-direction: row; }
-            .header-bottom, .main-nav { display: none; } /* 暫時隱藏複雜選單 */
-            /* 這裡之後可以考慮加回一個漢堡選單按鈕 */
-            
+            .header-bottom, .main-nav { display: none; }
             .logo-overlay-img { width: 90vw; } 
             .split-image-section { grid-template-columns: 1fr; height: auto; }
             .split-img-box { height: 60vh; }
@@ -177,18 +194,16 @@
 <body>
 
     <header id="main-header">
-        
         <div class="header-top">
             <a href="#" class="logo">JAY POSH</a>
-           <nav class="main-nav">
-    <a href="index.html#narrative" class="nav-link-main">ABOUT</a>
-    <a href="work.html" class="nav-link-main">WORK</a>
-    <a href="music.html" class="nav-link-main">MUSIC</a> 
-    <a href="index.html#experience" class="nav-link-main">EXPERIENCE</a>
-    <a href="#" class="nav-link-main">CONTACT</a>
-</nav>
+            <nav class="main-nav">
+                <a href="#narrative" class="nav-link-main">ABOUT</a>
+                <a href="work.html" class="nav-link-main">WORK</a>
+                <a href="music.html" class="nav-link-main">MUSIC</a>
+                <a href="#experience" class="nav-link-main">EXPERIENCE</a>
+                <a href="#" class="nav-link-main">CONTACT</a>
+            </nav>
         </div>
-
         <div class="header-bottom">
             <nav class="sub-nav">
                 <a href="#" class="nav-link-sub">ALL</a>
@@ -198,7 +213,6 @@
                 <a href="#" class="nav-link-sub">PERSONAL</a>
             </nav>
         </div>
-
     </header>
 
     <section class="hero-section">
@@ -287,36 +301,46 @@
     </section>
 
     <section class="experience-section" id="experience">
-        <h2 class="exp-header">Experience</h2>
-        <div class="exp-list">
-            <div class="exp-item">
-                <div class="exp-year">2023 - Present</div>
-                <div class="exp-content">
-                    <span class="exp-role">Brand Visual Design Lead</span>
-                    <span class="exp-company">PINKSELFIE</span>
-                    <div class="exp-desc">
-                        <ul>
-                            <li>Planned and executed brand image campaigns and catalog photography.</li>
-                            <li>Directed visual strategies for seasonal campaigns and mood boards.</li>
-                            <li>Managed social media visuals, video production, and high-end retouching.</li>
-                        </ul>
+        
+        <div class="exp-video-bg">
+            <video autoplay loop muted playsinline>
+                <source src="images/exp-bg.mp4" type="video/mp4">
+            </video>
+            <div class="exp-video-overlay"></div>
+        </div>
+
+        <div class="exp-content-relative">
+            <h2 class="exp-header">Experience</h2>
+            <div class="exp-list">
+                <div class="exp-item">
+                    <div class="exp-year">2023 - Present</div>
+                    <div class="exp-content">
+                        <span class="exp-role">Brand Visual Design Lead</span>
+                        <span class="exp-company">PINKSELFIE</span>
+                        <div class="exp-desc">
+                            <ul>
+                                <li>Planned and executed brand image campaigns and catalog photography.</li>
+                                <li>Directed visual strategies for seasonal campaigns and mood boards.</li>
+                                <li>Managed social media visuals, video production, and high-end retouching.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="exp-item">
-                <div class="exp-year">2021 - 2022</div>
-                <div class="exp-content">
-                    <span class="exp-role">Graphic Designer</span>
-                    <span class="exp-company">MUFAN</span>
-                    <div class="exp-desc">Specialized in diverse cover designs and visual presentation.</div>
+                <div class="exp-item">
+                    <div class="exp-year">2021 - 2022</div>
+                    <div class="exp-content">
+                        <span class="exp-role">Graphic Designer</span>
+                        <span class="exp-company">MUFAN</span>
+                        <div class="exp-desc">Specialized in diverse cover designs and visual presentation.</div>
+                    </div>
                 </div>
-            </div>
-            <div class="exp-item">
-                <div class="exp-year">2020</div>
-                <div class="exp-content">
-                    <span class="exp-role">Workshop Creator</span>
-                    <span class="exp-company">Moon Rise Studio / Island Editor</span>
-                    <div class="exp-desc">Facilitated "Eco-Printing" and "Outdoor Pottery" workshops.</div>
+                <div class="exp-item">
+                    <div class="exp-year">2020</div>
+                    <div class="exp-content">
+                        <span class="exp-role">Workshop Creator</span>
+                        <span class="exp-company">Moon Rise Studio / Island Editor</span>
+                        <div class="exp-desc">Facilitated "Eco-Printing" and "Outdoor Pottery" workshops.</div>
+                    </div>
                 </div>
             </div>
         </div>
