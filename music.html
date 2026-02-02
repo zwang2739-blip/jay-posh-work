@@ -40,8 +40,9 @@
            ========================================= */
         .music-section {
             width: 100%; min-height: 100vh;
-            display: flex; justify-content: center; align-items: flex-start; /* 改為上方對齊，配合 sticky 效果 */
-            padding: 120px 50px 50px 50px;
+            display: flex; justify-content: center; align-items: flex-start;
+            /* ★★★ 修正 2: 加大右側邊距到 100px (原本 50px) ★★★ */
+            padding: 120px 100px 50px 50px; /* 上 右 下 左 */
         }
 
         .player-container {
@@ -95,33 +96,34 @@
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
 
-        /* --- 右側：資訊區 --- */
+        /* --- 右側：資訊區 (重點修改區) --- */
         .player-info { 
             flex: 1; 
             font-family: 'Inter', sans-serif; 
-            z-index: 5;
-            position: relative; /* 為了讓 sticky 子元素生效 */
+            /* 移除父層的統一 z-index，改由子元素各自控制 */
+            position: relative; 
         }
 
-        /* ★★★ 麵包字 Logo 樣式 (關鍵修改) ★★★ */
+        /* ★★★ 麵包字 Logo 樣式 (修正圖層) ★★★ */
         .bread-logo {
-            /* 1. 變大：設定寬度為容器的 140%，並解除最大寬度限制 */
             width: 140%;
             max-width: none;
             height: auto;
             display: block;
-            
-            /* 2. 往左移：使用負邊距向左拉 */
             margin-left: -20%;
             margin-bottom: 40px;
-
-            /* 3. 跟隨畫面滑動 (Sticky) */
-            position: -webkit-sticky; /* Safari 相容 */
+            position: -webkit-sticky; 
             position: sticky;
-            top: 120px; /* 當距離頂部 120px 時開始固定 */
-            z-index: 20; /* 確保在最上層，蓋過歌單 */
+            top: 120px; 
+            /* ★★★ 關鍵修正 1: 降低 z-index 到 1，讓它在最底層 ★★★ */
+            z-index: 1; 
         }
 
+        /* ★★★ 提高文字和控制條的圖層，確保在 Logo 上方 ★★★ */
+        .track-title, .track-artist {
+            position: relative;
+            z-index: 5; /* 比 Logo 高 */
+        }
         .track-title { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; line-height: 1; margin-bottom: 10px; text-transform: uppercase; margin-top: 20px; }
         .track-artist { font-size: 1.1rem; color: #555; margin-bottom: 40px; display: block; }
 
@@ -129,7 +131,9 @@
             width: 100%; height: 60px; background-color: #000;
             display: flex; align-items: center; justify-content: space-between;
             padding: 0 20px; color: #fff; margin-top: 50px;
-            position: relative; z-index: 10; background: #000;
+            position: relative; 
+            z-index: 10; /* 保持高圖層 */
+            background: #000;
         }
         .play-btn {
             width: 40px; height: 40px; background: #fff; border-radius: 50%; color: #000;
@@ -140,16 +144,19 @@
         .progress-line::after { content: ''; position: absolute; top: -2px; left: 0; width: 0%; height: 5px; background: #fff; transition: width 0.5s; }
         .spotify-link { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #fff; padding-bottom: 2px; cursor: pointer; }
 
-        /* 歌單列表 */
+        /* ★★★ 歌單列表 (修正圖層與背景) ★★★ */
         .playlist-container {
             margin-top: 50px;
             border-top: 1px solid #ccc;
-            /* 增加歌單高度，讓滑動效果更明顯 */
             max-height: 600px; 
             overflow-y: auto;
             scrollbar-width: thin;
             scrollbar-color: #000 #f4f4f0;
-            position: relative; z-index: 5; background: #f4f4f0; /* 確保歌單在 Logo 這裡有背景 */
+            position: relative; 
+            /* ★★★ 關鍵修正 1: 提高 z-index 到 10，確保蓋住 Logo ★★★ */
+            z-index: 10; 
+            /* ★★★ 關鍵修正 1: 確保有背景色，不然透明的會透出下面的 Logo ★★★ */
+            background: #f4f4f0; 
         }
         .playlist-container::-webkit-scrollbar { width: 6px; }
         .playlist-container::-webkit-scrollbar-track { background: #f4f4f0; }
@@ -170,7 +177,10 @@
 
         @media (max-width: 900px) {
             header { padding: 20px; }
-            .music-section { padding-top: 100px; }
+            .music-section { 
+                /* 手機版邊距調整 */
+                padding: 100px 20px 50px 20px; 
+            }
             .player-container { flex-direction: column; gap: 60px; align-items: center; }
             .vinyl-wrapper { width: 280px; height: 280px; top: 0; position: relative; } 
             .track-title { font-size: 2.5rem; }
@@ -178,7 +188,7 @@
             .vinyl-wrapper.playing .vinyl-record { transform: translateX(45%); }
             
             /* 手機版 Logo 調整 */
-            .bread-logo { width: 120%; margin-left: -10%; position: relative; top: 0; }
+            .bread-logo { width: 120%; margin-left: -10%; position: relative; top: 0; z-index: 1; }
         }
     </style>
 </head>
