@@ -21,14 +21,14 @@
         a { text-decoration: none; color: inherit; cursor: pointer; }
         img { display: block; width: 100%; height: auto; object-fit: cover; }
 
-        /* --- Header (與其他頁面一致) --- */
+        /* --- Header --- */
         header {
             position: fixed; top: 0; left: 0; width: 100%; 
             display: flex; flex-direction: column; align-items: center;
             padding: 30px 50px;
             z-index: 100; 
             background: transparent;
-            mix-blend-mode: difference; /* 讓字在黑白背景都能看見 */
+            mix-blend-mode: difference; 
             color: #fff; 
         }
         .header-top { width: 100%; display: flex; justify-content: space-between; align-items: center; }
@@ -38,7 +38,7 @@
         .nav-link.active::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 1px; background: currentColor; }
 
         /* =========================================
-           ★ 1. 頂部個人形象區 (Profile Hero) ★
+           ★ 1. Profile Hero (個人形象) ★
            ========================================= */
         .profile-hero {
             width: 100%;
@@ -50,16 +50,17 @@
         }
         
         .profile-img-container {
-            width: 300px; /* 大頭照寬度 */
+            width: 300px; 
             height: 400px;
             overflow: hidden;
             margin-bottom: 40px;
-            /* 圓形或圓角，這邊用微圓角比較時尚 */
-            border-radius: 200px 200px 0 0; 
+            border-radius: 200px 200px 0 0; /* 拱門形狀 */
         }
         .profile-img-container img {
             width: 100%; height: 100%;
             transition: transform 1s ease;
+            /* 如果照片太黑，可以稍微調亮一點 */
+            filter: contrast(1.1); 
         }
         .profile-img-container:hover img { transform: scale(1.05); }
 
@@ -74,17 +75,17 @@
         .profile-name-zh {
             font-size: 1rem;
             letter-spacing: 5px;
-            color: #ff4d4d; /* 模仿參考圖的紅色字 */
+            color: #ff4d4d; /* 紅色點綴 */
             font-weight: 600;
             text-transform: uppercase;
         }
 
         /* =========================================
-           ★ 2. 中間色塊介紹區 (Intro Band) ★
+           ★ 2. Intro Band (黑色介紹區) ★
            ========================================= */
         .intro-band {
             width: 100%;
-            background-color: #000; /* 改成黑色比較酷 */
+            background-color: #000;
             color: #fff;
             padding: 100px 60px;
             display: flex;
@@ -92,104 +93,45 @@
             align-items: flex-start;
         }
 
-        .intro-left {
-            width: 30%;
-        }
-        .intro-title {
-            font-size: 2rem;
-            font-family: 'Cormorant Garamond', serif;
-            margin-bottom: 10px;
-        }
-        .intro-subtitle {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            opacity: 0.7;
-        }
+        .intro-left { width: 30%; }
+        .intro-title { font-size: 2rem; font-family: 'Cormorant Garamond', serif; margin-bottom: 10px; }
+        .intro-subtitle { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; }
 
-        .intro-right {
-            width: 60%;
-        }
-        .intro-text {
-            font-size: 1rem;
-            line-height: 1.8;
-            font-weight: 300;
-            opacity: 0.9;
-            text-align: justify;
-        }
+        .intro-right { width: 60%; }
+        .intro-text { font-size: 1rem; line-height: 1.8; font-weight: 300; opacity: 0.9; text-align: justify; }
 
         /* =========================================
-           ★ 3. 雙圖展示區 (Dual Visuals) ★
+           ★ 3. Dual Visuals (雙圖) ★
            ========================================= */
         .visual-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             width: 100%;
-            height: 80vh; /* 佔滿 80% 螢幕高度 */
+            height: 80vh;
         }
-        .visual-item {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            position: relative;
-        }
-        /* 左圖：人像 */
+        .visual-item { width: 100%; height: 100%; overflow: hidden; position: relative; }
         .visual-left img { object-position: center top; }
-        /* 右圖：風景 */
         .visual-right img { object-position: center center; }
 
         /* =========================================
-           ★ 4. 底部列表區 (List / Resume) ★
+           ★ 4. List Section (履歷/聯絡) ★
            ========================================= */
-        .list-section {
-            padding: 100px 60px;
-            background-color: #f8f8f6;
-        }
-        .list-title {
-            font-size: 1.5rem;
-            font-family: 'Cormorant Garamond', serif;
-            color: #ff4d4d; /* 紅色標題 */
-            margin-bottom: 60px;
-        }
+        .list-section { padding: 100px 60px; background-color: #f8f8f6; }
+        .list-title { font-size: 1.5rem; font-family: 'Cormorant Garamond', serif; color: #ff4d4d; margin-bottom: 60px; }
 
-        .list-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 三欄排版 */
-            gap: 60px;
-        }
+        .list-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 60px; }
 
         .list-col-title {
-            font-size: 0.9rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 15px;
-            margin-bottom: 25px;
-            color: #888;
+            font-size: 0.9rem; font-weight: 600; text-transform: uppercase;
+            border-bottom: 1px solid #ddd; padding-bottom: 15px; margin-bottom: 25px; color: #888;
         }
 
-        .list-item {
-            display: flex;
-            margin-bottom: 15px;
-            font-size: 0.9rem;
-            align-items: baseline;
-        }
-        .list-label {
-            font-weight: 600;
-            width: 120px; /* 左邊標籤寬度 */
-            color: #000;
-        }
-        .list-val {
-            color: #555;
-        }
-        .list-link {
-            border-bottom: 1px solid #000;
-            padding-bottom: 2px;
-            transition: color 0.3s;
-        }
+        .list-item { display: flex; margin-bottom: 15px; font-size: 0.9rem; align-items: baseline; }
+        .list-label { font-weight: 600; width: 120px; color: #000; flex-shrink: 0; }
+        .list-val { color: #555; }
+        .list-link { border-bottom: 1px solid #000; padding-bottom: 2px; transition: color 0.3s; }
         .list-link:hover { color: #ff4d4d; border-color: #ff4d4d; }
 
-        /* RWD */
         @media (max-width: 768px) {
             header { padding: 20px; }
             .profile-hero { padding-top: 120px; }
@@ -217,16 +159,16 @@
 
     <section class="profile-hero">
         <div class="profile-img-container">
-            <img src="images/work9.jpg" alt="Jay Posh Portrait">
+            <img src="images/profile.jpg" alt="Jay Posh Portrait">
         </div>
         <h1 class="profile-name-en">JAY POSH</h1>
-        <span class="profile-name-zh">VISUAL DIRECTOR</span>
+        <span class="profile-name-zh">VISUAL DESIGNER</span>
     </section>
 
     <section class="intro-band">
         <div class="intro-left">
             <h2 class="intro-title">Introduction</h2>
-            <span class="intro-subtitle">Based in Taipei, Taiwan</span>
+            <span class="intro-subtitle">Based in Taoyuan, Taiwan</span>
         </div>
         <div class="intro-right">
             <p class="intro-text">
@@ -239,15 +181,15 @@
 
     <section class="visual-grid">
         <div class="visual-item visual-left">
-            <img src="images/work3.jpg" alt="Portrait Visual">
+            <img src="images/work9.jpg" alt="Atmosphere">
         </div>
         <div class="visual-item visual-right">
-            <img src="images/split-3.jpg" alt="Scenery Visual">
+            <img src="images/split-3.jpg" alt="Texture">
         </div>
     </section>
 
     <section class="list-section">
-        <h2 class="list-title">Biography & Services</h2>
+        <h2 class="list-title">Biography & Info</h2>
         
         <div class="list-grid">
             <div class="list-col">
@@ -271,18 +213,22 @@
             </div>
 
             <div class="list-col">
-                <div class="list-col-title">Recognition</div>
+                <div class="list-col-title">Skills / Tools</div>
                 <div class="list-item">
-                    <span class="list-label">2025</span>
-                    <span class="list-val">Behance Featured</span>
+                    <span class="list-label">Design</span>
+                    <span class="list-val">Photoshop, Illustrator</span>
                 </div>
                 <div class="list-item">
-                    <span class="list-label">2024</span>
-                    <span class="list-val">Tokyo Type Directors Club</span>
+                    <span class="list-label">Web</span>
+                    <span class="list-val">HTML, CSS, Figma</span>
                 </div>
                 <div class="list-item">
-                    <span class="list-label">2023</span>
-                    <span class="list-val">Taipei Design Award</span>
+                    <span class="list-label">Video</span>
+                    <span class="list-val">Premiere, After Effects</span>
+                </div>
+                <div class="list-item">
+                    <span class="list-label">Language</span>
+                    <span class="list-val">Mandarin, English</span>
                 </div>
             </div>
 
@@ -290,15 +236,15 @@
                 <div class="list-col-title">Contact</div>
                 <div class="list-item">
                     <span class="list-label">Email</span>
-                    <span class="list-val"><a href="mailto:hello@jayposh.com" class="list-link">hello@jayposh.com</a></span>
+                    <span class="list-val"><a href="mailto:zwang2739@gmail.com" class="list-link">zwang2739@gmail.com</a></span>
                 </div>
                 <div class="list-item">
                     <span class="list-label">Instagram</span>
-                    <span class="list-val"><a href="#" class="list-link">@jayposh_w</a></span>
+                    <span class="list-val"><a href="https://instagram.com/jayposh_w" target="_blank" class="list-link">@jayposh_w</a></span>
                 </div>
                 <div class="list-item">
                     <span class="list-label">Location</span>
-                    <span class="list-val">Taipei, Taiwan</span>
+                    <span class="list-val">Taoyuan, Taiwan</span>
                 </div>
                 <div class="list-item" style="margin-top: 20px;">
                     <span class="list-label">Status</span>
