@@ -28,6 +28,7 @@
             padding: 30px 50px;
             z-index: 100; 
             background: transparent;
+            /* 這次背景是白色/圖片，我們用黑色字比較清楚，或是用 difference */
             mix-blend-mode: difference; 
             color: #fff; 
         }
@@ -38,47 +39,53 @@
         .nav-link.active::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 1px; background: currentColor; }
 
         /* =========================================
-           ★ 1. Profile Hero (個人形象) ★
+           ★ 1. Profile Hero (滿版寬幅設計) ★
            ========================================= */
         .profile-hero {
             width: 100%;
-            padding: 150px 0 80px 0;
+            padding-top: 150px; /* 留位置給 Header */
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
         }
-        
-        .profile-img-container {
-            width: 300px; 
-            height: 400px;
-            overflow: hidden;
-            margin-bottom: 40px;
-            border-radius: 200px 200px 0 0; /* 拱門形狀 */
+
+        .profile-text-group {
+            margin-bottom: 60px;
         }
-        .profile-img-container img {
-            width: 100%; height: 100%;
-            transition: transform 1s ease;
-            /* 如果照片太黑，可以稍微調亮一點 */
-            filter: contrast(1.1); 
-        }
-        .profile-img-container:hover img { transform: scale(1.05); }
 
         .profile-name-en {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 3.5rem;
+            font-size: 4rem; /* 字體加大 */
             font-weight: 400;
             line-height: 1;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             text-transform: uppercase;
         }
         .profile-name-zh {
-            font-size: 1rem;
-            letter-spacing: 5px;
-            color: #ff4d4d; /* 紅色點綴 */
+            font-size: 0.9rem;
+            letter-spacing: 4px;
+            color: #ff4d4d; 
             font-weight: 600;
             text-transform: uppercase;
         }
+        
+        /* ★★★ 寬幅圖片容器 ★★★ */
+        .profile-img-container {
+            width: 100%; 
+            height: 65vh; /* 佔據螢幕高度的 65%，很有電影感 */
+            overflow: hidden;
+            margin-bottom: 0; /* 貼齊下方 */
+        }
+        .profile-img-container img {
+            width: 100%; height: 100%;
+            object-fit: cover; /* 確保填滿 */
+            /* ★ 關鍵：調整對焦點，因為照片是直的被切成橫的，我們將焦點設在中間偏上 (看到眼睛) */
+            object-position: center 25%; 
+            transition: transform 1.5s ease;
+            filter: grayscale(100%) contrast(1.1); /* 確保黑白質感 */
+        }
+        .profile-img-container:hover img { transform: scale(1.03); }
 
         /* =========================================
            ★ 2. Intro Band (黑色介紹區) ★
@@ -101,20 +108,7 @@
         .intro-text { font-size: 1rem; line-height: 1.8; font-weight: 300; opacity: 0.9; text-align: justify; }
 
         /* =========================================
-           ★ 3. Dual Visuals (雙圖) ★
-           ========================================= */
-        .visual-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            width: 100%;
-            height: 80vh;
-        }
-        .visual-item { width: 100%; height: 100%; overflow: hidden; position: relative; }
-        .visual-left img { object-position: center top; }
-        .visual-right img { object-position: center center; }
-
-        /* =========================================
-           ★ 4. List Section (履歷/聯絡) ★
+           ★ 3. List Section (履歷/聯絡) ★
            ========================================= */
         .list-section { padding: 100px 60px; background-color: #f8f8f6; }
         .list-title { font-size: 1.5rem; font-family: 'Cormorant Garamond', serif; color: #ff4d4d; margin-bottom: 60px; }
@@ -135,10 +129,10 @@
         @media (max-width: 768px) {
             header { padding: 20px; }
             .profile-hero { padding-top: 120px; }
+            .profile-name-en { font-size: 2.5rem; }
+            .profile-img-container { height: 40vh; } /* 手機版高度縮減 */
             .intro-band { flex-direction: column; gap: 40px; padding: 60px 30px; }
             .intro-left, .intro-right { width: 100%; }
-            .visual-grid { grid-template-columns: 1fr; height: auto; }
-            .visual-item { height: 50vh; }
             .list-grid { grid-template-columns: 1fr; gap: 40px; }
         }
     </style>
@@ -158,11 +152,14 @@
     </header>
 
     <section class="profile-hero">
+        <div class="profile-text-group">
+            <h1 class="profile-name-en">JAY POSH</h1>
+            <span class="profile-name-zh">VISUAL DESIGNER</span>
+        </div>
+        
         <div class="profile-img-container">
             <img src="images/profile.jpg" alt="Jay Posh Portrait">
         </div>
-        <h1 class="profile-name-en">JAY POSH</h1>
-        <span class="profile-name-zh">VISUAL DESIGNER</span>
     </section>
 
     <section class="intro-band">
@@ -176,15 +173,6 @@
                 <br><br>
                 深受電影美術與音樂的啟發，我相信影像不僅是視覺的呈現，更是情感的語言。我不僅僅是在做設計，而是在編織故事。我的創作核心在於結合平面設計的精準度與攝影的原始張力，為品牌創造出具備「高級感」與「故事性」的視覺體驗。
             </p>
-        </div>
-    </section>
-
-    <section class="visual-grid">
-        <div class="visual-item visual-left">
-            <img src="images/work9.jpg" alt="Atmosphere">
-        </div>
-        <div class="visual-item visual-right">
-            <img src="images/split-3.jpg" alt="Texture">
         </div>
     </section>
 
@@ -213,7 +201,7 @@
             </div>
 
             <div class="list-col">
-                <div class="list-col-title">Skills / Tools</div>
+                <div class="list-col-title">Skills & Tools</div>
                 <div class="list-item">
                     <span class="list-label">Design</span>
                     <span class="list-val">Photoshop, Illustrator</span>
