@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABOUT | JAY POSH</title>
+    
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- 全局設定 --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background-color: #ffffff; 
+            color: #000000; 
+            font-family: 'Inter', sans-serif; 
+            overflow-x: hidden; 
+            line-height: 1.6;
+        }
+        a { text-decoration: none; color: inherit; cursor: pointer; }
+        img { display: block; width: 100%; height: auto; object-fit: cover; }
+
+        /* --- Header (與其他頁面一致) --- */
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; 
+            display: flex; flex-direction: column; align-items: center;
+            padding: 30px 50px;
+            z-index: 100; 
+            background: transparent;
+            mix-blend-mode: difference; /* 讓字在黑白背景都能看見 */
+            color: #fff; 
+        }
+        .header-top { width: 100%; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-link { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #fff; position: relative; font-weight: 500; }
+        .nav-link.active::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 1px; background: currentColor; }
+
+        /* =========================================
+           ★ 1. 頂部個人形象區 (Profile Hero) ★
+           ========================================= */
+        .profile-hero {
+            width: 100%;
+            padding: 150px 0 80px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .profile-img-container {
+            width: 300px; /* 大頭照寬度 */
+            height: 400px;
+            overflow: hidden;
+            margin-bottom: 40px;
+            /* 圓形或圓角，這邊用微圓角比較時尚 */
+            border-radius: 200px 200px 0 0; 
+        }
+        .profile-img-container img {
+            width: 100%; height: 100%;
+            transition: transform 1s ease;
+        }
+        .profile-img-container:hover img { transform: scale(1.05); }
+
+        .profile-name-en {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            font-weight: 400;
+            line-height: 1;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .profile-name-zh {
+            font-size: 1rem;
+            letter-spacing: 5px;
+            color: #ff4d4d; /* 模仿參考圖的紅色字 */
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* =========================================
+           ★ 2. 中間色塊介紹區 (Intro Band) ★
+           ========================================= */
+        .intro-band {
+            width: 100%;
+            background-color: #000; /* 改成黑色比較酷 */
+            color: #fff;
+            padding: 100px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .intro-left {
+            width: 30%;
+        }
+        .intro-title {
+            font-size: 2rem;
+            font-family: 'Cormorant Garamond', serif;
+            margin-bottom: 10px;
+        }
+        .intro-subtitle {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.7;
+        }
+
+        .intro-right {
+            width: 60%;
+        }
+        .intro-text {
+            font-size: 1rem;
+            line-height: 1.8;
+            font-weight: 300;
+            opacity: 0.9;
+            text-align: justify;
+        }
+
+        /* =========================================
+           ★ 3. 雙圖展示區 (Dual Visuals) ★
+           ========================================= */
+        .visual-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            width: 100%;
+            height: 80vh; /* 佔滿 80% 螢幕高度 */
+        }
+        .visual-item {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        /* 左圖：人像 */
+        .visual-left img { object-position: center top; }
+        /* 右圖：風景 */
+        .visual-right img { object-position: center center; }
+
+        /* =========================================
+           ★ 4. 底部列表區 (List / Resume) ★
+           ========================================= */
+        .list-section {
+            padding: 100px 60px;
+            background-color: #f8f8f6;
+        }
+        .list-title {
+            font-size: 1.5rem;
+            font-family: 'Cormorant Garamond', serif;
+            color: #ff4d4d; /* 紅色標題 */
+            margin-bottom: 60px;
+        }
+
+        .list-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 三欄排版 */
+            gap: 60px;
+        }
+
+        .list-col-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            color: #888;
+        }
+
+        .list-item {
+            display: flex;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            align-items: baseline;
+        }
+        .list-label {
+            font-weight: 600;
+            width: 120px; /* 左邊標籤寬度 */
+            color: #000;
+        }
+        .list-val {
+            color: #555;
+        }
+        .list-link {
+            border-bottom: 1px solid #000;
+            padding-bottom: 2px;
+            transition: color 0.3s;
+        }
+        .list-link:hover { color: #ff4d4d; border-color: #ff4d4d; }
+
+        /* RWD */
+        @media (max-width: 768px) {
+            header { padding: 20px; }
+            .profile-hero { padding-top: 120px; }
+            .intro-band { flex-direction: column; gap: 40px; padding: 60px 30px; }
+            .intro-left, .intro-right { width: 100%; }
+            .visual-grid { grid-template-columns: 1fr; height: auto; }
+            .visual-item { height: 50vh; }
+            .list-grid { grid-template-columns: 1fr; gap: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-top">
+            <a href="index.html" class="logo">JAY POSH</a>
+            <nav class="nav-links">
+                <a href="about.html" class="nav-link active">About</a>
+                <a href="work.html" class="nav-link">Work</a>
+                <a href="music.html" class="nav-link">Music</a>
+                <a href="index.html#experience" class="nav-link">Info</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="profile-hero">
+        <div class="profile-img-container">
+            <img src="images/work9.jpg" alt="Jay Posh Portrait">
+        </div>
+        <h1 class="profile-name-en">JAY POSH</h1>
+        <span class="profile-name-zh">VISUAL DIRECTOR</span>
+    </section>
+
+    <section class="intro-band">
+        <div class="intro-left">
+            <h2 class="intro-title">Introduction</h2>
+            <span class="intro-subtitle">Based in Taipei, Taiwan</span>
+        </div>
+        <div class="intro-right">
+            <p class="intro-text">
+                Driven by a profound love for cinema and music, I believe visuals are not just static images, but a language of emotion. I don't just design; I orchestrate narratives. My approach combines the precision of graphic design with the raw emotion of photography to create high-end, textured visuals that elevate brand value.
+                <br><br>
+                深受電影美術與音樂的啟發，我相信影像不僅是視覺的呈現，更是情感的語言。我不僅僅是在做設計，而是在編織故事。我的創作核心在於結合平面設計的精準度與攝影的原始張力，為品牌創造出具備「高級感」與「故事性」的視覺體驗。
+            </p>
+        </div>
+    </section>
+
+    <section class="visual-grid">
+        <div class="visual-item visual-left">
+            <img src="images/work3.jpg" alt="Portrait Visual">
+        </div>
+        <div class="visual-item visual-right">
+            <img src="images/split-3.jpg" alt="Scenery Visual">
+        </div>
+    </section>
+
+    <section class="list-section">
+        <h2 class="list-title">Biography & Services</h2>
+        
+        <div class="list-grid">
+            <div class="list-col">
+                <div class="list-col-title">Services</div>
+                <div class="list-item">
+                    <span class="list-label">Art Direction</span>
+                    <span class="list-val">Concept / Moodboard</span>
+                </div>
+                <div class="list-item">
+                    <span class="list-label">Photography</span>
+                    <span class="list-val">Editorial / Commercial</span>
+                </div>
+                <div class="list-item">
+                    <span class="list-label">Branding</span>
+                    <span class="list-val">VI System / Logo</span>
+                </div>
+                <div class="list-item">
+                    <span class="list-label">Web Design</span>
+                    <span class="list-val">UI / Visual Strategy</span>
+                </div>
+            </div>
+
+            <div class="list-col">
+                <div class="list-col-title">Recognition</div>
+                <div class="list-item">
+                    <span class="list-label">2025</span>
+                    <span class="list-val">Behance Featured</span>
+                </div>
+                <div class="list-item">
+                    <span class="list-label">2024</span>
+                    <span class="list-val">Tokyo Type Directors Club</span>
+                </div>
+                <div class="list-item">
+                    <span class="list-label">2023</span>
+                    <span class="list-val">Taipei Design Award</span>
+                </div>
+            </div>
+
+            <div class="list-col">
+                <div class="list-col-title">Contact</div>
+                <div class="list-item">
+                    <span class="list-label">Email</span>
+                    <span class="list-val"><a href="mailto:hello@jayposh.com" class="list-link">hello@jayposh.com</a></span>
+                </div>
+                <div class="list-item">
+                    <span class="list-label">Instagram</span>
+                    <span class="list-val"><a href="#" class="list-link">@jayposh_w</a></span>
+                </div>
+                <div class="list-item">
+                    <span class="list-label">Location</span>
+                    <span class="list-val">Taipei, Taiwan</span>
+                </div>
+                <div class="list-item" style="margin-top: 20px;">
+                    <span class="list-label">Status</span>
+                    <span class="list-val" style="color: #4caf50;">● Available for work</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
