@@ -38,11 +38,10 @@
         .nav-link.active::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 1px; background: currentColor; }
 
         /* =========================================
-           ★ 1. Profile Hero (照片在文字上方) ★
+           ★ 1. Profile Hero (照片在文字上方 - 調整版) ★
            ========================================= */
         .profile-hero {
             width: 100%;
-            /* padding-top: 100px; 讓照片從 header 下方開始，或者你想照片壓在 header 下面也可以設為 0 */
             padding-top: 100px; 
             display: flex;
             flex-direction: column;
@@ -53,14 +52,16 @@
         /* 寬幅圖片容器 */
         .profile-img-container {
             width: 100%; 
-            height: 65vh; 
+            /* ★★★ 修改 1: 高度增加到 85vh，更有氣勢 ★★★ */
+            height: 85vh; 
             overflow: hidden;
-            margin-bottom: 40px; /* 照片與下方文字的距離 */
+            /* ★★★ 修改 2: 距離下方文字增加到 80px ★★★ */
+            margin-bottom: 80px; 
         }
         .profile-img-container img {
             width: 100%; height: 100%;
             object-fit: cover;
-            object-position: center 25%; /* 調整對焦點 */
+            object-position: center 25%; /* 確保焦點在眼睛附近 */
             transition: transform 1.5s ease;
             filter: grayscale(100%) contrast(1.1);
         }
@@ -68,7 +69,7 @@
 
         /* 文字群組 */
         .profile-text-group {
-            margin-bottom: 80px; /* 文字與下方黑色區塊的距離 */
+            margin-bottom: 100px; /* 文字與下方黑色區塊的距離也稍微拉大 */
         }
         .profile-name-en {
             font-family: 'Cormorant Garamond', serif;
@@ -113,7 +114,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             width: 100%;
-            height: 80vh; /* 佔滿 80% 螢幕高度 */
+            height: 80vh; 
         }
         .visual-item {
             width: 100%;
@@ -121,7 +122,6 @@
             overflow: hidden;
             position: relative;
         }
-        /* 確保影片填滿 */
         .visual-item video { width: 100%; height: 100%; object-fit: cover; }
 
         /* =========================================
@@ -146,11 +146,10 @@
         @media (max-width: 768px) {
             header { padding: 20px; }
             .profile-hero { padding-top: 80px; }
-            .profile-img-container { height: 40vh; }
+            .profile-img-container { height: 50vh; }
             .profile-name-en { font-size: 2.5rem; }
             .intro-band { flex-direction: column; gap: 40px; padding: 60px 30px; }
             .intro-left, .intro-right { width: 100%; }
-            /* 手機版影片變為上下排列 */
             .visual-grid { grid-template-columns: 1fr; height: auto; }
             .visual-item { height: 50vh; }
             .list-grid { grid-template-columns: 1fr; gap: 40px; }
