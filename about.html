@@ -19,7 +19,7 @@
             line-height: 1.6;
         }
         a { text-decoration: none; color: inherit; cursor: pointer; }
-        img { display: block; width: 100%; height: auto; object-fit: cover; }
+        img, video { display: block; width: 100%; height: auto; object-fit: cover; }
 
         /* --- Header --- */
         header {
@@ -28,7 +28,6 @@
             padding: 30px 50px;
             z-index: 100; 
             background: transparent;
-            /* 這次背景是白色/圖片，我們用黑色字比較清楚，或是用 difference */
             mix-blend-mode: difference; 
             color: #fff; 
         }
@@ -39,24 +38,41 @@
         .nav-link.active::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 1px; background: currentColor; }
 
         /* =========================================
-           ★ 1. Profile Hero (滿版寬幅設計) ★
+           ★ 1. Profile Hero (照片在文字上方) ★
            ========================================= */
         .profile-hero {
             width: 100%;
-            padding-top: 150px; /* 留位置給 Header */
+            /* padding-top: 100px; 讓照片從 header 下方開始，或者你想照片壓在 header 下面也可以設為 0 */
+            padding-top: 100px; 
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
         }
 
-        .profile-text-group {
-            margin-bottom: 60px;
+        /* 寬幅圖片容器 */
+        .profile-img-container {
+            width: 100%; 
+            height: 65vh; 
+            overflow: hidden;
+            margin-bottom: 40px; /* 照片與下方文字的距離 */
         }
+        .profile-img-container img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            object-position: center 25%; /* 調整對焦點 */
+            transition: transform 1.5s ease;
+            filter: grayscale(100%) contrast(1.1);
+        }
+        .profile-img-container:hover img { transform: scale(1.03); }
 
+        /* 文字群組 */
+        .profile-text-group {
+            margin-bottom: 80px; /* 文字與下方黑色區塊的距離 */
+        }
         .profile-name-en {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 4rem; /* 字體加大 */
+            font-size: 4rem;
             font-weight: 400;
             line-height: 1;
             margin-bottom: 15px;
@@ -69,23 +85,6 @@
             font-weight: 600;
             text-transform: uppercase;
         }
-        
-        /* ★★★ 寬幅圖片容器 ★★★ */
-        .profile-img-container {
-            width: 100%; 
-            height: 65vh; /* 佔據螢幕高度的 65%，很有電影感 */
-            overflow: hidden;
-            margin-bottom: 0; /* 貼齊下方 */
-        }
-        .profile-img-container img {
-            width: 100%; height: 100%;
-            object-fit: cover; /* 確保填滿 */
-            /* ★ 關鍵：調整對焦點，因為照片是直的被切成橫的，我們將焦點設在中間偏上 (看到眼睛) */
-            object-position: center 25%; 
-            transition: transform 1.5s ease;
-            filter: grayscale(100%) contrast(1.1); /* 確保黑白質感 */
-        }
-        .profile-img-container:hover img { transform: scale(1.03); }
 
         /* =========================================
            ★ 2. Intro Band (黑色介紹區) ★
@@ -108,7 +107,25 @@
         .intro-text { font-size: 1rem; line-height: 1.8; font-weight: 300; opacity: 0.9; text-align: justify; }
 
         /* =========================================
-           ★ 3. List Section (履歷/聯絡) ★
+           ★ 3. Dual Visuals (雙影片並排區塊) ★
+           ========================================= */
+        .visual-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            width: 100%;
+            height: 80vh; /* 佔滿 80% 螢幕高度 */
+        }
+        .visual-item {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        /* 確保影片填滿 */
+        .visual-item video { width: 100%; height: 100%; object-fit: cover; }
+
+        /* =========================================
+           ★ 4. List Section (履歷/聯絡) ★
            ========================================= */
         .list-section { padding: 100px 60px; background-color: #f8f8f6; }
         .list-title { font-size: 1.5rem; font-family: 'Cormorant Garamond', serif; color: #ff4d4d; margin-bottom: 60px; }
@@ -128,11 +145,14 @@
 
         @media (max-width: 768px) {
             header { padding: 20px; }
-            .profile-hero { padding-top: 120px; }
+            .profile-hero { padding-top: 80px; }
+            .profile-img-container { height: 40vh; }
             .profile-name-en { font-size: 2.5rem; }
-            .profile-img-container { height: 40vh; } /* 手機版高度縮減 */
             .intro-band { flex-direction: column; gap: 40px; padding: 60px 30px; }
             .intro-left, .intro-right { width: 100%; }
+            /* 手機版影片變為上下排列 */
+            .visual-grid { grid-template-columns: 1fr; height: auto; }
+            .visual-item { height: 50vh; }
             .list-grid { grid-template-columns: 1fr; gap: 40px; }
         }
     </style>
@@ -152,13 +172,13 @@
     </header>
 
     <section class="profile-hero">
+        <div class="profile-img-container">
+            <img src="images/profile.jpg" alt="Jay Posh Portrait">
+        </div>
+        
         <div class="profile-text-group">
             <h1 class="profile-name-en">JAY POSH</h1>
             <span class="profile-name-zh">VISUAL DESIGNER</span>
-        </div>
-        
-        <div class="profile-img-container">
-            <img src="images/profile.jpg" alt="Jay Posh Portrait">
         </div>
     </section>
 
@@ -173,6 +193,15 @@
                 <br><br>
                 深受電影美術與音樂的啟發，我相信影像不僅是視覺的呈現，更是情感的語言。我不僅僅是在做設計，而是在編織故事。我的創作核心在於結合平面設計的精準度與攝影的原始張力，為品牌創造出具備「高級感」與「故事性」的視覺體驗。
             </p>
+        </div>
+    </section>
+
+    <section class="visual-grid">
+        <div class="visual-item visual-left">
+            <video src="images/about-video-1.mp4" autoplay loop muted playsinline></video>
+        </div>
+        <div class="visual-item visual-right">
+            <video src="images/about-video-2.mp4" autoplay loop muted playsinline></video>
         </div>
     </section>
 
