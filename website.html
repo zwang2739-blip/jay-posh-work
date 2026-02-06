@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JAY POSH - PINKSELFIE</title>
+    <title>PINKSELFIE - JAY POSH</title>
     <style>
-        /* --- 基礎設定 --- */
+        /* --- 基礎設定：白色雜誌風 --- */
         body {
-            background-color: #050505; /* 極黑背景 */
-            color: #e0e0e0;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f8f8f8; /* 微微的米白，不刺眼 */
+            color: #111;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            overflow-x: hidden; /* 防止圖片凸出去產生橫向卷軸 */
         }
 
         a { text-decoration: none; color: inherit; transition: opacity 0.3s; }
-        a:hover { opacity: 0.6; }
+        a:hover { opacity: 0.5; }
 
-        /* --- 導覽列 (保持一致) --- */
+        /* --- 導覽列 (改為黑色字) --- */
         nav {
-            padding: 20px 40px;
+            padding: 30px 50px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -30,119 +30,138 @@
             position: fixed;
             width: 100%;
             top: 0;
-            background: rgba(5, 5, 5, 0.9);
+            background: rgba(248, 248, 248, 0.9); /* 與背景同色 */
             z-index: 1000;
             box-sizing: border-box;
         }
+        .nav-links a { margin-left: 25px; color: #888; font-weight: 500; }
+        .nav-links a.active { color: #000; text-decoration: underline; text-underline-offset: 5px;}
 
-        .nav-links a { margin-left: 20px; font-weight: bold; color: #888; }
-        .nav-links a.active { color: #fff; }
-
-        /* --- 專案內容容器 --- */
+        /* --- 主容器 --- */
         .container {
-            max-width: 1200px;
-            margin: 120px auto 50px;
-            padding: 0 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 150px 20px 100px;
+            position: relative;
         }
 
-        /* --- 標題區塊 --- */
-        .project-header {
-            margin-bottom: 60px;
+        /* --- 標題區：模仿 Cho Gi-Seok 的大字風格 --- */
+        .hero-section {
             text-align: center;
-        }
-        .project-title {
-            font-size: 4rem;
-            font-weight: lighter;
-            margin: 0;
-            letter-spacing: -2px;
-            font-family: 'Times New Roman', serif;
-            color: #fff;
-        }
-        .project-subtitle {
-            color: #666;
-            margin-top: 10px;
-            font-size: 1rem;
-            letter-spacing: 2px;
+            margin-bottom: 100px;
+            position: relative;
         }
 
-        /* --- 資訊區塊 (參考 GROSHEV 風格) --- */
-        .info-section {
+        .project-title {
+            font-family: 'Times New Roman', Times, serif; /* 襯線體關鍵 */
+            font-size: 12vw; /* 隨螢幕寬度變大 */
+            line-height: 0.9;
+            font-weight: 100;
+            letter-spacing: -3px;
+            color: #111;
+            margin: 0;
+            z-index: 2;
+            position: relative;
+        }
+
+        .project-subtitle {
+            font-size: 1rem;
+            color: #666;
+            margin-top: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* --- 漂浮圖片 (裝飾用，像參考圖那樣) --- */
+        .floating-img {
+            position: absolute;
+            width: 200px;
+            z-index: 1; /* 在文字後面 */
+            opacity: 0.8;
+            filter: grayscale(100%);
+            transition: all 0.5s ease;
+        }
+        .floating-img:hover {
+            z-index: 3; /* 滑鼠移過去浮上來 */
+            opacity: 1;
+            filter: grayscale(0%);
+            transform: scale(1.1);
+        }
+        
+        /* 設定漂浮圖片的位置 */
+        .float-1 { top: 0; left: 10%; width: 15vw; }
+        .float-2 { top: 40%; right: 15%; width: 18vw; }
+
+        /* --- 專案介紹區 (左右兩欄) --- */
+        .content-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            margin-bottom: 100px;
-            border-top: 1px solid #333;
-            padding-top: 40px;
+            gap: 80px;
+            margin-top: 150px;
+            padding: 0 50px;
         }
 
-        .info-narrative {
-            font-size: 0.95rem;
-            line-height: 1.8;
-            color: #aaa;
-        }
-        .info-narrative h3 {
-            color: #fff;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
+        .project-desc {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            font-family: 'Times New Roman', serif;
         }
 
-        /* --- Credits 列表 --- */
-        .credits-list {
-            font-size: 0.8rem;
-            line-height: 2;
-            text-transform: uppercase;
+        .project-meta {
+            font-size: 0.9rem;
+            line-height: 2.2;
+            border-top: 1px solid #000;
+            padding-top: 20px;
         }
-        .credit-item {
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px solid #222;
-            padding: 5px 0;
-        }
-        .credit-label { color: #666; }
-        .credit-value { color: #fff; text-align: right; }
+        .meta-row { display: flex; justify-content: space-between; border-bottom: 1px solid #ddd; }
 
-        /* --- 圖片展示網格 --- */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+        /* --- 影片/大圖展示區 --- */
+        .visual-showcase {
+            margin-top: 100px;
+            width: 100%;
         }
 
-        .gallery-item {
+        .showcase-media {
             width: 100%;
             height: auto;
             display: block;
-            filter: grayscale(20%);
-            transition: filter 0.3s;
-            background-color: #1a1a1a; /* 圖片載入前的底色 */
-        }
-        .gallery-item:hover {
-            filter: grayscale(0%);
-        }
-        
-        .gallery-item.full-width {
-            grid-column: span 2;
-            margin-bottom: 20px;
+            margin-bottom: 50px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1); /* 增加一點立體感 */
         }
 
-        /* --- RWD --- */
+        /* --- 按鈕 --- */
+        .visit-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 40px;
+            background: #111;
+            color: #fff;
+            border-radius: 50px;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: transform 0.2s;
+        }
+        .visit-btn:hover {
+            transform: translateY(-5px);
+            opacity: 1;
+        }
+
+        /* RWD */
         @media (max-width: 768px) {
-            .info-section { grid-template-columns: 1fr; gap: 40px; }
-            .gallery-grid { grid-template-columns: 1fr; }
-            .project-title { font-size: 2.5rem; }
-            .gallery-item.full-width { grid-column: span 1; }
+            .project-title { font-size: 18vw; }
+            .content-grid { grid-template-columns: 1fr; padding: 0 20px; }
+            .floating-img { display: none; /* 手機版隱藏漂浮圖以免太亂 */ }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo"><a href="index.html" style="color:#fff;">JAY POSH</a></div>
+        <div class="logo"><a href="index.html" style="color:#000; font-weight:bold;">JAY POSH</a></div>
         <div class="nav-links">
             <a href="about.html">ABOUT</a>
-            <a href="work.html">WORK</a> <a href="music.html">MUSIC</a>
+            <a href="website.html" class="active">WEBSITE</a>
+            <a href="music.html">MUSIC</a>
             <a href="experience.html">EXPERIENCE</a>
             <a href="contact.html">CONTACT</a>
         </div>
@@ -150,51 +169,37 @@
 
     <div class="container">
         
-        <div class="project-header">
-            <h1 class="project-title">PINKSELFIE</h1>
-            <p class="project-subtitle">OFFICIAL BRAND WEBSITE</p>
+        <div class="hero-section">
+            <img src="images/pinkselfie_detail1.jpg" class="floating-img float-1" alt="Decor">
+            <img src="images/pinkselfie_detail2.jpg" class="floating-img float-2" alt="Decor">
+
+            <h1 class="project-title">
+                Pink<br>Selfie
+            </h1>
+            <p class="project-subtitle">Official E-Commerce Website</p>
         </div>
 
-        <section class="info-section">
-            
-            <div class="info-narrative">
-                <h3>Narrative</h3>
+        <div class="visual-showcase">
+            <img src="images/pinkselfie_hero.jpg" class="showcase-media" alt="Full Website Preview">
+        </div>
+
+        <section class="content-grid">
+            <div class="project-desc">
                 <p>
-                    這是我從無到有獨立建置的 PINKSELFIE 品牌官方網站。
-                    專案目標是打造一個視覺強烈且購物體驗流暢的電子商務平台。
-                    我負責了從 UI 設計、切版到最終的功能實作，確保網站在不同裝置上都能完美呈現品牌的時尚語彙。
+                    From concept to code, I built the entire PINKSELFIE official website. 
+                    The goal was to create a seamless shopping experience that reflects the brand's bold and elegant identity.
                 </p>
+                <br>
+                <a href="https://www.pinkselfie.com.tw" target="_blank" class="visit-btn">
+                    Visit Live Site ↗
+                </a>
             </div>
 
-            <div class="credits-list">
-                <div class="credit-item">
-                    <span class="credit-label">ROLE</span>
-                    <span class="credit-value">Frontend Developer / UI Designer</span>
-                </div>
-                <div class="credit-item">
-                    <span class="credit-label">YEAR</span>
-                    <span class="credit-value">2026</span>
-                </div>
-                <div class="credit-item">
-                    <span class="credit-label">TECH STACK</span>
-                    <span class="credit-value">HTML5, CSS3, JavaScript</span>
-                </div>
-                <div class="credit-item">
-                    <span class="credit-label">STATUS</span>
-                    <span class="credit-value">Live</span>
-                </div>
-                <div class="credit-item" style="border:none; margin-top: 20px;">
-                    <a href="https://www.pinkselfie.com.tw" target="_blank" style="border: 1px solid #fff; padding: 10px 20px; color: #fff; font-size: 10px; display:inline-block;">
-                        VISIT LIVE SITE ↗
-                    </a>
-                </div>
+            <div class="project-meta">
+                <div class="meta-row"><span>Role</span> <span>Full Stack Developer</span></div>
+                <div class="meta-row"><span>Year</span> <span>2026</span></div>
+                <div class="meta-row"><span>Stack</span> <span>HTML / CSS / JS / Shopify</span></div>
             </div>
-        </section>
-
-        <section class="gallery-grid">
-            <img src="images/pinkselfie_hero.jpg" alt="PinkSelfie Hero" class="gallery-item full-width">
-            <img src="images/pinkselfie_detail1.jpg" alt="Detail View 1" class="gallery-item">
-            <img src="images/pinkselfie_detail2.jpg" alt="Detail View 2" class="gallery-item">
         </section>
 
     </div>
