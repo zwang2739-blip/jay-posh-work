@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PINKSELFIE - JAY POSH</title>
     <style>
-        /* --- 基礎設定 --- */
+        /* --- 全局設定：米白紙質感 --- */
         body {
-            background-color: #f8f8f8;
+            background-color: #f4f4f4; /* 稍微深一點的米灰，更有質感 */
             color: #111;
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             margin: 0;
@@ -16,7 +16,6 @@
         }
 
         a { text-decoration: none; color: inherit; transition: opacity 0.3s; }
-        a:hover { opacity: 0.5; }
 
         /* --- 導覽列 --- */
         nav {
@@ -30,152 +29,149 @@
             position: fixed;
             width: 100%;
             top: 0;
-            background: rgba(248, 248, 248, 0.95);
+            background: rgba(244, 244, 244, 0.95);
             z-index: 1000;
-            box-sizing: border-box;
         }
         .nav-links a { margin-left: 25px; color: #888; font-weight: 500; }
         .nav-links a.active { color: #000; text-decoration: underline; text-underline-offset: 5px;}
 
-        /* --- 主容器 --- */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 150px 20px 100px;
-            position: relative;
-        }
-
-        /* --- 1. 標題區 (含漂浮圖片) --- */
+        /* --- 主標題區：Cho Gi-Seok 風格核心 --- */
         .hero-section {
+            height: 90vh; /* 佔滿第一屏 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
             text-align: center;
-            margin-bottom: 80px;
-            position: relative;
-            padding: 50px 0;
         }
 
-        .project-title {
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 13vw; /* 超大標題 */
-            line-height: 0.9;
+        /* 超大標題 */
+        .big-title {
+            font-family: 'Times New Roman', Times, serif; /* 重點：襯線體 */
+            font-size: 15vw;
+            line-height: 0.8;
             font-weight: 100;
-            letter-spacing: -4px;
+            letter-spacing: -5px;
             color: #111;
-            margin: 0;
-            z-index: 2;
+            z-index: 2; /* 文字在中間層 */
             position: relative;
+            mix-blend-mode: difference; /* 讓文字跟圖片交疊時有特殊變色效果 */
+            color: #000;
         }
 
-        .project-subtitle {
-            font-size: 1rem;
-            color: #666;
-            margin-top: 20px;
-            letter-spacing: 3px;
+        .subtitle {
+            margin-top: 30px;
+            font-size: 1.2rem;
+            letter-spacing: 5px;
             text-transform: uppercase;
+            color: #555;
+            font-family: sans-serif;
         }
 
-        /* 漂浮圖片設定 */
-        .floating-img {
+        /* --- 漂浮元素 (影片 & 圖片) --- */
+        .floating-box {
             position: absolute;
-            z-index: 1;
-            opacity: 0.9;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15); /* 增加陰影，讓它像浮在紙上 */
+            z-index: 1; /* 預設在文字後面 */
             transition: all 0.5s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        .floating-img:hover {
-            z-index: 3;
-            transform: scale(1.05);
-            opacity: 1;
+            object-fit: cover;
         }
         
-        /* 圖片 1 & 2 的位置 */
-        .float-1 { top: -20px; left: 10%; width: 180px; transform: rotate(-5deg); }
-        .float-2 { bottom: 0; right: 15%; width: 220px; transform: rotate(5deg); }
-
-        /* --- 2. 影片展示區 (通用) --- */
-        .video-container {
-            width: 100%;
-            margin-bottom: 100px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.05);
-        }
-        .video-container video {
-            width: 100%;
-            display: block;
+        /* 滑鼠移過去會浮上來 */
+        .floating-box:hover {
+            z-index: 10;
+            transform: scale(1.1) rotate(0deg) !important;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
         }
 
-        /* --- 3. 專案介紹與圖片網格 --- */
-        .content-section {
+        /* 位置設定 (模擬隨意散落) */
+        /* 左上角的小影片 */
+        .media-1 { 
+            top: 15%; 
+            left: 10%; 
+            width: 250px; 
+            transform: rotate(-5deg);
+        }
+        
+        /* 右下角的圖片 */
+        .media-2 { 
+            bottom: 10%; 
+            right: 15%; 
+            width: 280px; 
+            transform: rotate(3deg);
+        }
+
+        /* 中間穿插的小圖 */
+        .media-3 {
+            top: 40%;
+            right: 25%;
+            width: 180px;
+            z-index: 3; /* 這張蓋在文字上面 */
+            transform: rotate(-10deg);
+        }
+
+        /* --- 下方內容區 --- */
+        .content-grid {
+            max-width: 1200px;
+            margin: 100px auto;
             display: grid;
-            grid-template-columns: 4fr 6fr; /* 左文字 右圖片 */
-            gap: 60px;
-            margin-bottom: 120px;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
             padding: 0 40px;
         }
 
-        .text-content {
-            padding-top: 20px;
-        }
-        .project-desc {
-            font-size: 1.1rem;
-            line-height: 1.8;
+        .desc-text {
             font-family: 'Times New Roman', serif;
-            color: #333;
+            font-size: 1.5rem;
+            line-height: 1.6;
         }
+
+        /* 手機版直式影片框 */
+        .mobile-showcase {
+            background: #000;
+            padding: 10px;
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            width: 60%; /* 縮小一點 */
+            margin: 0 auto;
+            display: block;
+        }
+        .mobile-video {
+            width: 100%;
+            border-radius: 20px;
+            display: block;
+        }
+
+        /* 按鈕 */
         .visit-btn {
             display: inline-block;
-            margin-top: 40px;
-            padding: 15px 45px;
-            background: #111;
-            color: #fff;
+            margin-top: 50px;
+            padding: 15px 50px;
+            border: 1px solid #000;
             border-radius: 50px;
             font-size: 12px;
-            letter-spacing: 2px;
-            transition: transform 0.2s;
-        }
-        .visit-btn:hover { transform: translateY(-5px); }
-
-        .project-meta {
-            margin-top: 50px;
-            border-top: 1px solid #ddd;
-            padding-top: 20px;
-            font-size: 0.85rem;
-            line-height: 2.5;
             text-transform: uppercase;
-            color: #666;
+            letter-spacing: 2px;
         }
-        .meta-row { display: flex; justify-content: space-between; border-bottom: 1px solid #eee; }
-
-        /* 右側圖片網格 (放圖片 3 & 4) */
-        .image-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        .grid-img {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-        .grid-img:nth-child(2) { margin-top: 50px; } /* 讓右邊那張圖錯位，比較有設計感 */
-        .grid-img:hover { transform: scale(1.02); }
-
-
-        /* --- 4. 更多影片區 (Video 2 & 3) --- */
-        .more-videos {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            padding: 0 20px;
+        .visit-btn:hover {
+            background: #000;
+            color: #fff;
         }
 
-        /* RWD 設定 */
-        @media (max-width: 900px) {
-            .project-title { font-size: 18vw; }
-            .content-section { grid-template-columns: 1fr; }
-            .more-videos { grid-template-columns: 1fr; }
-            .floating-img { display: none; /* 手機版隱藏漂浮圖以免太亂 */ }
-            .float-1, .float-2 { width: 100px; }
-            .grid-img:nth-child(2) { margin-top: 0; }
+        /* RWD 調整 */
+        @media (max-width: 768px) {
+            .big-title { font-size: 20vw; }
+            .content-grid { grid-template-columns: 1fr; }
+            .media-1, .media-2, .media-3 { 
+                position: relative; 
+                width: 80%; 
+                left: auto; top: auto; right: auto; bottom: auto;
+                transform: none;
+                margin: 20px auto;
+                display: block;
+            }
+            .hero-section { height: auto; padding-top: 150px; padding-bottom: 50px;}
         }
     </style>
 </head>
@@ -192,67 +188,52 @@
         </div>
     </nav>
 
-    <div class="container">
+    <header class="hero-section">
         
-        <div class="hero-section">
-            <img src="images/pink_img_1.png" class="floating-img float-1" alt="Detail 1">
-            <img src="images/pink_img_2.png" class="floating-img float-2" alt="Detail 2">
+        <h1 class="big-title">Pink<br>Selfie</h1>
+        <p class="subtitle">Brand E-Commerce</p>
 
-            <h1 class="project-title">
-                Pink<br>Selfie
-            </h1>
-            <p class="project-subtitle">Official Brand E-Commerce</p>
+        <video class="floating-box media-1" autoplay loop muted playsinline>
+            <source src="images/pink_hero_video.mp4" type="video/mp4">
+        </video>
+
+        <img src="images/pink_img_1.png" class="floating-box media-2" alt="Detail">
+
+        <img src="images/pink_img_2.png" class="floating-box media-3" alt="Detail">
+
+    </header>
+
+    <section class="content-grid">
+        
+        <div class="text-col">
+            <p class="desc-text">
+                從無到有的完整品牌官網建置。<br>
+                將 PINKSELFIE 的前衛時尚美學，轉化為流暢的數位購物體驗。
+            </p>
+            <br>
+            <div style="font-size: 0.9rem; color: #666; line-height: 2;">
+                ROLE: Frontend Developer<br>
+                YEAR: 2026<br>
+                STACK: HTML, CSS, JavaScript
+            </div>
+
+            <a href="https://www.pinkselfie.com.tw" target="_blank" class="visit-btn">
+                Visit Live Site ↗
+            </a>
         </div>
 
-        <div class="video-container">
-            <video autoplay loop muted playsinline>
-                <source src="images/pink_video_1.mp4" type="video/mp4">
-            </video>
-        </div>
-
-        <section class="content-section">
-            <div class="text-content">
-                <div class="project-desc">
-                    <p>
-                        This is a complete e-commerce platform built from scratch. 
-                        My role involved translating the brand's high-fashion aesthetic into a functional digital experience.
-                    </p>
-                    <p>
-                        The site features a custom responsive layout, seamless checkout process, and immersive visual storytelling.
-                    </p>
-                    
-                    <a href="https://www.pinkselfie.com.tw" target="_blank" class="visit-btn">
-                        Visit Live Site ↗
-                    </a>
-                </div>
-
-                <div class="project-meta">
-                    <div class="meta-row"><span>Role</span> <span>Full Stack Developer</span></div>
-                    <div class="meta-row"><span>Client</span> <span>PinkSelfie</span></div>
-                    <div class="meta-row"><span>Year</span> <span>2026</span></div>
-                    <div class="meta-row"><span>Tech</span> <span>HTML / CSS / JS / Shopify</span></div>
-                </div>
-            </div>
-
-            <div class="image-grid">
-                <img src="images/pink_img_3.png" class="grid-img" alt="Detail 3">
-                <img src="images/pink_img_4.png" class="grid-img" alt="Detail 4">
-            </div>
-        </section>
-
-        <section class="more-videos">
-            <div class="video-container">
-                <video autoplay loop muted playsinline>
-                    <source src="images/pink_video_2.mp4" type="video/mp4">
+        <div class="visual-col">
+            <div class="mobile-showcase">
+                <video class="mobile-video" autoplay loop muted playsinline>
+                    <source src="images/pink_mobile_video.mp4" type="video/mp4">
                 </video>
             </div>
-            <div class="video-container">
-                <video autoplay loop muted playsinline>
-                    <source src="images/pink_video_3.mp4" type="video/mp4">
-                </video>
             </div>
-        </section>
 
+    </section>
+
+    <div style="width: 100%; padding: 0 20px; box-sizing: border-box; margin-bottom: 100px;">
+        <img src="images/pink_img_4.png" style="width: 100%; height: auto; filter: grayscale(20%); display: block;">
     </div>
 
 </body>
