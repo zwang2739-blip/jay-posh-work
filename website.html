@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JAY POSH - WEBSITE</title>
+    <title>JAY POSH - PINKSELFIE</title>
     <style>
         /* --- 基礎設定 --- */
         body {
@@ -18,7 +18,7 @@
         a { text-decoration: none; color: inherit; transition: opacity 0.3s; }
         a:hover { opacity: 0.6; }
 
-        /* --- 導覽列 (保持跟你原本的一樣) --- */
+        /* --- 導覽列 (保持一致) --- */
         nav {
             padding: 20px 40px;
             display: flex;
@@ -41,7 +41,7 @@
         /* --- 專案內容容器 --- */
         .container {
             max-width: 1200px;
-            margin: 120px auto 50px; /* 避開導覽列 */
+            margin: 120px auto 50px;
             padding: 0 20px;
         }
 
@@ -51,11 +51,12 @@
             text-align: center;
         }
         .project-title {
-            font-size: 4rem; /* 大標題 */
-            font-weight: lighter; /* 細字體更有質感 */
+            font-size: 4rem;
+            font-weight: lighter;
             margin: 0;
             letter-spacing: -2px;
-            font-family: 'Times New Roman', serif; /* 根據參考圖，標題用襯線體 */
+            font-family: 'Times New Roman', serif;
+            color: #fff;
         }
         .project-subtitle {
             color: #666;
@@ -64,10 +65,10 @@
             letter-spacing: 2px;
         }
 
-        /* --- 資訊區塊 (參考圖的中間部分) --- */
+        /* --- 資訊區塊 (參考 GROSHEV 風格) --- */
         .info-section {
             display: grid;
-            grid-template-columns: 1fr 1fr; /* 左右兩欄 */
+            grid-template-columns: 1fr 1fr;
             gap: 60px;
             margin-bottom: 100px;
             border-top: 1px solid #333;
@@ -87,7 +88,7 @@
             letter-spacing: 1px;
         }
 
-        /* --- Credits 列表 (參考圖右邊那排) --- */
+        /* --- Credits 列表 --- */
         .credits-list {
             font-size: 0.8rem;
             line-height: 2;
@@ -96,16 +97,16 @@
         .credit-item {
             display: flex;
             justify-content: space-between;
-            border-bottom: 1px solid #222; /* 淡淡的分隔線 */
+            border-bottom: 1px solid #222;
             padding: 5px 0;
         }
         .credit-label { color: #666; }
         .credit-value { color: #fff; text-align: right; }
 
-        /* --- 圖片展示網格 (參考圖下方的拼貼) --- */
+        /* --- 圖片展示網格 --- */
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 兩欄排版 */
+            grid-template-columns: repeat(2, 1fr);
             gap: 20px;
         }
 
@@ -113,20 +114,20 @@
             width: 100%;
             height: auto;
             display: block;
-            filter: grayscale(20%); /* 稍微降低飽和度增加質感 */
+            filter: grayscale(20%);
             transition: filter 0.3s;
+            background-color: #1a1a1a; /* 圖片載入前的底色 */
         }
         .gallery-item:hover {
             filter: grayscale(0%);
         }
         
-        /* 讓第一張圖跨滿整個寬度 (像 Hero Image) */
         .gallery-item.full-width {
             grid-column: span 2;
             margin-bottom: 20px;
         }
 
-        /* --- 手機版 RWD --- */
+        /* --- RWD --- */
         @media (max-width: 768px) {
             .info-section { grid-template-columns: 1fr; gap: 40px; }
             .gallery-grid { grid-template-columns: 1fr; }
@@ -141,7 +142,7 @@
         <div class="logo"><a href="index.html" style="color:#fff;">JAY POSH</a></div>
         <div class="nav-links">
             <a href="about.html">ABOUT</a>
-            <a href="website.html" class="active">WEBSITE</a> <a href="music.html">MUSIC</a>
+            <a href="work.html">WORK</a> <a href="music.html">MUSIC</a>
             <a href="experience.html">EXPERIENCE</a>
             <a href="contact.html">CONTACT</a>
         </div>
@@ -163,8 +164,6 @@
                     專案目標是打造一個視覺強烈且購物體驗流暢的電子商務平台。
                     我負責了從 UI 設計、切版到最終的功能實作，確保網站在不同裝置上都能完美呈現品牌的時尚語彙。
                 </p>
-                <br>
-                <p style="color: #666; font-size: 12px;">* Click images to view full resolution.</p>
             </div>
 
             <div class="credits-list">
@@ -181,12 +180,8 @@
                     <span class="credit-value">HTML5, CSS3, JavaScript</span>
                 </div>
                 <div class="credit-item">
-                    <span class="credit-label">RESPONSIVE</span>
-                    <span class="credit-value">Mobile & Desktop Ready</span>
-                </div>
-                <div class="credit-item">
                     <span class="credit-label">STATUS</span>
-                    <span class="credit-value">Live / Production</span>
+                    <span class="credit-value">Live</span>
                 </div>
                 <div class="credit-item" style="border:none; margin-top: 20px;">
                     <a href="https://www.pinkselfie.com.tw" target="_blank" style="border: 1px solid #fff; padding: 10px 20px; color: #fff; font-size: 10px; display:inline-block;">
@@ -198,11 +193,8 @@
 
         <section class="gallery-grid">
             <img src="images/pinkselfie_hero.jpg" alt="PinkSelfie Hero" class="gallery-item full-width">
-            
             <img src="images/pinkselfie_detail1.jpg" alt="Detail View 1" class="gallery-item">
             <img src="images/pinkselfie_detail2.jpg" alt="Detail View 2" class="gallery-item">
-            
-            <img src="images/pinkselfie_mobile.jpg" alt="Mobile View" class="gallery-item full-width">
         </section>
 
     </div>
