@@ -39,36 +39,56 @@
         .nav-link.active::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 1px; background: currentColor; }
 
         /* =========================================
-           ★ 1. Hero Section - 震撼開場 ★
+           ★ 1. Hero Section - 動態滿版開場 (大幅修改) ★
            ========================================= */
         .project-hero {
-            padding: 180px 60px 60px 60px;
+            position: relative;
+            width: 100%;
+            height: 100vh; /* 佔滿整個螢幕高度 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
+            overflow: hidden;
+            background-color: #000; /* 預設底色為黑 */
         }
+        
+        /* 背景影片 */
+        .hero-bg-video {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            opacity: 0.8; /* 稍微壓暗一點點，讓白字更清楚，如果不想要壓暗可以改回 1 */
+        }
+
+        /* 文字內容層 */
+        .hero-content {
+            position: relative;
+            z-index: 2; /* 確保浮在影片之上 */
+            padding: 0 20px;
+        }
+
         .project-title-large {
             font-size: 5rem;
             font-weight: 700;
-            line-height: 0.9;
+            line-height: 1.1;
             margin-bottom: 20px;
+            color: #ffffff; /* 強制白字 */
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3); /* 加一點陰影增加層次感 */
         }
+        
         .project-subtitle {
             font-size: 1.1rem;
-            color: #666;
+            color: rgba(255, 255, 255, 0.8); /* 半透明白字 */
             max-width: 600px;
-            margin: 0 auto 80px auto;
-        }
-        .hero-image-container {
-            width: 100%;
-            height: 85vh;
-            overflow: hidden;
-            background: #f4f4f4;
-        }
-        .hero-image-container img {
-            width: 100%; height: 100%; object-fit: cover;
+            margin: 0 auto;
         }
 
         /* =========================================
-           ★ 2. Intro & Challenge - 專案背景 (文字排版大改) ★
+           ★ 2. Intro & Challenge - 專案背景 ★
            ========================================= */
         .intro-section {
             padding: 120px 60px;
@@ -77,26 +97,24 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 80px;
-            align-items: flex-start; /* 改為上方對齊 */
+            align-items: flex-start;
         }
         .section-header { font-size: 2.5rem; margin-bottom: 30px; font-weight: 600; }
         
-        /* ★★★ 新增：英文主體文字樣式 ★★★ */
         .section-text-en {
-            font-size: 1.15rem; /* 字體加大 */
+            font-size: 1.15rem; 
             line-height: 1.5;
-            color: #000; /* 顏色加深 */
+            color: #000; 
             margin-bottom: 10px;
-            text-align: left; /* 靠左對齊 */
+            text-align: left; 
             font-weight: 400;
         }
-        /* ★★★ 新增：中文輔助文字樣式 ★★★ */
         .section-text-zh {
-            font-size: 0.9rem; /* 字體縮小 */
+            font-size: 0.9rem; 
             line-height: 1.6;
-            color: #888; /* 顏色變灰 */
-            margin-bottom: 35px; /* 增加段落間距 */
-            text-align: left; /* 靠左對齊 */
+            color: #888; 
+            margin-bottom: 35px; 
+            text-align: left; 
             font-weight: 400;
         }
 
@@ -123,7 +141,7 @@
         .swatch { width: 50px; height: 50px; border-radius: 50%; border: 1px solid #333; }
 
         /* =========================================
-           ★ 4. Brand Imagery - 形象大片排版 (修正圖片裁切) ★
+           ★ 4. Brand Imagery - 形象大片排版 ★
            ========================================= */
         .campaign-section {
             padding: 150px 60px;
@@ -131,10 +149,9 @@
         }
         .campaign-header { text-align: center; margin-bottom: 80px; }
         
-        /* ★★★ 關鍵修改：讓高度自動，解決裁切問題 ★★★ */
         .wide-img { 
             width: 100%; 
-            height: auto; /* 改為 auto，依原始比例顯示 */
+            height: auto; 
             display: block;
             margin-bottom: 40px; 
         }
@@ -213,9 +230,11 @@
         /* RWD */
         @media (max-width: 900px) {
             .header-top { padding: 20px; }
-            .project-hero { padding: 120px 20px 40px 20px; }
+            
+            /* 手機版封面調整 */
+            .project-hero { height: 100vh; padding-top: 0; }
             .project-title-large { font-size: 3rem; }
-            .hero-image-container { height: 50vh; }
+            
             .intro-section { grid-template-columns: 1fr; gap: 40px; padding: 80px 20px; }
             .concept-grid { flex-direction: column; gap: 40px; align-items: flex-start; }
             
@@ -248,32 +267,33 @@
     </header>
 
     <section class="project-hero">
-        <h1 class="project-title-large">PINKSELFIE<br>Digital Experience</h1>
-        <p class="project-subtitle">A comprehensive visual overhaul from official website to campaign imagery.</p>
         
-        <div class="hero-image-container">
-            <img src="images/ps-hero.jpg" alt="PINKSELFIE New Website Mockup">
+        <video class="hero-bg-video" autoplay loop muted playsinline>
+            <source src="images/pink-motion.mp4" type="video/mp4">
+        </video>
+
+        <div class="hero-content">
+            <h1 class="project-title-large">PINKSELFIE<br>DIGITAL EXPERIENCE</h1>
+            <p class="project-subtitle">A comprehensive visual overhaul from official website to campaign imagery.</p>
         </div>
+
     </section>
 
     <section class="intro-section">
         <div class="intro-text-col">
             <h2 class="section-header">The Challenge</h2>
-            
             <p class="section-text-en">
                 PINKSELFIE is a fashion brand with a unique personality, but its original website was too rigid and monotonous to effectively convey the brand's distinct visual language and sense of luxury.
             </p>
             <p class="section-text-zh">
                 PINKSELFIE 是一個充滿個性的時尚品牌，但原有的官方網站版型過於制式、單調，無法有效傳遞品牌獨特的視覺語言與高級感。
             </p>
-
             <p class="section-text-en">
                 This redesign program is not just about web design, but covers the overall Art Direction. Our goal is to break the framework and transform the website from a simple "sales catalog" into an "interactive fashion magazine," ensuring highly consistent tone across all social and campaign imagery.
             </p>
             <p class="section-text-zh">
                 這次的重塑計畫不僅是網頁設計，更涵蓋了整體視覺指導 (Art Direction)。我們的目標是打破框架，將網站從單純的「銷售目錄」轉變為一本「可互動的時尚雜誌」，並確保所有社群與形象影像的調性高度統一。
             </p>
-
             <div class="meta-grid">
                 <div class="meta-item"><strong>Role</strong>Visual Direction, UI/UX Design</div>
                 <div class="meta-item"><strong>Client</strong>PINKSELFIE</div>
@@ -311,7 +331,7 @@
     <section class="campaign-section">
         <div class="campaign-header">
             <h2 class="section-header">Art Direction & Campaign</h2>
-            <p class="project-subtitle">統籌季節性形象大片，建立一致的高級品牌語彙。</p>
+            <p class="project-subtitle" style="color: #666;">統籌季節性形象大片，建立一致的高級品牌語彙。</p>
         </div>
         
         <img src="images/ps-detail-1.jpg" alt="Campaign Hero" class="wide-img">
@@ -328,7 +348,7 @@
 
     <section class="mobile-section">
         <h2 class="section-header">Mobile Experience</h2>
-        <p class="project-subtitle">精準的響應式設計，確保在手機端也能擁有流暢且沉浸的購物體驗。</p>
+        <p class="project-subtitle" style="color: #666;">精準的響應式設計，確保在手機端也能擁有流暢且沉浸的購物體驗。</p>
         
         <div class="mobile-grid">
             <div class="mobile-item"><img src="images/ps-mobile-1.jpg" alt="Mobile Screen 1"></div>
