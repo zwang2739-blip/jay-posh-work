@@ -120,9 +120,32 @@
         .color-swatch { display: flex; gap: 15px; }
         .swatch { width: 50px; height: 50px; border-radius: 50%; border: 1px solid #333; }
 
+        /* =========================================
+           ★ 4. Brand Imagery - 形象大片排版 ★
+           ========================================= */
+        .campaign-section {
+            padding: 150px 60px 80px 60px; /* 調整底部間距 */
+            background: #fff;
+        }
+        .campaign-header { text-align: center; margin-bottom: 80px; }
+        
+        .wide-img { 
+            width: 100%; 
+            height: auto; 
+            display: block;
+            margin-bottom: 40px; 
+        }
+        
+        /* 修改為只放兩張圖的雙欄排版 */
+        .photo-masonry {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        .photo-masonry img { width: 100%; height: auto; object-fit: cover; }
 
         /* =========================================
-           ★ ★ ★ 新增：動態輪播過場區塊 ★ ★ ★
+           ★ ★ ★ 動態輪播過場區塊 (插在中間) ★ ★ ★
            ========================================= */
         .mood-carousel-section { 
             position: relative;
@@ -135,7 +158,6 @@
             background: #000;
         }
 
-        /* 背景影片輪播容器 */
         #mood-carousel {
             position: absolute;
             top: 0; left: 0;
@@ -148,18 +170,17 @@
             width: 100%; height: 100%;
             object-fit: cover;
             opacity: 0;
-            transition: opacity 2s ease-in-out; /* 柔和淡入淡出 */
+            transition: opacity 2s ease-in-out; 
         }
         .mood-bg-video.active {
-            opacity: 0.6; /* 背景壓暗，凸顯前方圖文 */
+            opacity: 0.6; 
         }
 
-        /* 懸浮內容容器 (小黑白照 + 英文金句) */
         .floating-content {
             position: relative;
             z-index: 2; 
             text-align: center;
-            max-width: 400px; /* 控制照片大小 */
+            max-width: 400px; 
             padding: 20px;
         }
 
@@ -167,7 +188,7 @@
             width: 100%; 
             height: auto;
             margin-bottom: 30px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5); /* 陰影立體感 */
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5); 
         }
 
         .floating-text {
@@ -181,30 +202,11 @@
             line-height: 1.4;
         }
 
-
-        /* =========================================
-           ★ 4. Brand Imagery - 形象大片排版 ★
-           ========================================= */
-        .campaign-section {
-            padding: 150px 60px;
+        /* 結尾大圖專用區塊 */
+        .campaign-footer-section {
+            padding: 80px 60px 150px 60px;
             background: #fff;
         }
-        .campaign-header { text-align: center; margin-bottom: 80px; }
-        
-        .wide-img { 
-            width: 100%; 
-            height: auto; 
-            display: block;
-            margin-bottom: 40px; 
-        }
-        
-        .photo-masonry {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-        .photo-masonry img { width: 100%; height: auto; object-fit: cover; }
 
         /* =========================================
            ★ 5. Mobile Showcase ★
@@ -281,7 +283,7 @@
             .floating-content { max-width: 80%; }
             .floating-text { font-size: 1.2rem; }
 
-            .campaign-section, .mobile-section, .motion-section, .immersive-section { padding: 80px 20px; }
+            .campaign-section, .campaign-footer-section, .mobile-section, .motion-section, .immersive-section { padding: 80px 20px; }
             .photo-masonry { grid-template-columns: 1fr; }
             .mobile-grid { grid-template-columns: 1fr; gap: 40px; }
             .mobile-item:nth-child(3n+2) { transform: translateY(0); }
@@ -365,6 +367,20 @@
         </div>
     </section>
 
+    <section class="campaign-section">
+        <div class="campaign-header">
+            <h2 class="section-header">Art Direction & Campaign</h2>
+            <p class="project-subtitle" style="color: #666;">統籌季節性形象大片，建立一致的高級品牌語彙。</p>
+        </div>
+        
+        <img src="images/ps-detail-1.jpg" alt="Campaign Hero" class="wide-img">
+        
+        <div class="photo-masonry">
+            <img src="images/p24工作區域 1-100.jpg" alt="Campaign Shot 1">
+            <img src="images/p26工作區域 1-100.jpg" alt="Campaign Shot 2">
+        </div>
+    </section>
+
     <section class="mood-carousel-section">
         
         <div id="mood-carousel">
@@ -380,22 +396,8 @@
 
     </section>
 
-    <section class="campaign-section">
-        <div class="campaign-header">
-            <h2 class="section-header">Art Direction & Campaign</h2>
-            <p class="project-subtitle" style="color: #666;">統籌季節性形象大片，建立一致的高級品牌語彙。</p>
-        </div>
-        
-        <img src="images/ps-detail-1.jpg" alt="Campaign Hero" class="wide-img">
-        
-        <div class="photo-masonry">
-            <img src="images/p24工作區域 1-100.jpg" alt="Campaign Shot 1">
-            <img src="images/p26工作區域 1-100.jpg" alt="Campaign Shot 2">
-            <img src="images/p25工作區域 1-100.jpg" alt="Campaign Shot 3">
-            <img src="images/p33工作區域 1-100.jpg" alt="Campaign Shot 4">
-        </div>
-
-        <img src="images/p34工作區域 1-100.jpg" alt="Campaign Footer" class="wide-img">
+    <section class="campaign-footer-section">
+        <img src="images/p34工作區域 1-100.jpg" alt="Campaign Footer" class="wide-img" style="margin-bottom: 0;">
     </section>
 
     <section class="mobile-section">
