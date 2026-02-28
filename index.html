@@ -9,84 +9,41 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     
     <style>
-        /* --- 全局設定 (恢復原狀) --- */
+        /* --- 全局設定 --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        body { 
-            background-color: #ffffff; /* 恢復白色底 */
-            color: #000000; 
-            font-family: 'Inter', sans-serif; 
-            overflow-x: hidden; 
-            line-height: 1.6;
-        }
+        body { background-color: #ffffff; color: #000000; font-family: 'Inter', sans-serif; overflow-x: hidden; line-height: 1.6; }
         a { text-decoration: none; color: inherit; cursor: pointer; }
         img, video { display: block; width: 100%; height: auto; }
 
-        /* =========================================
-           ★ Header 樣式 (恢復原狀) ★
-           ========================================= */
-        header {
-            position: fixed; top: 0; left: 0; width: 100%; 
-            display: flex; flex-direction: column; align-items: center;
-            padding: 30px 50px;
-            z-index: 100; 
-            background: transparent;
-            transition: all 0.4s ease;
-            mix-blend-mode: difference; 
-            color: #fff;
-        }
-        header.scrolled { 
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(10px);
-            padding: 20px 50px; 
-            mix-blend-mode: normal;
-            color: #000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
+        /* Header */
+        header { position: fixed; top: 0; left: 0; width: 100%; display: flex; flex-direction: column; align-items: center; padding: 30px 50px; z-index: 100; background: transparent; transition: all 0.4s ease; mix-blend-mode: difference; color: #fff; }
+        header.scrolled { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); padding: 20px 50px; mix-blend-mode: normal; color: #000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .header-top { width: 100%; display: flex; justify-content: space-between; align-items: center; }
         .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
         .main-nav { display: flex; gap: 35px; }
         .nav-link-main { font-size: 0.85rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; position: relative; }
         .nav-link-main::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 1px; background: currentColor; transition: width 0.3s; }
         .nav-link-main:hover::after { width: 100%; }
-        
         .header-bottom { margin-top: 18px; }
         .sub-nav { display: flex; gap: 25px; }
         .nav-link-sub { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; transition: opacity 0.3s; }
         .nav-link-sub:hover { opacity: 1; }
 
-        /* =========================================
-           ★ Hero Section (恢復原狀) ★
-           ========================================= */
-        .hero-section {
-            width: 100%; height: 100vh; 
-            position: relative; overflow: hidden; background-color: #000;
-        }
-        .bg-video {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 2s ease-in-out; z-index: 1;
-        }
+        /* Hero */
+        .hero-section { width: 100%; height: 100vh; position: relative; overflow: hidden; background-color: #000; }
+        .bg-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 2s ease-in-out; z-index: 1; }
         .bg-video.active { opacity: 0.7; }
-        .overlay-logo-container {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; height: 100%; z-index: 10; display: flex; justify-content: center; align-items: center; pointer-events: none;
-        }
+        .overlay-logo-container { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; height: 100%; z-index: 10; display: flex; justify-content: center; align-items: center; pointer-events: none; }
         .logo-overlay-img { width: 80vw; max-width: 1200px; height: auto; display: block; }
 
-        /* =========================================
-           ★ 開頭影音輪播區塊 (恢復原狀) ★
-           ========================================= */
-        .split-image-section { 
-            position: relative; width: 100%; height: 100vh; overflow: hidden; display: flex; justify-content: center; align-items: center; background: #000;
-        }
-        #split-carousel { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
-        .split-bg-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 2s ease-in-out; }
-        .split-bg-video.active { opacity: 0.6; }
-        .floating-content { position: relative; z-index: 2; text-align: center; max-width: 400px; padding: 20px; }
-        .floating-img { width: 100%; height: auto; margin-bottom: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-        .floating-text { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: #ffffff; font-style: italic; letter-spacing: 1px; font-weight: 300; text-shadow: 0 4px 15px rgba(0,0,0,0.8); }
+        /* Split Image 1 */
+        .split-image-section { display: grid; grid-template-columns: 1fr 1fr; width: 100%; height: 90vh; }
+        .split-img-box { width: 100%; height: 100%; overflow: hidden; }
+        .split-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s ease; }
+        .split-img-box:hover img { transform: scale(1.03); }
 
-        /* =========================================
-           ★ 敘述與過場區塊 (恢復原狀) ★
-           ========================================= */
+        /* Narrative */
         .narrative-section { padding: 120px 60px; max-width: 1400px; margin: 0 auto; border-bottom: 1px solid #eee; }
         .narrative-main-title { font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin-bottom: 80px; color: #000; }
         .narrative-content { display: flex; justify-content: space-between; align-items: flex-start; width: 100%; gap: 60px; }
@@ -96,6 +53,7 @@
         .info-text { font-size: 0.95rem; color: #444; line-height: 1.7; text-align: justify; }
         .narrative-list span { display: block; margin-bottom: 8px; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; color: #555; }
 
+        /* Swiss Grid */
         .swiss-section { width: 100%; background-color: #fff; padding-bottom: 150px; }
         .swiss-grid { position: relative; width: 100%; background-image: linear-gradient(to right, #f2f2f2 1px, transparent 1px); background-size: 30px 100%; border-top: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0; display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: minmax(100px, auto); padding-bottom: 150px; }
         .nb-item { position: relative; padding: 0 15px; }
@@ -107,93 +65,20 @@
         .pos-d { grid-column: 2; grid-row: 2; margin-top: 50px; width: 80%; }
         .pos-c { grid-column: 4; grid-row: 2; margin-top: 150px; padding-right: 30px; }
 
+        /* Split Image End */
         .split-image-section-end { display: grid; grid-template-columns: 1fr 1fr; width: 100%; height: 90vh; }
-        .split-img-box { width: 100%; height: 100%; overflow: hidden; }
-        .split-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s ease; }
-        .split-img-box:hover img { transform: scale(1.03); }
 
+        /* Staggered Grid (Original Gallery) */
+        .grid-section { padding: 150px 60px; background-color: #fff; }
+        .project-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 80px; align-items: start; max-width: 1400px; margin: 0 auto; }
+        .col-right { margin-top: 250px; } 
+        .project-item { margin-bottom: 220px; cursor: pointer; transition: opacity 0.3s; }
+        .project-item:hover { opacity: 0.7; }
+        .project-meta { margin-top: 15px; display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid #000; padding-top: 12px; }
+        .project-title { font-size: 0.9rem; font-weight: 600; text-transform: uppercase; }
+        .project-id { font-size: 0.8rem; color: #888; font-family: 'Cormorant Garamond', serif; font-style: italic; }
 
-        /* =========================================
-           ★ ★ ★ 精準手術：只修改 Gallery 區塊 ★ ★ ★
-           ========================================= */
-        .grid-section { 
-            padding: 150px 60px; 
-            /* 只有這個區塊換成淺灰色背景 */
-            background-color: #e8e8e6; 
-            color: #000; 
-        }
-        
-        /* 復刻 Editorial Magazine 排版 CSS */
-        .editorial-magazine-layout { 
-            max-width: 1200px; 
-            margin: 0 auto; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 150px; /* 大呼吸空間 */
-        }
-
-        .ed-text {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.75rem;
-            line-height: 1.8;
-            text-transform: uppercase;
-            color: #111;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            max-width: 480px;
-        }
-
-        .ed-item { display: block; position: relative; }
-        .ed-item img { 
-            width: 100%; height: auto; display: block; 
-            object-fit: cover; 
-            filter: grayscale(15%);
-            transition: transform 0.8s ease, filter 0.5s ease;
-        }
-        .ed-item:hover img { 
-            transform: scale(1.02); 
-            filter: grayscale(0%); 
-        }
-        
-        .ed-caption { 
-            font-family: 'Cormorant Garamond', serif; 
-            font-style: italic; 
-            font-size: 0.85rem; 
-            margin-top: 15px; 
-            color: #555; 
-        }
-
-        /* 佈局 A CSS */
-        .layout-a { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; align-items: end; }
-        .layout-a .ed-text { grid-column: 6 / 13; margin-bottom: 60px; }
-        .layout-a .ed-img-group-3 { grid-column: 1 / 7; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-
-        /* 佈局 B CSS */
-        .layout-b { display: grid; grid-template-columns: repeat(12, 1fr); gap: 60px; align-items: center; margin-top: -50px; }
-        .layout-b .ed-img-left { grid-column: 1 / 6; margin-top: 150px; }
-        .layout-b .ed-img-right { grid-column: 6 / 13; }
-
-        /* 佈局 C CSS */
-        .layout-c { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; align-items: start; }
-        .layout-c .ed-text { grid-column: 5 / 13; margin-bottom: 60px; }
-        .layout-c .ed-img-group-3 { grid-column: 1 / 7; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; grid-row: 2; }
-
-        /* 佈局 D CSS */
-        .layout-d { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; align-items: end; }
-        .layout-d .ed-text { grid-column: 5 / 12; margin-bottom: 80px; }
-        .layout-d .ed-wrapper-split { grid-column: 1 / 13; display: grid; grid-template-columns: repeat(12, 1fr); gap: 40px; align-items: end; grid-row: 2; }
-        .layout-d .ed-img-tiny { grid-column: 1 / 4; margin-bottom: 80px; }
-        .layout-d .ed-img-huge { grid-column: 6 / 13; }
-
-        /* 佈局 E CSS */
-        .layout-e { display: grid; grid-template-columns: repeat(12, 1fr); gap: 40px; align-items: start; }
-        .layout-e .ed-img-left { grid-column: 2 / 6; }
-        .layout-e .ed-img-right { grid-column: 7 / 12; margin-top: 100px;}
-
-
-        /* =========================================
-           ★ Experience 區塊 (恢復原狀) ★
-           ========================================= */
+        /* Experience */
         .experience-section { position: relative; padding: 150px 60px; border-top: 1px solid #000; background: #fff; overflow: hidden; }
         .exp-video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
         .exp-video-bg video { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; filter: contrast(1.1) grayscale(20%); }
@@ -212,37 +97,25 @@
         .exp-desc li { position: relative; padding-left: 15px; margin-bottom: 5px; }
         .exp-desc li::before { content: "-"; position: absolute; left: 0; color: #555; }
 
+        /* Footer */
         footer { padding: 50px 60px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 0.8rem; text-transform: uppercase; color: #000; border-top: 1px solid #000; background: #fff; position: relative; z-index: 10; }
 
-        /* RWD 手機版 */
-        @media (max-width: 900px) {
+        /* RWD */
+        @media (max-width: 768px) {
             header { padding: 20px; flex-direction: row; }
             .header-bottom, .main-nav { display: none; }
             .logo-overlay-img { width: 90vw; } 
-            
-            .split-image-section { height: 80vh; }
-            .floating-content { max-width: 80%; }
-            .floating-text { font-size: 1.2rem; }
-            .split-image-section-end { grid-template-columns: 1fr; height: auto; }
+            .split-image-section, .split-image-section-end { grid-template-columns: 1fr; height: auto; }
             .split-img-box { height: 60vh; }
             .narrative-content { flex-direction: column; gap: 40px; }
             .narrative-col-left, .narrative-col-mid, .narrative-col-right { width: 100%; text-align: left; }
             .narrative-col-right .info-label { margin-left: 0; }
             .swiss-grid { display: block; background-image: none; padding-bottom: 50px; }
             .pos-a, .pos-b, .pos-c, .pos-d { grid-column: auto; grid-row: auto; margin: 0; padding: 20px; margin-bottom: 20px; width: 100%; }
-            
-            /* 雜誌排版手機版 */
             .grid-section { padding: 80px 20px; }
-            .editorial-magazine-layout { gap: 80px; }
-            .layout-a, .layout-b, .layout-c, .layout-d, .layout-d .ed-wrapper-split, .layout-e { 
-                display: flex; flex-direction: column; gap: 40px; 
-            }
-            .layout-a .ed-img-group-3, .layout-c .ed-img-group-3 { 
-                display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; 
-            }
-            .layout-b .ed-img-left, .layout-e .ed-img-right { margin-top: 0; }
-            .layout-d .ed-img-tiny { margin-bottom: 0; width: 50%; }
-
+            .project-grid { grid-template-columns: 1fr; gap: 0; }
+            .col-right { margin-top: 0; }
+            .project-item { margin-bottom: 100px; }
             .experience-section { padding: 60px 20px; }
             .exp-item { flex-direction: column; gap: 10px; }
         }
@@ -252,7 +125,7 @@
 
     <header id="main-header">
         <div class="header-top">
-            <a href="#" class="logo">JAY POSH</a>
+            <a href="index.html" class="logo">JAY POSH</a>
             <nav class="main-nav">
                 <a href="about.html" class="nav-link-main">ABOUT</a>
                 <a href="work.html" class="nav-link-main">WORK</a>
@@ -282,14 +155,8 @@
     </section>
 
     <section class="split-image-section">
-        <div id="split-carousel">
-            <video id="split-video-1" class="split-bg-video active" autoplay muted loop playsinline></video>
-            <video id="split-video-2" class="split-bg-video" autoplay muted loop playsinline></video>
-        </div>
-        <div class="floating-content">
-            <img src="images/split-small.jpg" alt="Artistic Visual" class="floating-img">
-            <p class="floating-text">"Crafting visual narratives for the bold spirits."</p>
-        </div>
+        <div class="split-img-box"><img src="images/split-1.jpg" alt="Profile"></div>
+        <div class="split-img-box"><img src="images/split-2.jpg" alt="Sparkles"></div>
     </section>
 
     <section class="narrative-section" id="narrative">
@@ -331,73 +198,36 @@
         <div class="split-img-box"><img src="images/split-4.jpg" alt="Texture 2"></div>
     </section>
 
-
     <section class="grid-section" id="gallery">
-        <div class="editorial-magazine-layout">
-
-            <div class="layout-a">
-                <div class="ed-text">
-                    Many elements appear throughout the collection, from fabrication, styling, silhouettes, to detailing. Exploring the boundaries of visual narratives through careful curation of light, texture, and form.
-                </div>
-                <div class="ed-img-group-3">
-                    <div class="ed-item"><img src="images/p24工作區域 1-100.jpg"><div class="ed-caption">Editorial — 24</div></div>
-                    <div class="ed-item"><img src="images/p25工作區域 1-100.jpg"><div class="ed-caption">Editorial — 25</div></div>
-                    <div class="ed-item"><img src="images/p26工作區域 1-100.jpg"><div class="ed-caption">Editorial — 26</div></div>
-                </div>
+        <div class="project-grid">
+            <div class="col-left">
+                <div class="project-item"><a href="website.html"><img src="images/work3.jpg"><div class="project-meta"><span class="project-title">Noir Studio</span><span class="project-id">01</span></div></a></div>
+                <div class="project-item"><a href="website.html"><img src="images/work49.jpg"><div class="project-meta"><span class="project-title">Night Walker</span><span class="project-id">03</span></div></a></div>
+                <div class="project-item"><a href="website.html"><img src="images/work52.jpg"><div class="project-meta"><span class="project-title">Metropolis</span><span class="project-id">05</span></div></a></div>
+                <div class="project-item"><a href="website.html"><img src="images/work55.jpg"><div class="project-meta"><span class="project-title">Urban Angle</span><span class="project-id">07</span></div></a></div>
+                <div class="project-item"><a href="website.html"><img src="images/p2.jpg"><div class="project-meta"><span class="project-title">Blue Horizon</span><span class="project-id">09</span></div></a></div>
+                <div class="project-item"><a href="website.html"><img src="images/work14.jpg"><div class="project-meta"><span class="project-title">Ice Cold</span><span class="project-id">11</span></div></a></div>
+                <div class="project-item"><a href="website.html"><img src="images/work60.jpg"><div class="project-meta"><span class="project-title">Valerian</span><span class="project-id">13</span></div></a></div>
+                <div class="project-item"><a href="website.html"><img src="images/p5.jpg"><div class="project-meta"><span class="project-title">Purple Haze</span><span class="project-id">15</span></div></a></div>
+                <div class="project-item"><a href="website.html"><img src="images/work11.jpg"><div class="project-meta"><span class="project-title">Magazine</span><span class="project-id">17</span></div></a></div>
+                <div class="project-item"><a href="website.html"><img src="images/work36.jpg"><div class="project-meta"><span class="project-title">Dynamic</span><span class="project-id">19</span></div></a></div>
+                <div class="project-item"><a href="website.html"><img src="images/p3.jpg"><div class="project-meta"><span class="project-title">Desert Storm</span><span class="project-id">21</span></div></a></div>
             </div>
-
-            <div class="layout-b">
-                <div class="ed-item ed-img-left">
-                    <img src="images/p27工作區域 1-100.jpg">
-                    <div class="ed-caption">Editorial — 27</div>
-                </div>
-                <div class="ed-item ed-img-right">
-                    <img src="images/p28工作區域 1-100.jpg">
-                    <div class="ed-caption">Editorial — 28</div>
-                </div>
+            <div class="col-right">
+                <div class="project-item"><a href="website.html"><img src="images/work50.jpg"><div class="project-meta"><span class="project-title">Edge</span><span class="project-id">02</span></div></a></div>
+                <div class="project-item"><a href="website.html"><img src="images/work53.jpg"><div class="project-meta"><span class="project-title">City Blue</span><span class="project-id">04</span></div></a></div>
+                <div class="project-item"><a href="website.html"><img src="images/work54.jpg"><div class="project-meta"><span class="project-title">Steel Structure</span><span class="project-id">06</span></div></a></div>
+                <div class="project-item"><a href="website.html"><img src="images/work74.jpg"><div class="project-meta"><span class="project-title">Attitude</span><span class="project-id">08</span></div></a></div>
+                <div class="project-item"><a href="website.html"><img src="images/work13.jpg"><div class="project-meta"><span class="project-title">VR</span><span class="project-id">10</span></div></a></div>
+                <div class="project-item"><a href="website.html"><img src="images/work35.jpg"><div class="project-meta"><span class="project-title">Minimalism</span><span class="project-id">12</span></div></a></div>
+                <div class="project-item"><a href="website.html"><img src="images/work65.jpg"><div class="project-meta"><span class="project-title">Future</span><span class="project-id">14</span></div></a></div>
+                <div class="project-item"><a href="website.html"><img src="images/p9.jpg"><div class="project-meta"><span class="project-title">Alien Chic</span><span class="project-id">16</span></div></a></div>
+                <div class="project-item"><a href="website.html"><img src="images/work12.jpg"><div class="project-meta"><span class="project-title">Pink Studio</span><span class="project-id">18</span></div></a></div>
+                <div class="project-item"><a href="website.html"><img src="images/work33.jpg"><div class="project-meta"><span class="project-title">Neon</span><span class="project-id">20</span></div></a></div>
+                <div class="project-item"><a href="website.html"><img src="images/p4.jpg"><div class="project-meta"><span class="project-title">Wasteland</span><span class="project-id">22</span></div></a></div>
             </div>
-
-            <div class="layout-c">
-                <div class="ed-text">
-                    The materials are a combination of harsh contrasts and lightweight fluidity. Experimenting with textures to create a rugged yet sophisticated aesthetic, balancing symmetry and chaos.
-                </div>
-                <div class="ed-img-group-3">
-                    <div class="ed-item"><img src="images/p29工作區域 1-100.jpg"><div class="ed-caption">Editorial — 29</div></div>
-                    <div class="ed-item"><img src="images/p30工作區域 1-100.jpg"><div class="ed-caption">Editorial — 30</div></div>
-                    <div class="ed-item"><img src="images/p31工作區域 1-100.jpg"><div class="ed-caption">Editorial — 31</div></div>
-                </div>
-            </div>
-
-            <div class="layout-d">
-                <div class="ed-text">
-                    Metallic elements and sharp shadows were employed to create a dramatic appearance, along with styled statement accessories to dictate the mood.
-                </div>
-                <div class="ed-wrapper-split">
-                    <div class="ed-item ed-img-tiny">
-                        <img src="images/p32工作區域 1-100.jpg">
-                        <div class="ed-caption">Editorial — 32</div>
-                    </div>
-                    <div class="ed-item ed-img-huge">
-                        <img src="images/p33工作區域 1-100.jpg">
-                        <div class="ed-caption">Editorial — 33</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="layout-e">
-                <div class="ed-item ed-img-left">
-                    <img src="images/p34工作區域 1-100.jpg">
-                    <div class="ed-caption">Editorial — 34</div>
-                </div>
-                <div class="ed-item ed-img-right">
-                    <img src="images/work3.jpg">
-                    <div class="ed-caption">Noir Studio — End</div>
-                </div>
-            </div>
-
         </div>
     </section>
-
 
     <section class="experience-section" id="experience">
         <div class="exp-video-bg">
@@ -462,17 +292,19 @@
             }
         });
 
-        // --- 第一組輪播：首頁頂部 (恢復原狀) ---
+        // 首頁頂部影片輪播
         const videoSources = [
             'images/hero-1.mp4', 'images/hero-2.mp4', 'images/hero-3.mp4', 'images/hero-4.mp4',
             'images/hero-5.mp4', 'images/hero-6.mp4', 'images/hero-7.mp4', 'images/hero-8.mp4',
             'images/hero-9.mp4', 'images/hero-10.mp4', 'images/hero-11.mp4'
         ];
+        
         let currentIdx = 0;
         const v1 = document.getElementById('bg-video-1');
         const v2 = document.getElementById('bg-video-2');
         let activeVideo = v1;
         let nextVideo = v2;
+
         v1.src = videoSources[0];
 
         function rotateVideo() {
@@ -487,36 +319,8 @@
             nextVideo = temp;
             currentIdx = nextIdx;
         }
+
         setInterval(rotateVideo, 4000);
-
-        // --- 第二組輪播：動態藝廊 (恢復原狀) ---
-        const splitVideoSources = [
-            'images/split-motion-1.mp4',
-            'images/split-motion-2.mp4',
-            'images/split-motion-3.mp4',
-            'images/split-motion-4.mp4'
-        ];
-        let splitCurrentIdx = 0;
-        const splitV1 = document.getElementById('split-video-1');
-        const splitV2 = document.getElementById('split-video-2');
-        let splitActiveVideo = splitV1;
-        let splitNextVideo = splitV2;
-        
-        splitV1.src = splitVideoSources[0];
-
-        function rotateSplitVideo() {
-            const nextIdx = (splitCurrentIdx + 1) % splitVideoSources.length;
-            splitNextVideo.src = splitVideoSources[nextIdx];
-            splitNextVideo.play();
-            splitNextVideo.classList.add('active');
-            splitActiveVideo.classList.remove('active');
-            
-            const temp = splitActiveVideo;
-            splitActiveVideo = splitNextVideo;
-            splitNextVideo = temp;
-            splitCurrentIdx = nextIdx;
-        }
-        setInterval(rotateSplitVideo, 5000);
     </script>
 </body>
 </html>
