@@ -9,11 +9,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     
     <style>
-        /* --- 全局設定 --- */
+        /* --- 全局設定 (恢復原狀) --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body { 
-            background-color: #ffffff; 
+            background-color: #ffffff; /* 恢復白色底 */
             color: #000000; 
             font-family: 'Inter', sans-serif; 
             overflow-x: hidden; 
@@ -23,7 +23,7 @@
         img, video { display: block; width: 100%; height: auto; }
 
         /* =========================================
-           ★ Header 樣式 ★
+           ★ Header 樣式 (恢復原狀) ★
            ========================================= */
         header {
             position: fixed; top: 0; left: 0; width: 100%; 
@@ -56,7 +56,7 @@
         .nav-link-sub:hover { opacity: 1; }
 
         /* =========================================
-           ★ Hero Section ★
+           ★ Hero Section (恢復原狀) ★
            ========================================= */
         .hero-section {
             width: 100%; height: 100vh; 
@@ -72,7 +72,7 @@
         .logo-overlay-img { width: 80vw; max-width: 1200px; height: auto; display: block; }
 
         /* =========================================
-           ★ 開頭影音輪播區塊 ★
+           ★ 開頭影音輪播區塊 (恢復原狀) ★
            ========================================= */
         .split-image-section { 
             position: relative; width: 100%; height: 100vh; overflow: hidden; display: flex; justify-content: center; align-items: center; background: #000;
@@ -85,7 +85,7 @@
         .floating-text { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: #ffffff; font-style: italic; letter-spacing: 1px; font-weight: 300; text-shadow: 0 4px 15px rgba(0,0,0,0.8); }
 
         /* =========================================
-           ★ 敘述與過場區塊 ★
+           ★ 敘述與過場區塊 (恢復原狀) ★
            ========================================= */
         .narrative-section { padding: 120px 60px; max-width: 1400px; margin: 0 auto; border-bottom: 1px solid #eee; }
         .narrative-main-title { font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin-bottom: 80px; color: #000; }
@@ -112,24 +112,26 @@
         .split-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s ease; }
         .split-img-box:hover img { transform: scale(1.03); }
 
+
         /* =========================================
-           ★ ★ ★ 新版：高級雜誌編輯排版 (Editorial Gallery) ★ ★ ★
+           ★ ★ ★ 精準手術：只修改 Gallery 區塊 ★ ★ ★
            ========================================= */
-        .editorial-section { 
+        .grid-section { 
             padding: 150px 60px; 
-            /* 雜誌感淺灰色背景 */
+            /* 只有這個區塊換成淺灰色背景 */
             background-color: #e8e8e6; 
             color: #000; 
         }
-        .editorial-container { 
+        
+        /* 復刻 Editorial Magazine 排版 CSS */
+        .editorial-magazine-layout { 
             max-width: 1200px; 
             margin: 0 auto; 
             display: flex; 
             flex-direction: column; 
-            gap: 150px; /* 區塊間保留極大呼吸空間 */
+            gap: 150px; /* 大呼吸空間 */
         }
 
-        /* 英文質感短文 */
         .ed-text {
             font-family: 'Inter', sans-serif;
             font-size: 0.75rem;
@@ -141,12 +143,11 @@
             max-width: 480px;
         }
 
-        /* 圖片與標題共同容器 */
         .ed-item { display: block; position: relative; }
         .ed-item img { 
             width: 100%; height: auto; display: block; 
             object-fit: cover; 
-            filter: grayscale(15%); /* 預設微微偏灰，增加高級感 */
+            filter: grayscale(15%);
             transition: transform 0.8s ease, filter 0.5s ease;
         }
         .ed-item:hover img { 
@@ -154,7 +155,6 @@
             filter: grayscale(0%); 
         }
         
-        /* 圖片下方小標題 */
         .ed-caption { 
             font-family: 'Cormorant Garamond', serif; 
             font-style: italic; 
@@ -163,35 +163,36 @@
             color: #555; 
         }
 
-        /* --- 佈局 A：右上文字，左下三張小圖 --- */
+        /* 佈局 A CSS */
         .layout-a { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; align-items: end; }
         .layout-a .ed-text { grid-column: 6 / 13; margin-bottom: 60px; }
         .layout-a .ed-img-group-3 { grid-column: 1 / 7; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 
-        /* --- 佈局 B：右側巨大圖，左側中圖錯位 --- */
+        /* 佈局 B CSS */
         .layout-b { display: grid; grid-template-columns: repeat(12, 1fr); gap: 60px; align-items: center; margin-top: -50px; }
         .layout-b .ed-img-left { grid-column: 1 / 6; margin-top: 150px; }
         .layout-b .ed-img-right { grid-column: 6 / 13; }
 
-        /* --- 佈局 C：中間文字，左下三張小圖 --- */
+        /* 佈局 C CSS */
         .layout-c { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; align-items: start; }
         .layout-c .ed-text { grid-column: 5 / 13; margin-bottom: 60px; }
         .layout-c .ed-img-group-3 { grid-column: 1 / 7; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; grid-row: 2; }
 
-        /* --- 佈局 D：中間文字，極小圖在左，巨大圖在右 --- */
+        /* 佈局 D CSS */
         .layout-d { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; align-items: end; }
         .layout-d .ed-text { grid-column: 5 / 12; margin-bottom: 80px; }
         .layout-d .ed-wrapper-split { grid-column: 1 / 13; display: grid; grid-template-columns: repeat(12, 1fr); gap: 40px; align-items: end; grid-row: 2; }
         .layout-d .ed-img-tiny { grid-column: 1 / 4; margin-bottom: 80px; }
         .layout-d .ed-img-huge { grid-column: 6 / 13; }
 
-        /* --- 佈局 E：雙圖並排收尾 --- */
+        /* 佈局 E CSS */
         .layout-e { display: grid; grid-template-columns: repeat(12, 1fr); gap: 40px; align-items: start; }
         .layout-e .ed-img-left { grid-column: 2 / 6; }
         .layout-e .ed-img-right { grid-column: 7 / 12; margin-top: 100px;}
 
+
         /* =========================================
-           ★ Experience 區塊 ★
+           ★ Experience 區塊 (恢復原狀) ★
            ========================================= */
         .experience-section { position: relative; padding: 150px 60px; border-top: 1px solid #000; background: #fff; overflow: hidden; }
         .exp-video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
@@ -230,9 +231,9 @@
             .swiss-grid { display: block; background-image: none; padding-bottom: 50px; }
             .pos-a, .pos-b, .pos-c, .pos-d { grid-column: auto; grid-row: auto; margin: 0; padding: 20px; margin-bottom: 20px; width: 100%; }
             
-            /* 雜誌排版手機版適應 */
-            .editorial-section { padding: 80px 20px; }
-            .editorial-container { gap: 80px; }
+            /* 雜誌排版手機版 */
+            .grid-section { padding: 80px 20px; }
+            .editorial-magazine-layout { gap: 80px; }
             .layout-a, .layout-b, .layout-c, .layout-d, .layout-d .ed-wrapper-split, .layout-e { 
                 display: flex; flex-direction: column; gap: 40px; 
             }
@@ -331,28 +332,28 @@
     </section>
 
 
-    <section class="editorial-section" id="gallery">
-        <div class="editorial-container">
+    <section class="grid-section" id="gallery">
+        <div class="editorial-magazine-layout">
 
             <div class="layout-a">
                 <div class="ed-text">
                     Many elements appear throughout the collection, from fabrication, styling, silhouettes, to detailing. Exploring the boundaries of visual narratives through careful curation of light, texture, and form.
                 </div>
                 <div class="ed-img-group-3">
-                    <div class="ed-item"><img src="images/work3.jpg"><div class="ed-caption">Noir Studio — 01</div></div>
-                    <div class="ed-item"><img src="images/work49.jpg"><div class="ed-caption">Night Walker — 02</div></div>
-                    <div class="ed-item"><img src="images/work52.jpg"><div class="ed-caption">Metropolis — 03</div></div>
+                    <div class="ed-item"><img src="images/p24工作區域 1-100.jpg"><div class="ed-caption">Editorial — 24</div></div>
+                    <div class="ed-item"><img src="images/p25工作區域 1-100.jpg"><div class="ed-caption">Editorial — 25</div></div>
+                    <div class="ed-item"><img src="images/p26工作區域 1-100.jpg"><div class="ed-caption">Editorial — 26</div></div>
                 </div>
             </div>
 
             <div class="layout-b">
                 <div class="ed-item ed-img-left">
-                    <img src="images/work55.jpg">
-                    <div class="ed-caption">Urban Angle — 04</div>
+                    <img src="images/p27工作區域 1-100.jpg">
+                    <div class="ed-caption">Editorial — 27</div>
                 </div>
                 <div class="ed-item ed-img-right">
-                    <img src="images/p2.jpg">
-                    <div class="ed-caption">Blue Horizon — 05</div>
+                    <img src="images/p28工作區域 1-100.jpg">
+                    <div class="ed-caption">Editorial — 28</div>
                 </div>
             </div>
 
@@ -361,9 +362,9 @@
                     The materials are a combination of harsh contrasts and lightweight fluidity. Experimenting with textures to create a rugged yet sophisticated aesthetic, balancing symmetry and chaos.
                 </div>
                 <div class="ed-img-group-3">
-                    <div class="ed-item"><img src="images/work14.jpg"><div class="ed-caption">Ice Cold — 06</div></div>
-                    <div class="ed-item"><img src="images/work60.jpg"><div class="ed-caption">Valerian — 07</div></div>
-                    <div class="ed-item"><img src="images/p5.jpg"><div class="ed-caption">Purple Haze — 08</div></div>
+                    <div class="ed-item"><img src="images/p29工作區域 1-100.jpg"><div class="ed-caption">Editorial — 29</div></div>
+                    <div class="ed-item"><img src="images/p30工作區域 1-100.jpg"><div class="ed-caption">Editorial — 30</div></div>
+                    <div class="ed-item"><img src="images/p31工作區域 1-100.jpg"><div class="ed-caption">Editorial — 31</div></div>
                 </div>
             </div>
 
@@ -373,24 +374,24 @@
                 </div>
                 <div class="ed-wrapper-split">
                     <div class="ed-item ed-img-tiny">
-                        <img src="images/work11.jpg">
-                        <div class="ed-caption">Magazine — 09</div>
+                        <img src="images/p32工作區域 1-100.jpg">
+                        <div class="ed-caption">Editorial — 32</div>
                     </div>
                     <div class="ed-item ed-img-huge">
-                        <img src="images/work36.jpg">
-                        <div class="ed-caption">Dynamic — 10</div>
+                        <img src="images/p33工作區域 1-100.jpg">
+                        <div class="ed-caption">Editorial — 33</div>
                     </div>
                 </div>
             </div>
 
             <div class="layout-e">
                 <div class="ed-item ed-img-left">
-                    <img src="images/work50.jpg">
-                    <div class="ed-caption">Edge — 11</div>
+                    <img src="images/p34工作區域 1-100.jpg">
+                    <div class="ed-caption">Editorial — 34</div>
                 </div>
                 <div class="ed-item ed-img-right">
-                    <img src="images/p4.jpg">
-                    <div class="ed-caption">Wasteland — 12</div>
+                    <img src="images/work3.jpg">
+                    <div class="ed-caption">Noir Studio — End</div>
                 </div>
             </div>
 
@@ -461,7 +462,7 @@
             }
         });
 
-        // --- 第一組輪播：首頁頂部 ---
+        // --- 第一組輪播：首頁頂部 (恢復原狀) ---
         const videoSources = [
             'images/hero-1.mp4', 'images/hero-2.mp4', 'images/hero-3.mp4', 'images/hero-4.mp4',
             'images/hero-5.mp4', 'images/hero-6.mp4', 'images/hero-7.mp4', 'images/hero-8.mp4',
@@ -488,7 +489,7 @@
         }
         setInterval(rotateVideo, 4000);
 
-        // --- 第二組輪播：動態藝廊 ---
+        // --- 第二組輪播：動態藝廊 (恢復原狀) ---
         const splitVideoSources = [
             'images/split-motion-1.mp4',
             'images/split-motion-2.mp4',
