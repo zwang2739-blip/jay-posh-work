@@ -12,37 +12,15 @@
         /* --- 全局設定 --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        body { 
-            background-color: #ffffff; 
-            color: #000000; 
-            font-family: 'Inter', sans-serif; 
-            overflow-x: hidden; 
-            line-height: 1.6;
-        }
+        body { background-color: #ffffff; color: #000000; font-family: 'Inter', sans-serif; overflow-x: hidden; line-height: 1.6; }
         a { text-decoration: none; color: inherit; cursor: pointer; }
         img, video { display: block; width: 100%; height: auto; }
 
         /* =========================================
            ★ Header 樣式 ★
            ========================================= */
-        header {
-            position: fixed; top: 0; left: 0; width: 100%; 
-            display: flex; flex-direction: column; align-items: center;
-            padding: 30px 50px;
-            z-index: 100; 
-            background: transparent;
-            transition: all 0.4s ease;
-            mix-blend-mode: difference; 
-            color: #fff;
-        }
-        header.scrolled { 
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(10px);
-            padding: 20px 50px; 
-            mix-blend-mode: normal;
-            color: #000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
+        header { position: fixed; top: 0; left: 0; width: 100%; display: flex; flex-direction: column; align-items: center; padding: 30px 50px; z-index: 100; background: transparent; transition: all 0.4s ease; mix-blend-mode: difference; color: #fff; }
+        header.scrolled { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); padding: 20px 50px; mix-blend-mode: normal; color: #000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .header-top { width: 100%; display: flex; justify-content: space-between; align-items: center; }
         .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
         .main-nav { display: flex; gap: 35px; }
@@ -58,27 +36,23 @@
         /* =========================================
            ★ Hero Section ★
            ========================================= */
-        .hero-section {
-            width: 100%; height: 100vh; 
-            position: relative; overflow: hidden; background-color: #000;
-        }
-        .bg-video {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 2s ease-in-out; z-index: 1;
-        }
+        .hero-section { width: 100%; height: 100vh; position: relative; overflow: hidden; background-color: #000; }
+        .bg-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 2s ease-in-out; z-index: 1; }
         .bg-video.active { opacity: 0.7; }
-        .overlay-logo-container {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; height: 100%; z-index: 10; display: flex; justify-content: center; align-items: center; pointer-events: none;
-        }
+        .overlay-logo-container { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; height: 100%; z-index: 10; display: flex; justify-content: center; align-items: center; pointer-events: none; }
         .logo-overlay-img { width: 80vw; max-width: 1200px; height: auto; display: block; }
 
         /* =========================================
-           ★ 內容區塊 ★
+           ★ 開頭雙圖區塊 ★
            ========================================= */
         .split-image-section { display: grid; grid-template-columns: 1fr 1fr; width: 100%; height: 90vh; }
         .split-img-box { width: 100%; height: 100%; overflow: hidden; }
         .split-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s ease; }
         .split-img-box:hover img { transform: scale(1.03); }
 
+        /* =========================================
+           ★ 敘述區塊 ★
+           ========================================= */
         .narrative-section { padding: 120px 60px; max-width: 1400px; margin: 0 auto; border-bottom: 1px solid #eee; }
         .narrative-main-title { font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin-bottom: 80px; color: #000; }
         .narrative-content { display: flex; justify-content: space-between; align-items: flex-start; width: 100%; gap: 60px; }
@@ -88,6 +62,9 @@
         .info-text { font-size: 0.95rem; color: #444; line-height: 1.7; text-align: justify; }
         .narrative-list span { display: block; margin-bottom: 8px; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; color: #555; }
 
+        /* =========================================
+           ★ 筆記本錯位區 ★
+           ========================================= */
         .swiss-section { width: 100%; background-color: #fff; padding-bottom: 150px; }
         .swiss-grid { position: relative; width: 100%; background-image: linear-gradient(to right, #f2f2f2 1px, transparent 1px); background-size: 30px 100%; border-top: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0; display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: minmax(100px, auto); padding-bottom: 150px; }
         .nb-item { position: relative; padding: 0 15px; }
@@ -99,62 +76,87 @@
         .pos-d { grid-column: 2; grid-row: 2; margin-top: 50px; width: 80%; }
         .pos-c { grid-column: 4; grid-row: 2; margin-top: 150px; padding-right: 30px; }
 
-        .grid-section { padding: 150px 60px; background-color: #fff; }
-        .project-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 80px; align-items: start; }
-        .col-right { margin-top: 250px; } 
-        .project-item { margin-bottom: 220px; cursor: pointer; transition: opacity 0.3s; }
-        .project-item:hover { opacity: 0.7; }
-        .project-meta { margin-top: 15px; display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid #000; padding-top: 12px; }
-        .project-title { font-size: 0.9rem; font-weight: 600; text-transform: uppercase; }
-        .project-id { font-size: 0.8rem; color: #888; font-family: 'Cormorant Garamond', serif; font-style: italic; }
+        /* 結尾雙圖 */
+        .split-image-section-end { display: grid; grid-template-columns: 1fr 1fr; width: 100%; height: 90vh; }
+
 
         /* =========================================
-           ★ Experience Section (更新：背景影片) ★
+           ★ ★ ★ 新版：雜誌編輯排版 Gallery ★ ★ ★
            ========================================= */
-        .experience-section { 
-            position: relative; /* 為了放置絕對定位的影片 */
+        .editorial-section { 
             padding: 150px 60px; 
-            border-top: 1px solid #000; 
-            background: #fff;
-            overflow: hidden; /* 確保影片不超出範圍 */
+            background-color: #e8e8e6; /* 高級淺灰底色 */
+            color: #000; 
+        }
+        .editorial-container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 150px; /* 大面積留白 */
+        }
+        .ed-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            line-height: 1.8;
+            text-transform: uppercase;
+            color: #111;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            max-width: 480px;
+        }
+        .ed-item { display: block; position: relative; }
+        .ed-item img { 
+            width: 100%; height: auto; display: block; 
+            object-fit: cover; 
+            filter: grayscale(15%);
+            transition: transform 0.8s ease, filter 0.5s ease;
+        }
+        .ed-item:hover img { 
+            transform: scale(1.02); 
+            filter: grayscale(0%); 
+        }
+        .ed-caption { 
+            font-family: 'Inter', sans-serif; 
+            font-size: 0.7rem; 
+            text-transform: uppercase;
+            margin-top: 10px; 
+            color: #555; 
+            letter-spacing: 1px;
         }
 
-        /* 背景影片容器 */
-        .exp-video-bg {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 0; /* 在最底層 */
-            pointer-events: none; /* 讓滑鼠點擊可以穿透 */
-        }
-        
-        /* 影片樣式 */
-        .exp-video-bg video {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            /* 透明度設定：0.3 ~ 0.5 之間比較剛好，才不會讓文字看不清楚 */
-            opacity: 0.4; 
-            /* 讓影片稍微變灰階，更符合網站風格 (可選) */
-            filter: grayscale(50%); 
-        }
+        /* 佈局 A~E */
+        .layout-a { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; align-items: end; }
+        .layout-a .ed-text { grid-column: 6 / 13; margin-bottom: 40px; }
+        .layout-a .ed-img-group-3 { grid-column: 1 / 7; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 
-        /* ★★★ 底部漸層遮罩 (讓影片慢慢變白) ★★★ */
-        .exp-video-overlay {
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 100%; 
-            height: 40%; /* 遮罩佔底部 40% 的高度 */
-            /* 從透明漸層到純白 */
-            background: linear-gradient(to bottom, transparent, #ffffff);
-            z-index: 1;
-        }
+        .layout-b { display: grid; grid-template-columns: repeat(12, 1fr); gap: 60px; align-items: start; }
+        .layout-b .ed-img-left { grid-column: 1 / 6; margin-top: 150px; } 
+        .layout-b .ed-img-right { grid-column: 6 / 13; }
 
-        /* 內容容器 (確保文字在影片上面) */
-        .exp-content-relative {
-            position: relative;
-            z-index: 2; /* 在影片和遮罩之上 */
-        }
+        .layout-c { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; align-items: start; }
+        .layout-c .ed-text { grid-column: 5 / 13; margin-bottom: 40px; }
+        .layout-c .ed-img-group-3 { grid-column: 1 / 7; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; grid-row: 2; }
 
+        .layout-d { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; align-items: end; }
+        .layout-d .ed-text { grid-column: 5 / 12; margin-bottom: 60px; }
+        .layout-d .ed-wrapper-split { grid-column: 1 / 13; display: grid; grid-template-columns: repeat(12, 1fr); gap: 40px; align-items: end; grid-row: 2; }
+        .layout-d .ed-img-tiny { grid-column: 1 / 4; margin-bottom: 40px; }
+        .layout-d .ed-img-huge { grid-column: 6 / 13; }
+
+        .layout-e { display: grid; grid-template-columns: repeat(12, 1fr); gap: 40px; align-items: start; }
+        .layout-e .ed-img-left { grid-column: 2 / 6; }
+        .layout-e .ed-img-right { grid-column: 7 / 12; margin-top: 100px;}
+
+
+        /* =========================================
+           ★ Experience Section ★
+           ========================================= */
+        .experience-section { position: relative; padding: 150px 60px; border-top: 1px solid #000; background: #fff; overflow: hidden; }
+        .exp-video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+        .exp-video-bg video { width: 100%; height: 100%; object-fit: cover; opacity: 0.4; filter: grayscale(50%); }
+        .exp-video-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 40%; background: linear-gradient(to bottom, transparent, #ffffff); z-index: 1; }
+        .exp-content-relative { position: relative; z-index: 2; }
         .exp-header { font-size: 3.5rem; font-family: 'Cormorant Garamond', serif; margin-bottom: 80px; }
         .exp-list { max-width: 900px; margin-left: auto; margin-right: auto; }
         .exp-item { display: flex; padding: 40px 0; border-bottom: 1px solid rgba(0,0,0,0.2); transition: 0.3s; }
@@ -163,7 +165,7 @@
         .exp-content { flex: 1; }
         .exp-role { font-size: 1.8rem; font-family: 'Cormorant Garamond', serif; font-weight: 600; margin-bottom: 5px; display: block; }
         .exp-company { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: #444; margin-bottom: 15px; display: block; font-weight: 600; }
-        .exp-desc { font-size: 0.9rem; color: #222; line-height: 1.6; font-weight: 500; } /* 加深文字顏色確保可讀性 */
+        .exp-desc { font-size: 0.9rem; color: #222; line-height: 1.6; font-weight: 500; } 
         .exp-desc ul { list-style: none; padding: 0; }
         .exp-desc li { position: relative; padding-left: 15px; margin-bottom: 5px; }
         .exp-desc li::before { content: "-"; position: absolute; left: 0; color: #555; }
@@ -171,21 +173,26 @@
         footer { padding: 50px 60px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 0.8rem; text-transform: uppercase; color: #000; border-top: 1px solid #000; background: #fff; position: relative; z-index: 10; }
 
         /* RWD */
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             header { padding: 20px; flex-direction: row; }
             .header-bottom, .main-nav { display: none; }
             .logo-overlay-img { width: 90vw; } 
-            .split-image-section { grid-template-columns: 1fr; height: auto; }
+            .split-image-section, .split-image-section-end { grid-template-columns: 1fr; height: auto; }
             .split-img-box { height: 60vh; }
             .narrative-content { flex-direction: column; gap: 40px; }
             .narrative-col-left, .narrative-col-mid, .narrative-col-right { width: 100%; text-align: left; }
             .narrative-col-right .info-label { margin-left: 0; }
             .swiss-grid { display: block; background-image: none; padding-bottom: 50px; }
             .pos-a, .pos-b, .pos-c, .pos-d { grid-column: auto; grid-row: auto; margin: 0; padding: 20px; margin-bottom: 20px; width: 100%; }
-            .grid-section { padding: 80px 20px; }
-            .project-grid { grid-template-columns: 1fr; gap: 0; }
-            .col-right { margin-top: 0; }
-            .project-item { margin-bottom: 100px; }
+            
+            /* 手機版雜誌排版 */
+            .editorial-section { padding: 80px 20px; }
+            .editorial-container { gap: 80px; }
+            .layout-a, .layout-b, .layout-c, .layout-d, .layout-d .ed-wrapper-split { display: flex; flex-direction: column; gap: 40px; }
+            .layout-a .ed-img-group-3, .layout-c .ed-img-group-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+            .layout-b .ed-img-left { margin-top: 0; }
+            .layout-d .ed-img-tiny { margin-bottom: 0; width: 50%; }
+
             .experience-section { padding: 60px 20px; }
             .exp-item { flex-direction: column; gap: 10px; }
         }
@@ -198,9 +205,8 @@
             <a href="#" class="logo">JAY POSH</a>
             <nav class="main-nav">
                 <a href="about.html" class="nav-link-main">ABOUT</a>
-                <a href="work.html" class="nav-link-main">WORK</a>
-                <a href="music.html" class="nav-link-main">MUSIC</a>
-                <a href="contact.html" class="nav-link-main">CONTACT</a>
+                <a href="website.html" class="nav-link-main">WEBSITE</a> <a href="music.html" class="nav-link-main">MUSIC</a>
+                <a href="#experience" class="nav-link-main">EXPERIENCE</a> <a href="contact.html" class="nav-link-main">CONTACT</a>
             </nav>
         </div>
         <div class="header-bottom">
@@ -263,51 +269,85 @@
         </div>
     </section>
 
-    <section class="split-image-section">
+    <section class="split-image-section-end">
         <div class="split-img-box"><img src="images/split-3.jpg" alt="Texture 1"></div>
         <div class="split-img-box"><img src="images/split-4.jpg" alt="Texture 2"></div>
     </section>
 
-    <section class="grid-section" id="gallery">
-        <div class="project-grid">
-            <div class="col-left">
-                <div class="project-item"><img src="images/work3.jpg"><div class="project-meta"><span class="project-title">Noir Studio</span><span class="project-id">01</span></div></div>
-                <div class="project-item"><img src="images/work49.jpg"><div class="project-meta"><span class="project-title">Night Walker</span><span class="project-id">03</span></div></div>
-                <div class="project-item"><img src="images/work52.jpg"><div class="project-meta"><span class="project-title">Metropolis</span><span class="project-id">05</span></div></div>
-                <div class="project-item"><img src="images/work55.jpg"><div class="project-meta"><span class="project-title">Urban Angle</span><span class="project-id">07</span></div></div>
-                <div class="project-item"><img src="images/p2.jpg"><div class="project-meta"><span class="project-title">Blue Horizon</span><span class="project-id">09</span></div></div>
-                <div class="project-item"><img src="images/work14.jpg"><div class="project-meta"><span class="project-title">Ice Cold</span><span class="project-id">11</span></div></div>
-                <div class="project-item"><img src="images/work60.jpg"><div class="project-meta"><span class="project-title">Valerian</span><span class="project-id">13</span></div></div>
-                <div class="project-item"><img src="images/p5.jpg"><div class="project-meta"><span class="project-title">Purple Haze</span><span class="project-id">15</span></div></div>
-                <div class="project-item"><img src="images/work11.jpg"><div class="project-meta"><span class="project-title">Magazine</span><span class="project-id">17</span></div></div>
-                <div class="project-item"><img src="images/work36.jpg"><div class="project-meta"><span class="project-title">Dynamic</span><span class="project-id">19</span></div></div>
-                <div class="project-item"><img src="images/p3.jpg"><div class="project-meta"><span class="project-title">Desert Storm</span><span class="project-id">21</span></div></div>
+
+    <section class="editorial-section" id="gallery">
+        <div class="editorial-container">
+
+            <div class="layout-a">
+                <div class="ed-text">
+                    Many elements appear throughout the collection, from fabrication, styling, silhouettes, to detailing. There is a contrast of both symmetrical and asymmetrical silhouettes through the creative pattern making.
+                </div>
+                <div class="ed-img-group-3">
+                    <a href="website.html" class="ed-item"><img src="images/p24工作區域 1-100.jpg"><div class="ed-caption">Editorial — 24</div></a>
+                    <a href="website.html" class="ed-item"><img src="images/p25工作區域 1-100.jpg"><div class="ed-caption">Editorial — 25</div></a>
+                    <a href="website.html" class="ed-item"><img src="images/p26工作區域 1-100.jpg"><div class="ed-caption">Editorial — 26</div></a>
+                </div>
             </div>
-            <div class="col-right">
-                <div class="project-item"><img src="images/work50.jpg"><div class="project-meta"><span class="project-title">Edge</span><span class="project-id">02</span></div></div>
-                <div class="project-item"><img src="images/work53.jpg"><div class="project-meta"><span class="project-title">City Blue</span><span class="project-id">04</span></div></div>
-                <div class="project-item"><img src="images/work54.jpg"><div class="project-meta"><span class="project-title">Steel Structure</span><span class="project-id">06</span></div></div>
-                <div class="project-item"><img src="images/work74.jpg"><div class="project-meta"><span class="project-title">Attitude</span><span class="project-id">08</span></div></div>
-                <div class="project-item"><img src="images/work13.jpg"><div class="project-meta"><span class="project-title">VR</span><span class="project-id">10</span></div></div>
-                <div class="project-item"><img src="images/work35.jpg"><div class="project-meta"><span class="project-title">Minimalism</span><span class="project-id">12</span></div></div>
-                <div class="project-item"><img src="images/work65.jpg"><div class="project-meta"><span class="project-title">Future</span><span class="project-id">14</span></div></div>
-                <div class="project-item"><img src="images/p9.jpg"><div class="project-meta"><span class="project-title">Alien Chic</span><span class="project-id">16</span></div></div>
-                <div class="project-item"><img src="images/work12.jpg"><div class="project-meta"><span class="project-title">Pink Studio</span><span class="project-id">18</span></div></div>
-                <div class="project-item"><img src="images/work33.jpg"><div class="project-meta"><span class="project-title">Neon</span><span class="project-id">20</span></div></div>
-                <div class="project-item"><img src="images/p4.jpg"><div class="project-meta"><span class="project-title">Wasteland</span><span class="project-id">22</span></div></div>
+
+            <div class="layout-b">
+                <a href="website.html" class="ed-item ed-img-left">
+                    <img src="images/p27工作區域 1-100.jpg" onerror="this.src='images/work14.jpg'">
+                    <div class="ed-caption">Editorial — 27</div>
+                </a>
+                <a href="website.html" class="ed-item ed-img-right">
+                    <img src="images/p28工作區域 1-100.jpg" onerror="this.src='images/work49.jpg'">
+                    <div class="ed-caption">Editorial — 28</div>
+                </a>
             </div>
+
+            <div class="layout-c">
+                <div class="ed-text">
+                    The materials are a combination of thick heavy fabrics, knits, and lightweight materials. Experimenting with textures to create a rugged appearance, balancing symmetry and chaos.
+                </div>
+                <div class="ed-img-group-3">
+                    <a href="website.html" class="ed-item"><img src="images/p29工作區域 1-100.jpg" onerror="this.src='images/work11.jpg'"><div class="ed-caption">Editorial — 29</div></a>
+                    <a href="website.html" class="ed-item"><img src="images/p30工作區域 1-100.jpg" onerror="this.src='images/work13.jpg'"><div class="ed-caption">Editorial — 30</div></a>
+                    <a href="website.html" class="ed-item"><img src="images/p31工作區域 1-100.jpg" onerror="this.src='images/work35.jpg'"><div class="ed-caption">Editorial — 31</div></a>
+                </div>
+            </div>
+
+            <div class="layout-d">
+                <div class="ed-text">
+                    Metallic elements such as zips, buckles and buttons were employed to create a rugged appearance, along with styled statement accessories and chunky shoes.
+                </div>
+                <div class="ed-wrapper-split">
+                    <a href="website.html" class="ed-item ed-img-tiny">
+                        <img src="images/p32工作區域 1-100.jpg" onerror="this.src='images/work60.jpg'">
+                        <div class="ed-caption">Editorial — 32</div>
+                    </a>
+                    <a href="website.html" class="ed-item ed-img-huge">
+                        <img src="images/p33工作區域 1-100.jpg">
+                        <div class="ed-caption">Editorial — 33</div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="layout-e">
+                <a href="website.html" class="ed-item ed-img-left">
+                    <img src="images/p34工作區域 1-100.jpg">
+                    <div class="ed-caption">Editorial — 34</div>
+                </a>
+                <a href="website.html" class="ed-item ed-img-right">
+                    <img src="images/p2.jpg">
+                    <div class="ed-caption">Blue Horizon — 05</div>
+                </a>
+            </div>
+
         </div>
     </section>
 
     <section class="experience-section" id="experience">
-        
         <div class="exp-video-bg">
             <video autoplay loop muted playsinline>
                 <source src="images/exp-bg.mp4" type="video/mp4">
             </video>
             <div class="exp-video-overlay"></div>
         </div>
-
         <div class="exp-content-relative">
             <h2 class="exp-header">Experience</h2>
             <div class="exp-list">
