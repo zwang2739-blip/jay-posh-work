@@ -46,57 +46,34 @@
         .tiny-caption { font-size: 0.65rem; font-weight: 700; margin-top: 10px; text-transform: uppercase; }
         .tiny-sub { font-size: 0.55rem; color: #888; text-transform: uppercase; }
 
-        /* Hover 圖片微放大特效 */
-        .img-box { overflow: hidden; }
-        .img-box img { transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        .img-box:hover img { transform: scale(1.05); }
-
-        /* =========================================
-           1. Hero Section 
-           ========================================= */
+        /* --- 佈局網格設定 --- */
         .hero { margin-top: 20px; }
         .hero-img { width: 100%; height: 65vh; margin-bottom: 20px; }
         .hero-title-area { display: flex; justify-content: space-between; align-items: flex-start; margin-top: 10px; }
         .hero-title { font-size: 9vw; font-weight: 900; letter-spacing: -0.04em; line-height: 0.8; text-transform: uppercase; }
         .hero-desc { text-align: center; max-width: 800px; margin: 30px auto 80px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
 
-        /* =========================================
-           2. Four Thumbnails Row 
-           ========================================= */
         .thumb-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 50px; margin-bottom: 120px; }
         .thumb-item .img-box { aspect-ratio: 3/4; overflow: hidden; }
 
-        /* =========================================
-           3. EDITORIAL Section 
-           ========================================= */
         .editorial-top { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px; align-items: end; }
         .ed-top-left .img-box { aspect-ratio: 16/9; margin-bottom: 15px; }
         .ed-top-right .img-box { aspect-ratio: 4/3; }
         
-        /* 黑底白字橫幅 */
         .black-banner { background-color: #000; color: #fff; padding: 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-bottom: 100px; }
         .black-banner .img-box { aspect-ratio: 3/4; filter: grayscale(100%); transition: filter 0.5s; }
         .black-banner .img-box:hover { filter: grayscale(0%); }
         .black-banner .tiny-caption { color: #fff; font-weight: 400; text-transform: none; text-align: center; letter-spacing: 0.5px; }
 
-        /* =========================================
-           4. COMMERCIAL Section 
-           ========================================= */
         .comm-header-area { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
         .comm-headline { font-size: 2.2rem; font-weight: 900; text-align: right; max-width: 60%; line-height: 1.1; letter-spacing: -1px; }
-        .comm-img-box { width: 80%; margin-left: auto; aspect-ratio: 21/9; }
+        .comm-img-box { width: 80%; margin-left: auto; aspect-ratio: 21/9; margin-bottom: 120px; }
         .comm-desc { width: 35%; margin-left: auto; text-align: right; font-size: 0.75rem; font-weight: 500; margin-top: 20px; }
 
-        /* =========================================
-           5. MOTION Section 
-           ========================================= */
         .motion-grid { display: grid; grid-template-columns: 1fr 1fr 2.5fr 1fr 1fr; gap: 20px; align-items: center; margin-bottom: 120px; }
         .motion-grid .img-box { aspect-ratio: 3/4; }
         .motion-grid .center-img { aspect-ratio: 16/9; }
 
-        /* =========================================
-           6. BRANDING Section 
-           ========================================= */
         .branding-grid { display: grid; grid-template-columns: 1.8fr 1fr; gap: 60px; margin-bottom: 120px; }
         .brand-left .img-box { aspect-ratio: 16/9; margin-bottom: 20px; }
         .brand-left h2 { font-size: 3.5rem; font-weight: 900; line-height: 1; letter-spacing: -2px; margin-bottom: 20px; }
@@ -107,9 +84,6 @@
         .brand-right-item .img-box { aspect-ratio: 16/9; }
         .brand-right-item p { font-size: 0.7rem; font-weight: 700; line-height: 1.4; }
 
-        /* =========================================
-           7. CATEGORIES Section (底部長條切片)
-           ========================================= */
         .magazine-grid { display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 40px; margin-bottom: 100px; align-items: center; }
         .mag-center .img-box { aspect-ratio: 1/1; margin-bottom: 10px; }
 
@@ -122,8 +96,10 @@
         .cat-slice:nth-child(5) { height: 60%; align-self: center; }
         .cat-slice:nth-child(6) { height: 100%; align-self: flex-start; }
 
-        /* Footer */
-        footer { border-top: 1px solid #000; padding: 30px 50px; display: flex; justify-content: space-between; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; }
+        /* Hover 圖片特效 */
+        .img-box { overflow: hidden; background: #f0f0f0; }
+        .img-box img { transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .img-box:hover img { transform: scale(1.05); }
 
     </style>
 </head>
@@ -144,7 +120,7 @@
         
         <section class="hero">
             <div class="hero-img">
-                <img src="images/work36.jpg" alt="Hero Image">
+                <img src="images/work36.jpg" alt="Hero Image" style="object-position: top;">
             </div>
             <div class="hero-title-area">
                 <div class="pill-btn">[ 2026 EDIT ]</div>
@@ -160,22 +136,18 @@
             <div class="thumb-item">
                 <div class="img-box"><img src="images/p3.jpg"></div>
                 <div class="tiny-caption">Desert Storm — 01</div>
-                <div class="tiny-sub">Editorial / 2026</div>
             </div>
             <div class="thumb-item">
                 <div class="img-box"><img src="images/work53.jpg"></div>
                 <div class="tiny-caption">City Blue — 02</div>
-                <div class="tiny-sub">Lookbook / 2026</div>
             </div>
             <div class="thumb-item">
                 <div class="img-box"><img src="images/work49.jpg"></div>
                 <div class="tiny-caption">Night Walker — 03</div>
-                <div class="tiny-sub">Campaign / 2025</div>
             </div>
             <div class="thumb-item">
                 <div class="img-box"><img src="images/work54.jpg"></div>
                 <div class="tiny-caption">Steel Structure — 04</div>
-                <div class="tiny-sub">Personal / 2025</div>
             </div>
         </section>
 
@@ -188,26 +160,23 @@
             <div class="editorial-top">
                 <div class="ed-top-left">
                     <div class="img-box"><img src="images/p7.jpg"></div>
-                    <div class="tiny-caption">Background by Jay Posh. Capturing the tension between nature and high fashion.</div>
+                    <div class="tiny-caption">Background by Jay Posh. Capturing tension.</div>
                 </div>
                 <div class="ed-top-right">
-                    <div class="img-box"><img src="images/work72.jpg"></div>
-                    <div class="tiny-caption">Exploring the avant-garde styling of the new collection.</div>
+                    <div class="img-box"><img src="images/work72.jpg" style="object-position: top;"></div>
+                    <div class="tiny-caption">Avant-garde styling of the new collection.</div>
                 </div>
             </div>
 
             <div class="black-banner">
                 <div class="banner-item">
                     <div class="img-box"><img src="images/work11.jpg"></div>
-                    <p class="tiny-caption">Metallic elements and sharp shadows.</p>
                 </div>
                 <div class="banner-item">
                     <div class="img-box"><img src="images/work12.jpg"></div>
-                    <p class="tiny-caption">Studio session exploring vibrant pink hues.</p>
                 </div>
                 <div class="banner-item">
                     <div class="img-box"><img src="images/work13.jpg"></div>
-                    <p class="tiny-caption">Futuristic visual presentation.</p>
                 </div>
             </div>
         </section>
@@ -225,97 +194,9 @@
             
             <div class="comm-img-box">
                 <img src="images/p2.jpg">
-            </div>
-            <p class="comm-desc">
-                Emphasizing light and shadow as the key ingredients in this season's visual presentation. From ideation to final execution.
-            </p>
-        </section>
-
-        <section>
-            <div class="section-header">
-                <h2 class="section-title">SEASONAL LOOKBOOK</h2>
-                <a href="#" class="pill-btn">SEE ALL</a>
-            </div>
-            <section class="thumb-row" style="margin-bottom: 50px;">
-                <div class="thumb-item">
-                    <div class="img-box"><img src="images/work33.jpg"></div>
-                    <div class="tiny-caption">Urban Shade — 01</div>
-                </div>
-                <div class="thumb-item">
-                    <div class="img-box"><img src="images/work35.jpg"></div>
-                    <div class="tiny-caption">Inner Light — 02</div>
-                </div>
-                <div class="thumb-item">
-                    <div class="img-box"><img src="images/work50.jpg"></div>
-                    <div class="tiny-caption">Noir Texture — 03</div>
-                </div>
-                <div class="thumb-item">
-                    <div class="img-box"><img src="images/work51.jpg"></div>
-                    <div class="tiny-caption">Static Motion — 04</div>
-                </div>
-            </section>
-        </section>
-
-        <section>
-            <div class="section-header center">
-                <h2 class="section-title">MOTION</h2>
-                <a href="#" class="pill-btn">SEE ALL</a>
-            </div>
-            
-            <div class="motion-grid">
-                <div class="img-box"><img src="images/work38.jpg"></div>
-                <div class="img-box"><img src="images/work39.jpg"></div>
-                <div class="img-box center-img"><img src="images/work65.jpg"></div>
-                <div class="img-box"><img src="images/work42.jpg"></div>
-                <div class="img-box"><img src="images/work43.jpg"></div>
-            </div>
-        </section>
-
-        <section>
-            <div class="black-banner">
-                <div class="banner-item">
-                    <div class="img-box"><img src="images/work58.jpg"></div>
-                    <p class="tiny-caption">Street Angle — 01</p>
-                </div>
-                <div class="banner-item">
-                    <div class="img-box"><img src="images/work60.jpg"></div>
-                    <p class="tiny-caption">Dynamic Stance — 02</p>
-                </div>
-                <div class="banner-item">
-                    <div class="img-box"><img src="images/work64.jpg"></div>
-                    <p class="tiny-caption">Urban Chaos — 03</p>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <div class="section-header">
-                <h2 class="section-title">BRANDING</h2>
-                <a href="#" class="pill-btn">SEE ALL</a>
-            </div>
-
-            <div class="branding-grid">
-                <div class="brand-left">
-                    <div class="img-box"><img src="images/work61.jpg"></div>
-                    <h2>The visual identity for the new sub-label is finally here.</h2>
-                    <p>
-                        A complete overhaul of the brand's visual language. We aimed to create something that felt both timeless and immediately striking. 
-                    </p>
-                </div>
-                <div class="brand-right">
-                    <div class="brand-right-item">
-                        <div class="img-box"><img src="images/split-1.jpg"></div>
-                        <p>Behind the scenes: Building the aesthetic directory.</p>
-                    </div>
-                    <div class="brand-right-item">
-                        <div class="img-box"><img src="images/split-2.jpg"></div>
-                        <p>Experimenting with textures and light flares on set.</p>
-                    </div>
-                    <div class="brand-right-item">
-                        <div class="img-box"><img src="images/split-3.jpg"></div>
-                        <p>Finalizing the color grading for the cinematic output.</p>
-                    </div>
-                </div>
+                <p class="comm-desc">
+                    Emphasizing light and shadow as the key ingredients in this season's visual presentation. From ideation to final execution.
+                </p>
             </div>
         </section>
 
@@ -336,30 +217,21 @@
                 </div>
             </div>
 
-            <div class="comm-img-box" style="width: 100%; margin-bottom: 50px; aspect-ratio: 16/9;">
-                <img src="images/k3.jpg">
-            </div>
-        </section>
-
-        <section>
-            <div class="comm-header-area">
-                <a href="#" class="pill-btn">[ IN-STUDIO ]</a>
-                <h3 class="comm-headline">Pushing the boundaries of light, shadow, and pose.</h3>
-            </div>
-            <section class="thumb-row" style="margin-bottom: 120px; gap: 30px;">
-                <div class="thumb-item">
+            <div class="black-banner">
+                <div class="banner-item">
+                    <div class="img-box"><img src="images/k3.jpg"></div>
+                </div>
+                <div class="banner-item">
                     <div class="img-box"><img src="images/k4.jpg"></div>
                 </div>
-                <div class="thumb-item">
+                <div class="banner-item">
                     <div class="img-box"><img src="images/k5.jpg"></div>
                 </div>
-                <div class="thumb-item">
-                    <div class="img-box"><img src="images/k6.jpg"></div>
-                </div>
-                <div class="thumb-item">
-                    <div class="img-box"><img src="images/work14.jpg"></div>
-                </div>
-            </section>
+            </div>
+
+            <div class="comm-img-box" style="aspect-ratio: 21/9; margin-left: 0; width: 100%;">
+                <img src="images/k6.jpg" style="object-position: center 20%;">
+            </div>
         </section>
 
         <section>
@@ -368,75 +240,115 @@
                 <a href="#" class="pill-btn">SEE ALL</a>
             </div>
             
-            <div class="editorial-top">
+            <div class="branding-grid">
+                <div class="brand-left">
+                    <div class="img-box"><img src="images/24422880c15a113faf45c1736b9aeef8.jpg"></div>
+                    <h2>Monolith. A study of scale and environment.</h2>
+                    <p>Exploring the natural curves and surreal rock formations.</p>
+                </div>
+                <div class="brand-right">
+                    <div class="brand-right-item">
+                        <div class="img-box"><img src="images/de00c1a11dde1a2f4460b5fd20eb11b5.jpg"></div>
+                        <p>Dune abstract. Curve and light.</p>
+                    </div>
+                    <div class="brand-right-item">
+                        <div class="img-box"><img src="images/5f0ae2efd0d2ee282587f2d31e8ee780.jpg"></div>
+                        <p>Texture and shadows in nature.</p>
+                    </div>
+                    <div class="brand-right-item">
+                        <div class="img-box"><img src="images/dc28ddde4759285f76e146081ff60eb.jpg"></div>
+                        <p>Organic forms and erosion.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="thumb-row" style="grid-template-columns: repeat(3, 1fr);">
+                <div class="thumb-item">
+                    <div class="img-box" style="aspect-ratio: 1/1;"><img src="images/cd04de1c9060ddd141e7c9aeef3218a1.jpg"></div>
+                </div>
+                <div class="thumb-item">
+                    <div class="img-box" style="aspect-ratio: 1/1;"><img src="images/b2898ded5d8730e81fd94a3c3940c6e1.jpg"></div>
+                </div>
+                <div class="thumb-item">
+                    <div class="img-box" style="aspect-ratio: 1/1;"><img src="images/work39.jpg"></div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-header center">
+                <h2 class="section-title">MACRO & DETAILS</h2>
+            </div>
+            
+            <div class="editorial-top" style="grid-template-columns: 1.5fr 1fr;">
                 <div class="ed-top-left">
-                    <div class="img-box"><img src="images/de00c1a11dde1a2f4460b5fd20eb11b5.jpg"></div>
-                    <div class="tiny-caption">Dune abstract. Curve and light.</div>
+                    <div class="img-box" style="aspect-ratio: 16/9;"><img src="images/3aeff037050ea8f17c62d0601e79f4ce.jpg"></div>
+                    <div class="tiny-caption">Facial projection mapping.</div>
                 </div>
                 <div class="ed-top-right">
-                    <div class="img-box"><img src="images/cd04de1c9060ddd141e7c9aeef3218a1.jpg"></div>
-                    <div class="tiny-caption">Surreal rock formation. A study of form.</div>
+                    <div class="img-box" style="aspect-ratio: 3/4;"><img src="images/73f97913769bc22416f1405c0b30124a.jpg"></div>
+                    <div class="tiny-caption">Electric blue hues.</div>
                 </div>
-            </div>
-
-            <div class="black-banner" style="margin-bottom: 50px;">
-                <div class="banner-item">
-                    <div class="img-box"><img src="images/5f0ae2efd0d2ee282587f2d31e8ee780.jpg"></div>
-                </div>
-                <div class="banner-item">
-                    <div class="img-box"><img src="images/dc28ddde4759285f76e146081ff60eb.jpg"></div>
-                </div>
-                <div class="banner-item">
-                    <div class="img-box"><img src="images/b2898ded5d8730e81fd94a3c3940c6e1.jpg"></div>
-                </div>
-            </div>
-            <div class="comm-img-box" style="width: 80%; margin-left:0; margin-bottom: 120px; aspect-ratio: 1/1;">
-                <img src="images/24422880c15a113faf45c1736b9aeef8.jpg">
             </div>
         </section>
 
         <section>
-             <div class="section-header center">
-                <h2 class="section-title">ARCHIVE ADDITIONS</h2>
+            <div class="section-header">
+                <h2 class="section-title">STREET ARCHIVE</h2>
+            </div>
+            <div class="motion-grid">
+                <div class="img-box"><img src="images/work58.jpg"></div>
+                <div class="img-box"><img src="images/work67.jpg"></div>
+                <div class="img-box center-img"><img src="images/work68.jpg"></div>
+                <div class="img-box"><img src="images/work69.jpg"></div>
+                <div class="img-box"><img src="images/work70.jpg"></div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-header">
+                <h2 class="section-title">BRANDING</h2>
                 <a href="#" class="pill-btn">SEE ALL</a>
             </div>
-            <div class="magazine-grid">
-                <div class="mag-side">
-                    <div class="img-box"><img src="images/73f97913769bc22416f1405c0b30124a.jpg"></div>
+
+            <div class="branding-grid">
+                <div class="brand-left">
+                    <div class="img-box"><img src="images/work61.jpg"></div>
+                    <h2>The visual identity for the new sub-label is finally here.</h2>
+                    <p>
+                        A complete overhaul of the brand's visual language. We aimed to create something that felt both timeless and immediately striking. By stripping away the unnecessary elements, we focused purely on the relationship between typography and negative space. 
+                    </p>
                 </div>
-                <div class="mag-center">
-                    <div class="img-box"><img src="images/work3.jpg"></div>
-                </div>
-                <div class="mag-side">
-                    <div class="img-box"><img src="images/work9.jpg"></div>
+                <div class="brand-right">
+                    <div class="brand-right-item">
+                        <div class="img-box"><img src="images/work66.jpg"></div>
+                        <p>Mother's Day Campaign layout.</p>
+                    </div>
+                    <div class="brand-right-item">
+                        <div class="img-box"><img src="images/work33.jpg" style="object-position: top;"></div>
+                        <p>Pink series color grading.</p>
+                    </div>
+                    <div class="brand-right-item">
+                        <div class="img-box"><img src="images/work71.jpg"></div>
+                        <p>Finalizing the cinematic output.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section>
-            <div class="magazine-grid" style="margin-top: 100px;">
-                <div class="mag-side">
-                    <div class="img-box"><img src="images/p25工作區域 1-100.jpg"></div>
-                    <div class="tiny-caption">Noir Studio</div>
-                </div>
-                <div class="mag-center">
-                    <div class="img-box"><img src="images/work69.jpg"></div>
-                    <div class="tiny-caption" style="text-align: center;">Pink Series / 2026</div>
-                </div>
-                <div class="mag-side">
-                    <div class="img-box"><img src="images/work71.jpg"></div>
-                    <div class="tiny-caption">Urban Angle</div>
-                </div>
+            <div class="section-header center">
+                <h2 class="section-title">CATEGORIES</h2>
             </div>
 
             <div class="categories-slice-wrap">
                 <div class="cat-slice img-box"><img src="images/work52.jpg"></div>
-                <div class="cat-slice img-box"><img src="images/work63.jpg"></div>
+                <div class="cat-slice img-box"><img src="images/work46.jpg"></div>
                 
-                <div class="cat-center-title">CATEGORIES</div>
+                <div class="cat-center-title">INDEX</div>
                 
-                <div class="cat-slice img-box"><img src="images/p26工作區域 1-100.jpg"></div>
-                <div class="cat-slice img-box"><img src="images/p5.jpg"></div>
+                <div class="cat-slice img-box"><img src="images/work54.jpg"></div>
+                <div class="cat-slice img-box"><img src="images/p8.jpg"></div>
                 <div class="cat-slice img-box"><img src="images/work74.jpg"></div>
             </div>
         </section>
