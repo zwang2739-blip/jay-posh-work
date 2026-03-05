@@ -6,214 +6,325 @@
     <title>WORK | JAY POSH</title>
     
     <link rel="icon" type="image/png" href="images/favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     
     <style>
         /* --- 全局設定 --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
-            background-color: #e6e6e4; /* 完美還原參考圖的暖灰色雜誌底色 */
+            background-color: #ffffff; /* 經典雜誌純白底 */
             color: #000000; 
             font-family: 'Inter', sans-serif; 
-            /* 讓網頁可以往下滾動 */
-            overflow-y: auto; 
             overflow-x: hidden;
-            width: 100vw;
-            user-select: none;
+            line-height: 1.5;
         }
-        
-        /* --- Header --- */
+        a { text-decoration: none; color: inherit; cursor: pointer; }
+        img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+        /* --- 雜誌版 Header (純白底黑字) --- */
         header {
-            position: fixed; top: 0; left: 0; width: 100%; 
-            padding: 30px 50px;
+            position: sticky; top: 0; left: 0; width: 100%; 
+            padding: 20px 50px;
             z-index: 1000; 
-            pointer-events: none; 
-            background: linear-gradient(to bottom, rgba(230,230,228,0.9) 0%, rgba(230,230,228,0) 100%);
+            background: #ffffff;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex; justify-content: space-between; align-items: center;
         }
-        .header-content { pointer-events: auto; display: flex; width: 100%; justify-content: space-between; align-items: center; }
-        .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 700; text-transform: uppercase; color: #000; text-decoration: none;}
-        .nav-links { display: flex; gap: 30px; }
-        .nav-link { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #000; text-decoration: none; position: relative; }
-        .nav-link.active::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 1px; background: #000; }
+        .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-link { font-size: 0.75rem; text-transform: uppercase; font-weight: 600; letter-spacing: 1px; position: relative; }
+        .nav-link.active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background: #000; }
+        .subscribe-btn { font-size: 0.7rem; border: 1px solid #000; padding: 6px 15px; border-radius: 20px; font-weight: 700; margin-left: 20px; }
+
+        /* --- 共用排版元件 --- */
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 40px; }
+        .pill-btn { font-size: 0.65rem; border: 1px solid #000; padding: 5px 15px; border-radius: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; display: inline-block; }
+        .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px; border-bottom: 1px solid #000; padding-bottom: 10px; margin-top: 100px; }
+        .section-header.center { justify-content: center; flex-direction: column; align-items: center; border-bottom: none; gap: 15px; }
+        .section-title { font-size: 1.8rem; font-weight: 900; letter-spacing: -1px; text-transform: uppercase; line-height: 1; }
+        
+        .tiny-caption { font-size: 0.65rem; font-weight: 700; margin-top: 10px; text-transform: uppercase; }
+        .tiny-sub { font-size: 0.55rem; color: #888; text-transform: uppercase; }
 
         /* =========================================
-           ★ ★ ★ Work 完美對齊高級雜誌排版 ★ ★ ★
+           1. Hero Section (巨型標題區)
            ========================================= */
-        #gallery-canvas {
-            padding: 120px 40px 80px 40px; /* 留出 Header 與底部的空間 */
-            max-width: 900px; /* 控制總寬度讓排版更緊湊 */
-            margin: 0 auto;
-            display: flex; 
-            flex-direction: column; 
-            gap: 150px; /* 大區塊間的巨大留白 */
-            
-            /* 載入動畫設定 */
-            opacity: 0; 
-            transition: opacity 0.8s ease-out;
-        }
+        .hero { margin-top: 20px; }
+        .hero-img { width: 100%; height: 65vh; margin-bottom: 20px; }
+        .hero-title-area { display: flex; justify-content: space-between; align-items: flex-start; margin-top: 10px; }
+        .hero-title { font-size: 9vw; font-weight: 900; letter-spacing: -0.04em; line-height: 0.8; text-transform: uppercase; }
+        .hero-desc { text-align: center; max-width: 800px; margin: 30px auto 80px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* =========================================
+           2. Four Thumbnails Row (四格小圖區)
+           ========================================= */
+        .thumb-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 50px; margin-bottom: 120px; }
+        .thumb-item .img-box { aspect-ratio: 3/4; overflow: hidden; }
+
+        /* =========================================
+           3. EDITORIAL Section (對應原圖 FASHION)
+           ========================================= */
+        .editorial-top { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px; align-items: end; }
+        .ed-top-left .img-box { aspect-ratio: 16/9; margin-bottom: 15px; }
+        .ed-top-right .img-box { aspect-ratio: 4/3; }
         
-        #gallery-canvas.loaded { opacity: 1; }
+        /* 黑底白字橫幅 */
+        .black-banner { background-color: #000; color: #fff; padding: 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-bottom: 100px; }
+        .black-banner .img-box { aspect-ratio: 3/4; filter: grayscale(100%); transition: filter 0.5s; }
+        .black-banner .img-box:hover { filter: grayscale(0%); }
+        .black-banner .tiny-caption { color: #fff; font-weight: 400; text-transform: none; text-align: center; letter-spacing: 0.5px; }
 
-        /* 圖片容器與強制裁切 (這是對齊的關鍵！) */
-        .gallery-img-container {
-            display: block; 
-            overflow: hidden; 
-            background: #fff; /* 載入前的底色 */
-            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-        .gallery-img-container img { 
-            width: 100%; 
-            height: 100%; 
-            display: block; 
-            object-fit: cover; /* 絕對裁切，保證對齊 */
-            filter: grayscale(15%); 
-            transition: transform 0.8s ease, filter 0.5s ease;
-        }
-        .gallery-img-container:hover img { 
-            transform: scale(1.02); 
-            filter: grayscale(0%);
-        }
+        /* =========================================
+           4. COMMERCIAL Section (對應原圖 BEAUTY)
+           ========================================= */
+        .comm-header-area { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+        .comm-headline { font-size: 2.2rem; font-weight: 900; text-align: right; max-width: 60%; line-height: 1.1; letter-spacing: -1px; }
+        .comm-img-box { width: 80%; margin-left: auto; aspect-ratio: 21/9; }
+        .comm-desc { width: 35%; margin-left: auto; text-align: right; font-size: 0.75rem; font-weight: 500; margin-top: 20px; }
 
-        /* --- 雜誌佈局 A：上文 + 下三張直圖 --- */
-        .editorial-block-1 { display: flex; flex-direction: column; align-items: flex-end; }
-        .editorial-block-1 .ed-text { width: 50%; text-align: left; }
-        .editorial-block-1 .images { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; width: 100%; }
-        /* 強制比例：直圖 3:4 */
-        .editorial-block-1 .images .gallery-img-container { aspect-ratio: 3 / 4; } 
+        /* =========================================
+           5. MOTION Section (對應原圖 MUSIC)
+           ========================================= */
+        .motion-grid { display: grid; grid-template-columns: 1fr 1fr 2.5fr 1fr 1fr; gap: 20px; align-items: center; margin-bottom: 120px; }
+        .motion-grid .img-box { aspect-ratio: 3/4; }
+        .motion-grid .center-img { aspect-ratio: 16/9; }
 
-        /* --- 雜誌佈局 B：左中圖 + 右大圖錯位 --- */
-        .editorial-block-2 { display: grid; grid-template-columns: repeat(12, 1fr); gap: 15px; align-items: start; }
-        /* 左中圖：佔 4 欄，比例 4:5 */
-        .editorial-block-2 .left-img { grid-column: 1 / 5; aspect-ratio: 4 / 5; margin-top: 150px; } /* 往前錯位 */
-        /* 右大圖：佔 8 欄，比例 3:4 */
-        .editorial-block-2 .right-img { grid-column: 5 / 13; aspect-ratio: 3 / 4; } 
+        /* =========================================
+           6. BRANDING Section (對應原圖 ART & CULTURE)
+           ========================================= */
+        .branding-grid { display: grid; grid-template-columns: 1.8fr 1fr; gap: 60px; margin-bottom: 120px; }
+        .brand-left .img-box { aspect-ratio: 16/9; margin-bottom: 20px; }
+        .brand-left h2 { font-size: 3.5rem; font-weight: 900; line-height: 1; letter-spacing: -2px; margin-bottom: 20px; }
+        .brand-left p { font-size: 0.8rem; column-count: 2; column-gap: 30px; font-weight: 500; }
+        
+        .brand-right { display: flex; flex-direction: column; gap: 20px; }
+        .brand-right-item { display: grid; grid-template-columns: 1.5fr 1fr; gap: 20px; align-items: center; background: #f9f9f9; padding: 15px; }
+        .brand-right-item .img-box { aspect-ratio: 16/9; }
+        .brand-right-item p { font-size: 0.7rem; font-weight: 700; line-height: 1.4; }
 
-        /* --- 雜誌佈局 C：上文 + 下三圖 (兩直一橫) --- */
-        .editorial-block-3 { display: flex; flex-direction: column; align-items: flex-end; }
-        .editorial-block-3 .ed-text { width: 55%; text-align: left; }
-        .editorial-block-3 .images { display: grid; grid-template-columns: repeat(12, 1fr); gap: 15px; width: 100%; align-items: end; }
-        /* 前兩張直圖：各佔 4 欄，比例 3:4 */
-        .editorial-block-3 .p-small { grid-column: span 4; aspect-ratio: 3 / 4; }
-        /* 第三張橫圖：佔 4 欄，放在右下角，比例 4:3 */
-        .editorial-block-3 .landscape-end { grid-column: span 4; aspect-ratio: 4 / 3; } 
+        /* =========================================
+           7. CATEGORIES Section (底部長條切片)
+           ========================================= */
+        .magazine-grid { display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 40px; margin-bottom: 100px; align-items: center; }
+        .mag-center .img-box { aspect-ratio: 1/1; margin-bottom: 10px; }
 
-        /* --- 雜誌佈局 D：上文 + 左小直圖 + 右大直圖 --- */
-        .editorial-block-4 { display: flex; flex-direction: column; align-items: flex-end; }
-        .editorial-block-4 .ed-text { width: 55%; text-align: left; }
-        .editorial-block-4 .images { display: grid; grid-template-columns: repeat(12, 1fr); gap: 15px; width: 100%; align-items: end; }
-        /* 左小直圖：佔 3 欄，比例 3:4，往上抬 */
-        .editorial-block-4 .p-tiny { grid-column: 1 / 4; aspect-ratio: 3 / 4; margin-bottom: 80px; } 
-        /* 右大直圖：佔 9 欄，比例 3:4 */
-        .editorial-block-4 .p-huge { grid-column: 5 / 13; aspect-ratio: 3 / 4; } 
+        .categories-slice-wrap { height: 60vh; display: flex; justify-content: space-between; align-items: stretch; margin-bottom: 100px; position: relative; }
+        .cat-slice { width: 12%; overflow: hidden; }
+        .cat-slice:nth-child(1) { height: 80%; align-self: flex-end; }
+        .cat-slice:nth-child(2) { height: 100%; align-self: flex-start; }
+        .cat-center-title { display: flex; align-items: center; justify-content: center; font-size: 3rem; font-weight: 900; letter-spacing: -2px; flex: 1; }
+        .cat-slice:nth-child(4) { height: 90%; align-self: flex-end; }
+        .cat-slice:nth-child(5) { height: 60%; align-self: center; }
+        .cat-slice:nth-child(6) { height: 100%; align-self: flex-start; }
 
-        /* RWD 雜誌排版手機版適應 */
-        @media (max-width: 900px) {
-            #gallery-canvas { column-count: 2; padding: 100px 20px; }
-            .editorial-lg { column-span: 1; } /* 手機版全部一樣大，避免破版 */
-        }
+        /* =========================================
+           Footer
+           ========================================= */
+        footer { border-top: 1px solid #000; padding: 30px 50px; display: flex; justify-content: space-between; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; }
+
+        /* Hover 圖片微放大特效 */
+        .img-box { overflow: hidden; }
+        .img-box img { transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .img-box:hover img { transform: scale(1.05); }
+
     </style>
 </head>
 <body>
 
     <header>
-        <div class="header-content">
-            <a href="index.html" class="logo">JAY POSH</a>
-            <nav class="nav-links">
+        <a href="index.html" class="logo">JAY POSH</a>
+        <nav class="nav-links">
             <a href="about.html" class="nav-link">About</a>
             <a href="work.html" class="nav-link active">Work</a>
             <a href="music.html" class="nav-link">Music</a>
             <a href="contact.html" class="nav-link">Contact</a>
+            <a href="#" class="subscribe-btn">BOOKING</a>
         </nav>
-        </div>
     </header>
 
-    <div id="gallery-canvas">
+    <div class="container">
         
-        <div class="editorial-block-1">
-            <div class="images">
-                <a href="website.html" class="gallery-img-container"><img src="images/split-1.jpg"></a>
-                <a href="website.html" class="gallery-img-container"><img src="images/split-2.jpg"></a>
-                <a href="website.html" class="gallery-img-container"><img src="images/work3.jpg"></a>
+        <section class="hero">
+            <div class="hero-img">
+                <img src="images/work36.jpg" alt="Hero Image">
             </div>
-        </div>
-
-        <div class="editorial-block-2">
-            <a href="website.html" class="gallery-img-container left-img">
-                <img src="images/work49.jpg">
-            </a>
-            <a href="website.html" class="gallery-img-container right-img">
-                <img src="images/p2.jpg"> 
-            </a>
-        </div>
-
-        <div class="editorial-block-1">
-            <div class="images">
-                <a href="website.html" class="gallery-img-container"><img src="images/work60.jpg"></a>
-                <a href="website.html" class="gallery-img-container"><img src="images/work50.jpg"></a>
-                <a href="website.html" class="gallery-img-container"><img src="images/p5.jpg"></a>
+            <div class="hero-title-area">
+                <div class="pill-btn">[ 2026 EDIT ]</div>
+                <h1 class="hero-title">SELECTED WORKS</h1>
+                <div class="pill-btn">VIEW PORTFOLIO</div>
             </div>
-        </div>
+            <p class="hero-desc">
+                The intersection of fashion, art, and cinematic storytelling. Exploring the boundaries of visual narratives through careful curation of light, texture, and form. Directed and styled by Jay Posh.
+            </p>
+        </section>
 
-        <div class="editorial-block-3">
-            <div class="images">
-                <a href="website.html" class="gallery-img-container p-small"><img src="images/work11.jpg"></a>
-                <a href="website.html" class="gallery-img-container p-small"><img src="images/work12.jpg"></a>
-                <a href="website.html" class="gallery-img-container landscape-end"><img src="images/work36.jpg"></a>
+        <section class="thumb-row">
+            <div class="thumb-item">
+                <div class="img-box"><img src="images/p3.jpg"></div>
+                <div class="tiny-caption">Desert Storm — 01</div>
+                <div class="tiny-sub">Editorial / 2026</div>
             </div>
-        </div>
-
-        <div class="editorial-block-2">
-            <a href="website.html" class="gallery-img-container left-img">
-                <img src="images/p3.jpg">
-            </a>
-            <a href="website.html" class="gallery-img-container right-img">
-                <img src="images/work55.jpg"> 
-            </a>
-        </div>
-
-        <div class="editorial-block-4">
-            <div class="images">
-                <a href="website.html" class="gallery-img-container p-tiny"><img src="images/p4.jpg"></a>
-                <a href="website.html" class="gallery-img-container p-huge"><img src="images/work72.jpg"></a>
+            <div class="thumb-item">
+                <div class="img-box"><img src="images/work53.jpg"></div>
+                <div class="tiny-caption">City Blue — 02</div>
+                <div class="tiny-sub">Lookbook / 2026</div>
             </div>
+            <div class="thumb-item">
+                <div class="img-box"><img src="images/work49.jpg"></div>
+                <div class="tiny-caption">Night Walker — 03</div>
+                <div class="tiny-sub">Campaign / 2025</div>
+            </div>
+            <div class="thumb-item">
+                <div class="img-box"><img src="images/work54.jpg"></div>
+                <div class="tiny-caption">Steel Structure — 04</div>
+                <div class="tiny-sub">Personal / 2025</div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-header center">
+                <h2 class="section-title">EDITORIAL</h2>
+                <a href="#" class="pill-btn">SEE ALL</a>
+            </div>
+            
+            <div class="editorial-top">
+                <div class="ed-top-left">
+                    <div class="img-box"><img src="images/p7.jpg"></div>
+                    <div class="tiny-caption">Background by Jay Posh. Capturing the tension between nature and high fashion.</div>
+                </div>
+                <div class="ed-top-right">
+                    <div class="img-box"><img src="images/work72.jpg"></div>
+                    <div class="tiny-caption">Exploring the avant-garde styling of the new collection.</div>
+                </div>
+            </div>
+
+            <div class="black-banner">
+                <div class="banner-item">
+                    <div class="img-box"><img src="images/work11.jpg"></div>
+                    <p class="tiny-caption">Metallic elements and sharp shadows. High-end retouching applied.</p>
+                </div>
+                <div class="banner-item">
+                    <div class="img-box"><img src="images/work12.jpg"></div>
+                    <p class="tiny-caption">Studio session exploring vibrant pink hues and contemporary silhouettes.</p>
+                </div>
+                <div class="banner-item">
+                    <div class="img-box"><img src="images/work13.jpg"></div>
+                    <p class="tiny-caption">Futuristic visual presentation combining 3D elements and fashion.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-header">
+                <h2 class="section-title">COMMERCIAL</h2>
+                <a href="#" class="pill-btn">SEE ALL</a>
+            </div>
+
+            <div class="comm-header-area">
+                <a href="#" class="pill-btn">[ PINKSELFIE ]</a>
+                <h3 class="comm-headline">All eyes on the latest campaign. Highlighting cinematic mood and texture.</h3>
+            </div>
+            
+            <div class="comm-img-box">
+                <img src="images/p2.jpg">
+            </div>
+            <p class="comm-desc">
+                Emphasizing light and shadow as the key ingredients in this season's visual presentation. From ideation to final execution, creating a cohesive brand image that speaks to the modern sophisticated audience.
+            </p>
+        </section>
+
+        <section>
+            <div class="section-header center">
+                <h2 class="section-title">MOTION</h2>
+                <a href="#" class="pill-btn">SEE ALL</a>
+            </div>
+            
+            <div class="motion-grid">
+                <div class="img-box"><img src="images/work38.jpg"></div>
+                <div class="img-box"><img src="images/work39.jpg"></div>
+                <div class="img-box center-img"><img src="images/work65.jpg"></div>
+                <div class="img-box"><img src="images/work42.jpg"></div>
+                <div class="img-box"><img src="images/work43.jpg"></div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-header">
+                <h2 class="section-title">BRANDING</h2>
+                <a href="#" class="pill-btn">SEE ALL</a>
+            </div>
+
+            <div class="branding-grid">
+                <div class="brand-left">
+                    <div class="img-box"><img src="images/work61.jpg"></div>
+                    <h2>The visual identity for the new sub-label is finally here.</h2>
+                    <p>
+                        A complete overhaul of the brand's visual language. We aimed to create something that felt both timeless and immediately striking. By stripping away the unnecessary elements, we focused purely on the relationship between typography and negative space. The result is a design system that adapts seamlessly across digital platforms and physical print, maintaining its bold character regardless of the medium.
+                    </p>
+                </div>
+                <div class="brand-right">
+                    <div class="brand-right-item">
+                        <div class="img-box"><img src="images/split-1.jpg"></div>
+                        <p>Behind the scenes: Building the aesthetic directory.</p>
+                    </div>
+                    <div class="brand-right-item">
+                        <div class="img-box"><img src="images/split-2.jpg"></div>
+                        <p>Experimenting with textures and light flares on set.</p>
+                    </div>
+                    <div class="brand-right-item">
+                        <div class="img-box"><img src="images/split-3.jpg"></div>
+                        <p>Finalizing the color grading for the cinematic output.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-header">
+                <h2 class="section-title">ARCHIVE</h2>
+                <a href="#" class="pill-btn">SEE ALL</a>
+            </div>
+
+            <div class="magazine-grid">
+                <div class="mag-side">
+                    <div class="img-box"><img src="images/work50.jpg" style="aspect-ratio:3/4;"></div>
+                    <div class="tiny-caption">Noir Studio</div>
+                </div>
+                <div class="mag-center">
+                    <div class="img-box"><img src="images/p9.jpg"></div>
+                    <div class="tiny-caption" style="text-align: center;">Pink Series / 2026</div>
+                </div>
+                <div class="mag-side">
+                    <div class="img-box"><img src="images/work55.jpg" style="aspect-ratio:3/4;"></div>
+                    <div class="tiny-caption">Urban Angle</div>
+                </div>
+            </div>
+
+            <div class="categories-slice-wrap">
+                <div class="cat-slice img-box"><img src="images/work52.jpg"></div>
+                <div class="cat-slice img-box"><img src="images/work53.jpg"></div>
+                
+                <div class="cat-center-title">CATEGORIES</div>
+                
+                <div class="cat-slice img-box"><img src="images/work54.jpg"></div>
+                <div class="cat-slice img-box"><img src="images/p8.jpg"></div>
+                <div class="cat-slice img-box"><img src="images/work74.jpg"></div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <div class="footer-left">
+            <span>SHOP</span> &nbsp;&nbsp; <span>MAGAZINE</span> &nbsp;&nbsp; <span>INFO</span>
         </div>
-
+        <div class="footer-center">
+            <span>EDITORIAL</span> &nbsp; <span>COMMERCIAL</span> &nbsp; <span>MOTION</span> &nbsp; <span>BRANDING</span>
         </div>
+        <div class="footer-right">
+            <span>SUBSCRIBE</span>
+        </div>
+    </footer>
 
-    <script>
-        const canvas = document.getElementById('gallery-canvas');
-        const items = Array.from(document.querySelectorAll('.gallery-img-container'));
-        let hasInitialized = false; 
-
-        function initGallery() {
-            if (hasInitialized) return;
-            hasInitialized = true;
-            // 圖片載入後顯示畫布
-            canvas.classList.add('loaded');
-            console.log("Editorial Grid Initialized!");
-        }
-
-        let imagesLoadedCount = 0;
-        const totalImages = items.length;
-
-        items.forEach(item => {
-            const img = item.querySelector('img');
-            const handleLoad = () => {
-                imagesLoadedCount++;
-                if (imagesLoadedCount === totalImages) initGallery();
-            };
-            if (img.complete) {
-                handleLoad(); 
-            } else {
-                img.onload = handleLoad; 
-                img.onerror = handleLoad; // 即使破圖也不要卡住
-            }
-        });
-
-        // 安全機制：超時 1 秒強制顯示
-        setTimeout(() => { 
-            if (!hasInitialized) initGallery(); 
-        }, 1000);
-    </script>
 </body>
 </html>
