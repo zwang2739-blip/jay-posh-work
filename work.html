@@ -12,10 +12,10 @@
         /* --- 全局設定 --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
-            background-color: #f8f8f6;
+            background-color: #e6e6e4; /* 完美還原參考圖的暖灰色雜誌底色 */
             color: #000000; 
             font-family: 'Inter', sans-serif; 
-            /* 關鍵：改為 auto 讓網頁可以往下滾動 */
+            /* 讓網頁可以往下滾動 */
             overflow-y: auto; 
             overflow-x: hidden;
             width: 100vw;
@@ -28,7 +28,7 @@
             padding: 30px 50px;
             z-index: 1000; 
             pointer-events: none; 
-            background: linear-gradient(to bottom, rgba(248,248,246,0.9) 0%, rgba(248,248,246,0) 100%);
+            background: linear-gradient(to bottom, rgba(230,230,228,0.9) 0%, rgba(230,230,228,0) 100%);
         }
         .header-content { pointer-events: auto; display: flex; width: 100%; justify-content: space-between; align-items: center; }
         .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 700; text-transform: uppercase; color: #000; text-decoration: none;}
@@ -37,15 +37,15 @@
         .nav-link.active::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 1px; background: #000; }
 
         /* =========================================
-           ★ Work 瀑布流雜誌排版 ★
+           ★ ★ ★ Work 完美對齊高級雜誌排版 ★ ★ ★
            ========================================= */
         #gallery-canvas {
             padding: 120px 40px 80px 40px; /* 留出 Header 與底部的空間 */
-            max-width: 1600px;
+            max-width: 900px; /* 控制總寬度讓排版更緊湊 */
             margin: 0 auto;
-            /* 純 CSS 瀑布流設定 */
-            column-count: 4; /* 電腦版分成 4 欄 */
-            column-gap: 20px; /* 欄間距 */
+            display: flex; 
+            flex-direction: column; 
+            gap: 150px; /* 大區塊間的巨大留白 */
             
             /* 載入動畫設定 */
             opacity: 0; 
@@ -54,51 +54,62 @@
         
         #gallery-canvas.loaded { opacity: 1; }
 
+        /* 圖片容器與強制裁切 (這是對齊的關鍵！) */
         .gallery-img-container {
-            display: inline-block; /* 瀑布流必備 */
-            width: 100%; /* 填滿欄寬 */
-            margin-bottom: 20px; /* 圖與圖的垂直間距 */
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            display: block; 
+            overflow: hidden; 
+            background: #fff; /* 載入前的底色 */
             transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-            background: #fff;
-            padding: 10px; /* 模擬照片拍立得白框感，很加分 */
-            break-inside: avoid; /* 防止圖片跨欄斷開 */
+        }
+        .gallery-img-container img { 
+            width: 100%; 
+            height: 100%; 
+            display: block; 
+            object-fit: cover; /* 絕對裁切，保證對齊 */
+            filter: grayscale(15%); 
+            transition: transform 0.8s ease, filter 0.5s ease;
+        }
+        .gallery-img-container:hover img { 
+            transform: scale(1.02); 
+            filter: grayscale(0%);
         }
 
-        .gallery-img-container img {
-            width: 100%; height: auto; display: block;
-            object-fit: cover;
-            filter: grayscale(15%); /* 微灰階增加質感 */
-            transition: 0.5s ease;
-        }
+        /* --- 雜誌佈局 A：上文 + 下三張直圖 --- */
+        .editorial-block-1 { display: flex; flex-direction: column; align-items: flex-end; }
+        .editorial-block-1 .ed-text { width: 50%; text-align: left; }
+        .editorial-block-1 .images { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; width: 100%; }
+        /* 強制比例：直圖 3:4 */
+        .editorial-block-1 .images .gallery-img-container { aspect-ratio: 3 / 4; } 
 
-        /* 互動效果 */
-        .gallery-img-container:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-            z-index: 10;
-            position: relative;
-        }
-        .gallery-img-container:hover img {
-            filter: grayscale(0%); /* 滑過恢復彩色 */
-        }
+        /* --- 雜誌佈局 B：左中圖 + 右大圖錯位 --- */
+        .editorial-block-2 { display: grid; grid-template-columns: repeat(12, 1fr); gap: 15px; align-items: start; }
+        /* 左中圖：佔 4 欄，比例 4:5 */
+        .editorial-block-2 .left-img { grid-column: 1 / 5; aspect-ratio: 4 / 5; margin-top: 150px; } /* 往前錯位 */
+        /* 右大圖：佔 8 欄，比例 3:4 */
+        .editorial-block-2 .right-img { grid-column: 5 / 13; aspect-ratio: 3 / 4; } 
 
-        /* 創造雜誌感：設定特定照片的大小 */
-        .editorial-sm { column-span: 1; } /* 預設小圖占 1 欄 */
-        .editorial-lg { column-span: 2; } /* 大圖占 2 欄，創造視覺重點 */
+        /* --- 雜誌佈局 C：上文 + 下三圖 (兩直一橫) --- */
+        .editorial-block-3 { display: flex; flex-direction: column; align-items: flex-end; }
+        .editorial-block-3 .ed-text { width: 55%; text-align: left; }
+        .editorial-block-3 .images { display: grid; grid-template-columns: repeat(12, 1fr); gap: 15px; width: 100%; align-items: end; }
+        /* 前兩張直圖：各佔 4 欄，比例 3:4 */
+        .editorial-block-3 .p-small { grid-column: span 4; aspect-ratio: 3 / 4; }
+        /* 第三張橫圖：佔 4 欄，放在右下角，比例 4:3 */
+        .editorial-block-3 .landscape-end { grid-column: span 4; aspect-ratio: 4 / 3; } 
 
-        /* RWD 瀑布流手機版適應 */
-        @media (max-width: 1200px) {
-            #gallery-canvas { column-count: 3; }
-        }
+        /* --- 雜誌佈局 D：上文 + 左小直圖 + 右大直圖 --- */
+        .editorial-block-4 { display: flex; flex-direction: column; align-items: flex-end; }
+        .editorial-block-4 .ed-text { width: 55%; text-align: left; }
+        .editorial-block-4 .images { display: grid; grid-template-columns: repeat(12, 1fr); gap: 15px; width: 100%; align-items: end; }
+        /* 左小直圖：佔 3 欄，比例 3:4，往上抬 */
+        .editorial-block-4 .p-tiny { grid-column: 1 / 4; aspect-ratio: 3 / 4; margin-bottom: 80px; } 
+        /* 右大直圖：佔 9 欄，比例 3:4 */
+        .editorial-block-4 .p-huge { grid-column: 5 / 13; aspect-ratio: 3 / 4; } 
+
+        /* RWD 雜誌排版手機版適應 */
         @media (max-width: 900px) {
             #gallery-canvas { column-count: 2; padding: 100px 20px; }
-            .editorial-lg { column-span: 1; } /* 平板/手機版全部一樣大，避免破版 */
-        }
-        @media (max-width: 500px) {
-            #gallery-canvas { column-count: 1; column-gap: 15px; padding: 80px 15px; }
-            .gallery-img-container { margin-bottom: 15px; padding: 8px; }
+            .editorial-lg { column-span: 1; } /* 手機版全部一樣大，避免破版 */
         }
     </style>
 </head>
@@ -118,51 +129,56 @@
 
     <div id="gallery-canvas">
         
-        <div class="gallery-img-container editorial-sm"><img src="images/split-1.jpg"></div>
-        <div class="gallery-img-container editorial-sm"><img src="images/split-2.jpg"></div>
-        <div class="gallery-img-container editorial-sm"><img src="images/split-3.jpg"></div>
-        <div class="gallery-img-container editorial-sm"><img src="images/split-4.jpg"></div>
-
-        <div class="gallery-img-container editorial-lg">
-            <img src="images/p2.jpg"> 
+        <div class="editorial-block-1">
+            <div class="images">
+                <a href="website.html" class="gallery-img-container"><img src="images/split-1.jpg"></a>
+                <a href="website.html" class="gallery-img-container"><img src="images/split-2.jpg"></a>
+                <a href="website.html" class="gallery-img-container"><img src="images/work3.jpg"></a>
+            </div>
         </div>
 
-        <div class="gallery-img-container editorial-sm"><img src="images/work3.jpg"></div>
-        <div class="gallery-img-container editorial-sm"><img src="images/work49.jpg"></div>
-        <div class="gallery-img-container editorial-sm"><img src="images/p5.jpg"></div> 
-        <div class="gallery-img-container editorial-sm"><img src="images/work60.jpg"></div>
-
-        <div class="gallery-img-container editorial-lg">
-            <img src="images/work36.jpg">
+        <div class="editorial-block-2">
+            <a href="website.html" class="gallery-img-container left-img">
+                <img src="images/work49.jpg">
+            </a>
+            <a href="website.html" class="gallery-img-container right-img">
+                <img src="images/p2.jpg"> 
+            </a>
         </div>
 
-        <div class="gallery-img-container editorial-sm"><img src="images/work50.jpg"></div>
-        <div class="gallery-img-container editorial-sm"><img src="images/work55.jpg"></div>
-        <div class="gallery-img-container editorial-sm"><img src="images/work11.jpg"></div>
-        <div class="gallery-img-container editorial-sm"><img src="images/work12.jpg"></div>
-        <div class="gallery-img-container editorial-sm"><img src="images/work13.jpg"></div>
-        <div class="gallery-img-container editorial-sm"><img src="images/work33.jpg"></div>
-        
-        <div class="gallery-img-container editorial-sm"><img src="images/p3.jpg"></div>
-        <div class="gallery-img-container editorial-sm"><img src="images/p4.jpg"></div>
-        <div class="gallery-img-container editorial-sm"><img src="images/work52.jpg"></div>
-        
-        <div class="gallery-img-container editorial-lg">
-            <img src="images/work14.jpg">
+        <div class="editorial-block-1">
+            <div class="images">
+                <a href="website.html" class="gallery-img-container"><img src="images/work60.jpg"></a>
+                <a href="website.html" class="gallery-img-container"><img src="images/work50.jpg"></a>
+                <a href="website.html" class="gallery-img-container"><img src="images/p5.jpg"></a>
+            </div>
         </div>
 
-        <div class="gallery-img-container editorial-sm"><img src="images/work53.jpg"></div>
-        <div class="gallery-img-container editorial-sm"><img src="images/work54.jpg"></div>
-        <div class="gallery-img-container editorial-sm"><img src="images/work65.jpg"></div>
-        <div class="gallery-img-container editorial-sm"><img src="images/work72.jpg"></div>
-        <div class="gallery-img-container editorial-sm"><img src="images/work74.jpg"></div>
-        <div class="gallery-img-container editorial-sm"><img src="images/p7.jpg"></div>
-        <div class="gallery-img-container editorial-sm"><img src="images/p8.jpg"></div>
-        <div class="gallery-img-container editorial-sm"><img src="images/p9.jpg"></div>
-        <div class="gallery-img-container editorial-sm"><img src="images/work38.jpg"></div>
-        <div class="gallery-img-container editorial-sm"><img src="images/work39.jpg"></div>
+        <div class="editorial-block-3">
+            <div class="images">
+                <a href="website.html" class="gallery-img-container p-small"><img src="images/work11.jpg"></a>
+                <a href="website.html" class="gallery-img-container p-small"><img src="images/work12.jpg"></a>
+                <a href="website.html" class="gallery-img-container landscape-end"><img src="images/work36.jpg"></a>
+            </div>
+        </div>
 
-    </div>
+        <div class="editorial-block-2">
+            <a href="website.html" class="gallery-img-container left-img">
+                <img src="images/p3.jpg">
+            </a>
+            <a href="website.html" class="gallery-img-container right-img">
+                <img src="images/work55.jpg"> 
+            </a>
+        </div>
+
+        <div class="editorial-block-4">
+            <div class="images">
+                <a href="website.html" class="gallery-img-container p-tiny"><img src="images/p4.jpg"></a>
+                <a href="website.html" class="gallery-img-container p-huge"><img src="images/work72.jpg"></a>
+            </div>
+        </div>
+
+        </div>
 
     <script>
         const canvas = document.getElementById('gallery-canvas');
@@ -174,6 +190,7 @@
             hasInitialized = true;
             // 圖片載入後顯示畫布
             canvas.classList.add('loaded');
+            console.log("Editorial Grid Initialized!");
         }
 
         let imagesLoadedCount = 0;
@@ -193,10 +210,10 @@
             }
         });
 
-        // 安全機制：超時 1.5 秒強制顯示
+        // 安全機制：超時 1 秒強制顯示
         setTimeout(() => { 
             if (!hasInitialized) initGallery(); 
-        }, 1500);
+        }, 1000);
     </script>
 </body>
 </html>
