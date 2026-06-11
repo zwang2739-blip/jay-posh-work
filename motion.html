@@ -42,11 +42,10 @@
         .nav-link.active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background: currentColor; }
 
         /* =========================================
-           1. 滿版 Hero Video Section (★修正：不裁切滿版★)
+           1. 滿版 Hero Video Section
            ========================================= */
         .hero-video-wrapper {
             width: 100vw;
-            /* 移除了 height: 100vh，讓高度自動適應影片比例，保證0裁切 */
             position: relative;
             overflow: hidden;
             margin-bottom: 150px;
@@ -54,7 +53,7 @@
         }
         .hero-video-wrapper > video {
             width: 100%;
-            height: auto; /* 高度自動，維持原比例 */
+            height: auto; 
             display: block;
         }
 
@@ -97,7 +96,7 @@
             margin-top: 5px;
         }
 
-        /* ★ 底部無限跑馬燈 (Infinite Marquee) (★修正：加上底部黑線★) ★ */
+        /* ★ 底部無限跑馬燈 (Infinite Marquee) ★ */
         .hero-marquee {
             position: absolute;
             bottom: 0;
@@ -106,7 +105,7 @@
             height: 120px;
             background: #fff;
             border-top: 1px solid #000;
-            border-bottom: 1px solid #000; /* ★ 新增底部黑線框，看起來更像電影底片 ★ */
+            border-bottom: 1px solid #000; 
             overflow: hidden;
             z-index: 20;
             box-sizing: border-box;
@@ -149,7 +148,6 @@
             padding: 0 40px 200px 40px;
         }
 
-        /* 巨大主標題 */
         .massive-title-area {
             text-align: center;
             margin-bottom: 150px;
@@ -165,7 +163,6 @@
             text-transform: uppercase;
         }
 
-        /* 英文文案區塊 */
         .text-block {
             font-size: 0.9rem;
             font-weight: 500;
@@ -178,7 +175,6 @@
         .text-block.left { margin-right: auto; text-align: left; }
         .text-block.right { margin-left: auto; text-align: right; }
 
-        /* 媒體容器 */
         .media-box {
             position: relative;
             transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -189,7 +185,6 @@
             z-index: 20;
         }
 
-        /* 錯落佈局 */
         .row-scatter { display: flex; justify-content: space-between; align-items: center; margin-bottom: 150px; position: relative; gap: 40px; }
         .row-scatter .media-box.sm { width: 30%; }
         .row-scatter .media-box.md { width: 45%; }
@@ -199,7 +194,6 @@
         .offset-down { transform: translateY(80px); }
         .overlap-left { margin-left: -10%; z-index: 10; }
 
-        /* --- 網格拼貼區塊 --- */
         .chaotic-grid {
             display: grid;
             grid-template-columns: repeat(12, 1fr);
@@ -207,7 +201,6 @@
             margin-bottom: 150px;
             align-items: center;
         }
-        
         .cg-1 { grid-column: 1 / 5; z-index: 10; } 
         .cg-2 { grid-column: 7 / 11; margin-top: 80px; z-index: 10; } 
         .cg-3 { grid-column: 1 / 13; margin-top: -120px; z-index: 5; } 
@@ -215,9 +208,6 @@
         .cg-4 { grid-column: 1 / 7; } 
         .cg-5 { grid-column: 8 / 12; } 
 
-        /* =========================================
-           3. 橫向連續小影片區 
-           ========================================= */
         .filmstrip {
             display: flex;
             gap: 15px;
@@ -234,16 +224,68 @@
             object-fit: cover; 
         }
 
-        /* Footer */
+        /* =========================================
+           ★ 全新設計：Minimalist Editorial Grid (細線與極簡敘述) ★
+           ========================================= */
+        .minimal-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 100px 80px;
+            margin-bottom: 150px;
+            align-items: start;
+        }
+        .mg-item {
+            display: flex;
+            flex-direction: column;
+        }
+        .mg-item img, .mg-item video {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            background: #f8f8f8; /* 極簡的淺灰底色，增加藝廊質感 */
+        }
+        
+        .mg-caption-wrapper {
+            display: flex;
+            align-items: flex-start;
+            margin-top: 20px;
+            width: 100%;
+        }
+        /* 極簡細線 */
+        .mg-line {
+            flex-grow: 1;
+            height: 1px;
+            background-color: #d0d0d0;
+            margin-top: 10px;
+        }
+        .mg-line.left { margin-right: 20px; }
+        .mg-line.right { margin-left: 20px; }
+        
+        /* 極簡文字 */
+        .mg-text {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #000;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            min-width: 150px;
+            line-height: 1.4;
+        }
+        .mg-subtext {
+            color: #888;
+            font-size: 0.6rem;
+            display: block;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
         footer { border-top: 1px solid #000; padding: 30px 50px; display: flex; justify-content: space-between; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; }
 
-        /* 手機版 RWD 適應 */
         @media (max-width: 900px) {
             .hero-overlay { flex-direction: column; align-items: flex-start; gap: 20px; bottom: 120px; }
             .hero-main-title { font-size: 2.5rem; }
             .hero-sub-title { font-size: 1.2rem; text-align: left; }
             .hero-marquee { height: 90px; }
-
             .row-scatter { flex-direction: column; gap: 50px; }
             .row-scatter .media-box.sm, .row-scatter .media-box.md, .row-scatter .media-box.lg { width: 90% !important; }
             .chaotic-grid { display: flex; flex-direction: column; gap: 40px; }
@@ -251,6 +293,9 @@
             .offset-up, .offset-down { transform: none; }
             .filmstrip { flex-wrap: wrap; }
             .filmstrip .media-box { min-width: 45%; }
+            /* Minimal Grid RWD */
+            .minimal-grid { grid-template-columns: 1fr; gap: 80px; }
+            .mg-item { width: 100% !important; margin: 0 !important; }
         }
     </style>
 </head>
@@ -391,7 +436,7 @@
             <div class="media-box"><video src="images/17.mp4" autoplay loop muted playsinline></video></div>
         </div>
 
-        <div class="chaotic-grid" style="margin-bottom: 50px;">
+        <div class="chaotic-grid" style="margin-bottom: 150px;">
             <div class="media-box cg-4">
                 <video src="images/619fd84e-597a-4cd5-b6fd-e1de3ed75148.mp4" autoplay loop muted playsinline></video>
             </div>
@@ -400,23 +445,75 @@
             </div>
         </div>
 
-        <div class="row-scatter">
-            <div class="text-block left">
-                Metallic elements such as zips, buckles and buttons were employed to create a rugged appearance, along with styled statement accessories.
-            </div>
-            <div class="media-box sm">
-                <img src="images/H75工作區域 4-100.jpg">
-            </div>
-            <div class="media-box md overlap-left">
-                <video src="images/mid-video.mp4" autoplay loop muted playsinline></video>
-            </div>
-        </div>
 
-        <div class="row-scatter" style="margin-bottom: 50px;">
-            <div class="media-box sm"><video src="images/7592951a-d00f-4550-b747-fb3cdde688c5.mp4" autoplay loop muted playsinline></video></div>
-            <div class="media-box sm offset-up"><img src="images/74.png"></div>
-            <div class="media-box sm offset-down"><img src="images/2.png"></div>
-            <div class="media-box sm"><video src="images/56.mp4" autoplay loop muted playsinline></video></div>
+        <div class="minimal-grid">
+            
+            <div class="mg-item" style="grid-column: 1 / 2; width: 85%;">
+                <div class="media-box"><video src="images/7592951a-d00f-4550-b747-fb3cdde688c5.mp4" autoplay loop muted playsinline></video></div>
+                <div class="mg-caption-wrapper">
+                    <div class="mg-text">
+                        Pink Series Transit<br>
+                        <span class="mg-subtext">Commercial Campaign / 2026</span>
+                    </div>
+                    <div class="mg-line right"></div>
+                </div>
+            </div>
+
+            <div class="mg-item" style="grid-column: 2 / 3; width: 65%; margin-left: auto; margin-top: 150px;">
+                <div class="media-box"><img src="images/74.png"></div>
+                <div class="mg-caption-wrapper">
+                    <div class="mg-line left"></div>
+                    <div class="mg-text" style="text-align: right;">
+                        Studio Blue Edition<br>
+                        <span class="mg-subtext">Lookbook Archive</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mg-item" style="grid-column: 1 / 2; width: 70%; margin-left: 15%;">
+                <div class="media-box"><img src="images/2.png"></div>
+                <div class="mg-caption-wrapper">
+                    <div class="mg-text">
+                        Landscape Harmony<br>
+                        <span class="mg-subtext">Natural Textures</span>
+                    </div>
+                    <div class="mg-line right"></div>
+                </div>
+            </div>
+
+            <div class="mg-item" style="grid-column: 2 / 3; width: 80%; margin-top: -50px;">
+                <div class="media-box"><video src="images/56.mp4" autoplay loop muted playsinline></video></div>
+                <div class="mg-caption-wrapper">
+                    <div class="mg-line left"></div>
+                    <div class="mg-text" style="text-align: right;">
+                        Perspective Geometry<br>
+                        <span class="mg-subtext">Motion Visuals</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mg-item" style="grid-column: 1 / 2; width: 50%;">
+                <div class="media-box"><img src="images/H75工作區域 4-100.jpg"></div>
+                <div class="mg-caption-wrapper">
+                    <div class="mg-text">
+                        Styling Details<br>
+                        <span class="mg-subtext">Behind The Scenes</span>
+                    </div>
+                    <div class="mg-line right"></div>
+                </div>
+            </div>
+
+            <div class="mg-item" style="grid-column: 2 / 3; width: 90%; margin-top: -100px;">
+                <div class="media-box"><video src="images/mid-video.mp4" autoplay loop muted playsinline></video></div>
+                <div class="mg-caption-wrapper">
+                    <div class="mg-line left"></div>
+                    <div class="mg-text" style="text-align: right;">
+                        Dynamic Stance<br>
+                        <span class="mg-subtext">Full Campaign Output</span>
+                    </div>
+                </div>
+            </div>
+
         </div>
         
     </div>
