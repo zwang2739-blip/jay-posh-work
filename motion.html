@@ -42,7 +42,7 @@
         .nav-link.active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background: currentColor; }
 
         /* =========================================
-           1. 滿版 Hero Video Section
+           1. 滿版 Hero Video Section (全新升級)
            ========================================= */
         .hero-video-wrapper {
             width: 100vw;
@@ -52,10 +52,90 @@
             margin-bottom: 150px;
             background: #000;
         }
-        .hero-video-wrapper video {
+        .hero-video-wrapper > video {
             width: 100%;
             height: 100%;
             object-fit: cover; 
+        }
+
+        /* ★ 覆蓋文字 (Hero Overlay) ★ */
+        .hero-overlay {
+            position: absolute;
+            bottom: 140px; /* 留出底部跑馬燈的空間 */
+            left: 0;
+            width: 100%;
+            padding: 0 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            color: #fff;
+            z-index: 10;
+            pointer-events: none;
+        }
+        .hero-main-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 4rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 1;
+            margin: 0;
+        }
+        .hero-sub-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: right;
+            line-height: 1.2;
+            letter-spacing: -1px;
+        }
+        .hero-sub-title span {
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            display: block;
+            margin-top: 5px;
+        }
+
+        /* ★ 底部無限跑馬燈 (Infinite Marquee) ★ */
+        .hero-marquee {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 120px;
+            background: #fff;
+            border-top: 1px solid #000;
+            overflow: hidden;
+            z-index: 20;
+        }
+        .marquee-track {
+            display: flex;
+            height: 100%;
+            width: max-content;
+            animation: scroll-left 40s linear infinite;
+        }
+        .marquee-track:hover {
+            animation-play-state: paused; /* 滑鼠懸停暫停 */
+        }
+        .marquee-item {
+            height: 100%;
+            padding: 15px; /* 上下留白，更有呼吸感 */
+            border-right: 1px solid #000; /* 分隔線 */
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+        }
+        /* 跑馬燈內的媒體：高度填滿、寬度自動、不裁切 */
+        .marquee-item img, .marquee-item video {
+            height: 100%;
+            width: auto;
+            object-fit: contain; 
+        }
+
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
 
         /* =========================================
@@ -127,10 +207,9 @@
             align-items: center;
         }
         
-        /* ★ 修改點：紅色滿版與上方重疊 ★ */
-        .cg-1 { grid-column: 1 / 5; z-index: 10; } /* 兩位模特兒，層級拉高 */
-        .cg-2 { grid-column: 7 / 11; margin-top: 80px; z-index: 10; } /* 電腦影片，層級拉高 */
-        .cg-3 { grid-column: 1 / 13; margin-top: -120px; z-index: 5; } /* 紅色照片滿版，往上縮壓在底部 */
+        .cg-1 { grid-column: 1 / 5; z-index: 10; } 
+        .cg-2 { grid-column: 7 / 11; margin-top: 80px; z-index: 10; } 
+        .cg-3 { grid-column: 1 / 13; margin-top: -120px; z-index: 5; } 
 
         .cg-4 { grid-column: 1 / 7; } 
         .cg-5 { grid-column: 8 / 12; } 
@@ -159,6 +238,11 @@
 
         /* 手機版 RWD 適應 */
         @media (max-width: 900px) {
+            .hero-overlay { flex-direction: column; align-items: flex-start; gap: 20px; bottom: 120px; }
+            .hero-main-title { font-size: 2.5rem; }
+            .hero-sub-title { font-size: 1.2rem; text-align: left; }
+            .hero-marquee { height: 90px; }
+
             .row-scatter { flex-direction: column; gap: 50px; }
             .row-scatter .media-box.sm, .row-scatter .media-box.md, .row-scatter .media-box.lg { width: 90% !important; }
             .chaotic-grid { display: flex; flex-direction: column; gap: 40px; }
@@ -183,6 +267,44 @@
 
     <div class="hero-video-wrapper">
         <video src="images/hero4.mp4" autoplay loop muted playsinline></video>
+        
+        <div class="hero-overlay">
+            <h1 class="hero-main-title">MOTION ARCHIVE</h1>
+            <div class="hero-sub-title">
+                VISUAL WORKSPACE<br>
+                <span>EXPLORING CINEMATIC NARRATIVES & DYNAMIC LIGHTING</span>
+            </div>
+        </div>
+
+        <div class="hero-marquee">
+            <div class="marquee-track">
+                <div class="marquee-item"><img src="images/15.png"></div>
+                <div class="marquee-item"><video src="images/YT 2.mp4" autoplay loop muted playsinline></video></div>
+                <div class="marquee-item"><img src="images/H40工作區域 5-100.jpg"></div>
+                <div class="marquee-item"><video src="images/47eeec1c-bbd4-4b73-87e3-f13509925887.mp4" autoplay loop muted playsinline></video></div>
+                <div class="marquee-item"><img src="images/16.png"></div>
+                <div class="marquee-item"><video src="images/trend3.mp4" autoplay loop muted playsinline></video></div>
+                <div class="marquee-item"><img src="images/k1.jpg"></div>
+                <div class="marquee-item"><img src="images/k6.jpg"></div>
+                <div class="marquee-item"><img src="images/24422880c15a113faf45c1736b9aeef8.jpg"></div>
+                <div class="marquee-item"><video src="images/mid-video.mp4" autoplay loop muted playsinline></video></div>
+                <div class="marquee-item"><img src="images/3aeff037050ea8f17c62d0601e79f4ce.jpg"></div>
+                <div class="marquee-item"><img src="images/work68.jpg"></div>
+
+                <div class="marquee-item"><img src="images/15.png"></div>
+                <div class="marquee-item"><video src="images/YT 2.mp4" autoplay loop muted playsinline></video></div>
+                <div class="marquee-item"><img src="images/H40工作區域 5-100.jpg"></div>
+                <div class="marquee-item"><video src="images/47eeec1c-bbd4-4b73-87e3-f13509925887.mp4" autoplay loop muted playsinline></video></div>
+                <div class="marquee-item"><img src="images/16.png"></div>
+                <div class="marquee-item"><video src="images/trend3.mp4" autoplay loop muted playsinline></video></div>
+                <div class="marquee-item"><img src="images/k1.jpg"></div>
+                <div class="marquee-item"><img src="images/k6.jpg"></div>
+                <div class="marquee-item"><img src="images/24422880c15a113faf45c1736b9aeef8.jpg"></div>
+                <div class="marquee-item"><video src="images/mid-video.mp4" autoplay loop muted playsinline></video></div>
+                <div class="marquee-item"><img src="images/3aeff037050ea8f17c62d0601e79f4ce.jpg"></div>
+                <div class="marquee-item"><img src="images/work68.jpg"></div>
+            </div>
+        </div>
     </div>
 
     <div class="collage-container">
