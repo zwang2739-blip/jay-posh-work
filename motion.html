@@ -42,11 +42,11 @@
         .nav-link.active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background: currentColor; }
 
         /* =========================================
-           1. 滿版 Hero Video Section (全新升級)
+           1. 滿版 Hero Video Section (★修正：不裁切滿版★)
            ========================================= */
         .hero-video-wrapper {
             width: 100vw;
-            height: 100vh;
+            /* 移除了 height: 100vh，讓高度自動適應影片比例，保證0裁切 */
             position: relative;
             overflow: hidden;
             margin-bottom: 150px;
@@ -54,14 +54,14 @@
         }
         .hero-video-wrapper > video {
             width: 100%;
-            height: 100%;
-            object-fit: cover; 
+            height: auto; /* 高度自動，維持原比例 */
+            display: block;
         }
 
         /* ★ 覆蓋文字 (Hero Overlay) ★ */
         .hero-overlay {
             position: absolute;
-            bottom: 140px; /* 留出底部跑馬燈的空間 */
+            bottom: 140px; 
             left: 0;
             width: 100%;
             padding: 0 50px;
@@ -97,7 +97,7 @@
             margin-top: 5px;
         }
 
-        /* ★ 底部無限跑馬燈 (Infinite Marquee) ★ */
+        /* ★ 底部無限跑馬燈 (Infinite Marquee) (★修正：加上底部黑線★) ★ */
         .hero-marquee {
             position: absolute;
             bottom: 0;
@@ -106,8 +106,10 @@
             height: 120px;
             background: #fff;
             border-top: 1px solid #000;
+            border-bottom: 1px solid #000; /* ★ 新增底部黑線框，看起來更像電影底片 ★ */
             overflow: hidden;
             z-index: 20;
+            box-sizing: border-box;
         }
         .marquee-track {
             display: flex;
@@ -116,17 +118,16 @@
             animation: scroll-left 40s linear infinite;
         }
         .marquee-track:hover {
-            animation-play-state: paused; /* 滑鼠懸停暫停 */
+            animation-play-state: paused; 
         }
         .marquee-item {
             height: 100%;
-            padding: 15px; /* 上下留白，更有呼吸感 */
-            border-right: 1px solid #000; /* 分隔線 */
+            padding: 15px; 
+            border-right: 1px solid #000; 
             flex-shrink: 0;
             display: flex;
             align-items: center;
         }
-        /* 跑馬燈內的媒體：高度填滿、寬度自動、不裁切 */
         .marquee-item img, .marquee-item video {
             height: 100%;
             width: auto;
