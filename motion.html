@@ -20,11 +20,11 @@
         }
         a { text-decoration: none; color: inherit; cursor: pointer; }
         
-        /* ★ 關鍵修改：預設讓圖片與影片維持原比例，不裁切 ★ */
+        /* 圖片與影片維持原比例，不裁切 */
         img, video { 
             display: block; 
             width: 100%; 
-            height: auto; /* 讓高度自然延伸 */
+            height: auto; 
             object-fit: contain; 
         }
 
@@ -51,9 +51,8 @@
             position: relative;
             overflow: hidden;
             margin-bottom: 150px;
-            background: #000; /* 載入前的底色 */
+            background: #000;
         }
-        /* Hero 影片強制填滿，這是唯一需要裁切的地方 */
         .hero-video-wrapper video {
             width: 100%;
             height: 100%;
@@ -61,7 +60,7 @@
         }
 
         /* =========================================
-           2. 散落拼貼畫布 (無強制裁切版)
+           2. 散落拼貼畫布 
            ========================================= */
         .collage-container {
             max-width: 1400px;
@@ -99,19 +98,18 @@
         .text-block.left { margin-right: auto; text-align: left; }
         .text-block.right { margin-left: auto; text-align: right; }
 
-        /* 媒體容器 (照片與影片共用) */
+        /* 媒體容器 */
         .media-box {
             position: relative;
             transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
             z-index: 5;
-            /* 移除了原本的 aspect-ratio 限制，讓媒體自由發展 */
         }
         .media-box:hover {
             transform: scale(1.05);
             z-index: 20;
         }
 
-        /* --- 錯落佈局 (僅限制寬度，高度交給原比例) --- */
+        /* 錯落佈局 */
         .row-scatter { display: flex; justify-content: space-between; align-items: center; margin-bottom: 150px; position: relative; gap: 40px; }
         .row-scatter .media-box.sm { width: 30%; }
         .row-scatter .media-box.md { width: 45%; }
@@ -121,7 +119,7 @@
         .offset-down { transform: translateY(80px); }
         .overlap-left { margin-left: -10%; z-index: 10; }
 
-        /* 網格拼貼區塊 */
+        /* --- 網格拼貼區塊 (微調了比例與偏移) --- */
         .chaotic-grid {
             display: grid;
             grid-template-columns: repeat(12, 1fr);
@@ -131,13 +129,15 @@
         }
         .cg-1 { grid-column: 1 / 5; }
         .cg-2 { grid-column: 6 / 10; margin-top: -100px; z-index: 10; }
-        .cg-3 { grid-column: 10 / 13; margin-top: 150px; }
+        /* ★ 修改點 2：右邊紅色圖片放大 (跨度9-13)，並往左下方移動 */
+        .cg-3 { grid-column: 9 / 13; margin-top: 200px; margin-left: -30px; } 
 
-        .cg-4 { grid-column: 2 / 8; }
-        .cg-5 { grid-column: 9 / 12; }
+        /* ★ 修改點 4：爆炸影片往左移，走秀影片放大但仍較小 */
+        .cg-4 { grid-column: 1 / 7; } /* 往左移齊平 */
+        .cg-5 { grid-column: 8 / 12; } /* 稍微放大 */
 
         /* =========================================
-           3. 橫向連續小影片區 (依照你的要求，這排維持裁切)
+           3. 橫向連續小影片區 
            ========================================= */
         .filmstrip {
             display: flex;
@@ -147,12 +147,13 @@
         }
         .filmstrip .media-box { 
             flex: 1; 
-            aspect-ratio: 1/1; /* 維持方形/微長方形感 */
+            /* ★ 修改點 3：長度拉長，改為直式的 3/4 比例 */
+            aspect-ratio: 3/4; 
             overflow: hidden;
         }
         .filmstrip .media-box img, .filmstrip .media-box video {
             height: 100%;
-            object-fit: cover; /* 僅針對這排強制裁切填滿 */
+            object-fit: cover; 
         }
 
         /* Footer */
@@ -161,7 +162,7 @@
         /* 手機版 RWD 適應 */
         @media (max-width: 900px) {
             .row-scatter { flex-direction: column; gap: 50px; }
-            .row-scatter .media-box.sm, .row-scatter .media-box.md, .row-scatter .media-box.lg { width: 90%; }
+            .row-scatter .media-box.sm, .row-scatter .media-box.md, .row-scatter .media-box.lg { width: 90% !important; }
             .chaotic-grid { display: flex; flex-direction: column; gap: 40px; }
             .cg-1, .cg-2, .cg-3, .cg-4, .cg-5 { width: 100%; margin: 0; }
             .offset-up, .offset-down { transform: none; }
@@ -196,7 +197,7 @@
         </div>
 
         <div class="row-scatter">
-            <div class="media-box sm offset-down">
+            <div class="media-box offset-down" style="width: 40%;">
                 <img src="images/15.png" alt="Concept">
             </div>
             <div class="text-block">
