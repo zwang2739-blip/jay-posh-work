@@ -19,14 +19,21 @@
             line-height: 1.4;
         }
         a { text-decoration: none; color: inherit; cursor: pointer; }
-        img, video { display: block; width: 100%; height: 100%; object-fit: cover; }
+        
+        /* ★ 關鍵修改：預設讓圖片與影片維持原比例，不裁切 ★ */
+        img, video { 
+            display: block; 
+            width: 100%; 
+            height: auto; /* 讓高度自然延伸 */
+            object-fit: contain; 
+        }
 
         /* --- 懸浮 Header --- */
         header {
             position: fixed; top: 0; left: 0; width: 100%; 
             padding: 20px 50px;
             z-index: 9999; 
-            mix-blend-mode: difference; /* 讓字體在黑白背景都能看清楚 */
+            mix-blend-mode: difference; 
             color: #fff;
             display: flex; justify-content: space-between; align-items: center;
         }
@@ -44,15 +51,17 @@
             position: relative;
             overflow: hidden;
             margin-bottom: 150px;
+            background: #000; /* 載入前的底色 */
         }
+        /* Hero 影片強制填滿，這是唯一需要裁切的地方 */
         .hero-video-wrapper video {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: cover; 
         }
 
         /* =========================================
-           2. Cho Gi-Seok 風格拼貼畫布
+           2. 散落拼貼畫布 (無強制裁切版)
            ========================================= */
         .collage-container {
             max-width: 1400px;
@@ -70,7 +79,7 @@
         }
         .massive-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 16vw; /* 隨著螢幕變化的極巨化字體 */
+            font-size: 16vw; 
             font-weight: 700;
             line-height: 0.8;
             letter-spacing: -0.05em;
@@ -93,20 +102,20 @@
         /* 媒體容器 (照片與影片共用) */
         .media-box {
             position: relative;
-            background: #eee;
             transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
             z-index: 5;
+            /* 移除了原本的 aspect-ratio 限制，讓媒體自由發展 */
         }
         .media-box:hover {
             transform: scale(1.05);
             z-index: 20;
         }
 
-        /* --- 錯落有致的自訂佈局 --- */
-        .row-scatter { display: flex; justify-content: space-between; align-items: center; margin-bottom: 150px; position: relative; }
-        .row-scatter .media-box.sm { width: 25%; aspect-ratio: 3/4; }
-        .row-scatter .media-box.md { width: 40%; aspect-ratio: 4/5; }
-        .row-scatter .media-box.lg { width: 60%; aspect-ratio: 16/9; margin: 0 auto; }
+        /* --- 錯落佈局 (僅限制寬度，高度交給原比例) --- */
+        .row-scatter { display: flex; justify-content: space-between; align-items: center; margin-bottom: 150px; position: relative; gap: 40px; }
+        .row-scatter .media-box.sm { width: 30%; }
+        .row-scatter .media-box.md { width: 45%; }
+        .row-scatter .media-box.lg { width: 70%; margin: 0 auto; }
         
         .offset-up { transform: translateY(-80px); }
         .offset-down { transform: translateY(80px); }
@@ -120,21 +129,31 @@
             margin-bottom: 150px;
             align-items: center;
         }
-        .cg-1 { grid-column: 1 / 5; aspect-ratio: 3/4; }
-        .cg-2 { grid-column: 6 / 10; aspect-ratio: 1/1; margin-top: -100px; z-index: 10; }
-        .cg-3 { grid-column: 10 / 13; aspect-ratio: 3/4; margin-top: 150px; }
+        .cg-1 { grid-column: 1 / 5; }
+        .cg-2 { grid-column: 6 / 10; margin-top: -100px; z-index: 10; }
+        .cg-3 { grid-column: 10 / 13; margin-top: 150px; }
 
-        .cg-4 { grid-column: 2 / 8; aspect-ratio: 16/9; }
-        .cg-5 { grid-column: 9 / 12; aspect-ratio: 4/5; }
+        .cg-4 { grid-column: 2 / 8; }
+        .cg-5 { grid-column: 9 / 12; }
 
-        /* 橫向連續小影片區 */
+        /* =========================================
+           3. 橫向連續小影片區 (依照你的要求，這排維持裁切)
+           ========================================= */
         .filmstrip {
             display: flex;
             gap: 15px;
             margin-bottom: 150px;
             overflow: hidden;
         }
-        .filmstrip .media-box { flex: 1; aspect-ratio: 4/5; }
+        .filmstrip .media-box { 
+            flex: 1; 
+            aspect-ratio: 1/1; /* 維持方形/微長方形感 */
+            overflow: hidden;
+        }
+        .filmstrip .media-box img, .filmstrip .media-box video {
+            height: 100%;
+            object-fit: cover; /* 僅針對這排強制裁切填滿 */
+        }
 
         /* Footer */
         footer { border-top: 1px solid #000; padding: 30px 50px; display: flex; justify-content: space-between; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; }
@@ -142,7 +161,7 @@
         /* 手機版 RWD 適應 */
         @media (max-width: 900px) {
             .row-scatter { flex-direction: column; gap: 50px; }
-            .row-scatter .media-box.sm, .row-scatter .media-box.md { width: 80%; }
+            .row-scatter .media-box.sm, .row-scatter .media-box.md, .row-scatter .media-box.lg { width: 90%; }
             .chaotic-grid { display: flex; flex-direction: column; gap: 40px; }
             .cg-1, .cg-2, .cg-3, .cg-4, .cg-5 { width: 100%; margin: 0; }
             .offset-up, .offset-down { transform: none; }
@@ -153,7 +172,6 @@
 </head>
 <body>
 
-    <!-- 懸浮 Header -->
     <header>
         <a href="index.html" class="logo">JAY POSH</a>
         <nav class="nav-links">
@@ -164,15 +182,12 @@
         </nav>
     </header>
 
-    <!-- 1. 滿版 Hero Video -->
     <div class="hero-video-wrapper">
-        <video src="images/形象4.mp4" autoplay loop muted playsinline></video>
+        <video src="images/hero4.mp4" autoplay loop muted playsinline></video>
     </div>
 
-    <!-- 2. 無序拼貼畫布 -->
     <div class="collage-container">
 
-        <!-- 巨大主標題與開場白 -->
         <div class="massive-title-area">
             <h1 class="massive-title">JAY POSH</h1>
             <div class="text-block center" style="margin-top: -30px;">
@@ -180,7 +195,6 @@
             </div>
         </div>
 
-        <!-- 區塊 1: 散落的靜態與動態 -->
         <div class="row-scatter">
             <div class="media-box sm offset-down">
                 <img src="images/15.png" alt="Concept">
@@ -193,7 +207,6 @@
             </div>
         </div>
 
-        <!-- 區塊 2: 細節特寫 (縫紉機與嘴唇) -->
         <div class="row-scatter" style="justify-content: center; gap: 80px;">
             <div class="media-box md">
                 <video src="images/ef5d0fb7-04fd-4c01-bf0a-8fae0def4661.mp4" autoplay loop muted playsinline></video>
@@ -203,10 +216,8 @@
             </div>
         </div>
 
-        <!-- 區塊 3: 巨大置中影片 + 文字 -->
         <div class="row-scatter" style="flex-direction: column; gap: 40px;">
             <div class="media-box lg">
-                <!-- 已修改檔名為 trend3.mp4 -->
                 <video src="images/trend3.mp4" autoplay loop muted playsinline></video>
             </div>
             <div class="text-block center">
@@ -214,7 +225,6 @@
             </div>
         </div>
 
-        <!-- 區塊 4: 網格錯位拼貼 -->
         <div class="chaotic-grid">
             <div class="media-box cg-1">
                 <img src="images/H40工作區域 5-100.jpg">
@@ -227,20 +237,38 @@
             </div>
         </div>
 
-        <!-- 區塊 5: 連續動態切片 (Filmstrip) -->
+        <div class="row-scatter">
+            <div class="media-box sm">
+                <video src="images/50259817-65f2-48ad-81cd-d64b244c1d06.mp4" autoplay loop muted playsinline></video>
+            </div>
+            <div class="media-box sm offset-up">
+                <video src="images/45bffd52-c882-4842-a9e5-21a802937a5b.mp4" autoplay loop muted playsinline></video>
+            </div>
+            <div class="media-box sm offset-down">
+                <video src="images/e538a708-20d0-4132-a64c-f62ea068682d.mp4" autoplay loop muted playsinline></video>
+            </div>
+        </div>
+
+        <div class="row-scatter" style="justify-content: flex-end;">
+            <div class="media-box md overlap-left offset-up">
+                <video src="images/6e33be24-e034-4951-9356-94a4c0cb142e.mp4" autoplay loop muted playsinline></video>
+            </div>
+            <div class="media-box sm offset-down">
+                <video src="images/hug 08.mp4" autoplay loop muted playsinline></video>
+            </div>
+        </div>
+
         <div class="text-block left" style="margin-bottom: 20px;">
-            Many elements appear throughout the collection, from fabrication, styling to accessories.
+            MANY ELEMENTS APPEAR THROUGHOUT THE COLLECTION, FROM FABRICATION, STYLING TO ACCESSORIES.
         </div>
         <div class="filmstrip">
             <div class="media-box"><video src="images/ig 02.mp4" autoplay loop muted playsinline></video></div>
             <div class="media-box"><video src="images/FB 5.mp4" autoplay loop muted playsinline></video></div>
-            <!-- 已修改檔名為 origin2.mp4 -->
             <div class="media-box"><video src="images/origin2.mp4" autoplay loop muted playsinline></video></div>
             <div class="media-box"><img src="images/H61工作區域 5-100.jpg"></div>
             <div class="media-box"><video src="images/17.mp4" autoplay loop muted playsinline></video></div>
         </div>
 
-        <!-- 區塊 6: 視覺震撼收尾 -->
         <div class="chaotic-grid" style="margin-bottom: 50px;">
             <div class="media-box cg-4">
                 <video src="images/619fd84e-597a-4cd5-b6fd-e1de3ed75148.mp4" autoplay loop muted playsinline></video>
@@ -258,12 +286,10 @@
                 <img src="images/H75工作區域 4-100.jpg">
             </div>
             <div class="media-box md overlap-left">
-                <!-- 已修改檔名為 mid-video.mp4 -->
                 <video src="images/mid-video.mp4" autoplay loop muted playsinline></video>
             </div>
         </div>
 
-        <!-- 最終行 -->
         <div class="row-scatter" style="margin-bottom: 50px;">
             <div class="media-box sm"><video src="images/7592951a-d00f-4550-b747-fb3cdde688c5.mp4" autoplay loop muted playsinline></video></div>
             <div class="media-box sm offset-up"><img src="images/74.png"></div>
@@ -273,7 +299,6 @@
         
     </div>
 
-    <!-- Footer -->
     <footer>
         <div class="footer-left"><span>SHOP</span> &nbsp;&nbsp; <span>MAGAZINE</span> &nbsp;&nbsp; <span>INFO</span></div>
         <div class="footer-right"><span>&copy; 2026 JAY POSH</span></div>
