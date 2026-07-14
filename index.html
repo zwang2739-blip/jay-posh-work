@@ -283,73 +283,28 @@
         </div>
     </section>
 
-    <style>
-        /* ★ 首頁專屬：文字壓圖藝廊 (最新優化版) ★ */
-        .typo-wall-section {
-            position: relative;
-            width: 100%;
-            padding: 100px 50px;
-            background: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
+   <!-- ★ Hero Section (這應該是你的滿版影片區塊) ★ -->
+    <section class="hero-section">
+        <video class="bg-video" ... ></video>
+        ...
+    </section>
 
-        /* 圖片容器：放大並確保在最上層 */
-        .typo-image {
-            width: 450px; /* 圖片變大 */
-            z-index: 5;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
-        }
-
-        /* 文字容器：定位在圖片上，但不擋住中心 */
-        .typo-text-top-left {
-            position: absolute;
-            top: 150px; left: 10%;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.2rem;
-            line-height: 1.2;
-            width: 300px;
-            z-index: 2; /* 在圖片下方 */
-            pointer-events: none;
-        }
-        .typo-text-bottom-right {
-            position: absolute;
-            bottom: 150px; right: 10%;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.2rem;
-            line-height: 1.2;
-            width: 300px;
-            text-align: right;
-            z-index: 2;
-            pointer-events: none;
-        }
-        
-        .typo-text-top-left b, .typo-text-bottom-right b { font-weight: 700; }
-        .typo-text-top-left i, .typo-text-bottom-right i { color: #888; font-style: italic; }
-    </style>
-
-    <!-- ★ HTML 結構 ★ -->
+    <!-- 🌟🌟🌟 第二段的 HTML 程式碼請貼在這裡！！！ 🌟🌟🌟 -->
     <section class="typo-wall-section">
-        <!-- 左上角文字 -->
-        <div class="typo-text-top-left">
-            <b>JAY POSH ARCHIVE</b><br>
-            <i>Visual Narrative Exploration</i><br>
-            <span style="font-size: 0.7rem;">EST. 2026 / TW</span>
+        <div class="typo-text">
+            Jay Posh, <i>Visual Designer & Art Director</i>...
+            ...
         </div>
-
-        <!-- 中間圖片 (維持最大主角地位) -->
         <div class="typo-image">
             <img src="images/UPO 2.png" alt="Jay Posh UPO">
         </div>
+    </section>
+    <!-- 🌟🌟🌟 貼到這裡結束 🌟🌟🌟 -->
 
-        <!-- 右下角文字 -->
-        <div class="typo-text-bottom-right">
-            <b>CINE-FASHION</b><br>
-            <i>Dynamic Lighting & Form</i><br>
-            <span style="font-size: 0.7rem;">FULL CAMPAIGN / 2026</span>
-        </div>
+    <!-- ★ 開頭雙圖區塊 (下面兩張並排圖) ★ -->
+    <section class="split-image-section">
+        <div class="split-img-box">...</div>
+        <div class="split-img-box">...</div>
     </section>
 
     <section class="split-image-section">
