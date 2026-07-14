@@ -199,6 +199,54 @@
             .experience-section { padding: 60px 20px; }
             .exp-item { flex-direction: column; gap: 10px; }
         }
+    /* =========================================
+           ★ 首頁專屬：Typographic Wall (字體牆藝廊) ★
+           ========================================= */
+        .typo-wall-section {
+            position: relative;
+            padding: 100px 40px;
+            max-width: 1400px;
+            margin: 0 auto 100px auto;
+            text-align: justify;
+            background: #ffffff;
+            overflow: hidden;
+        }
+        .typo-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4.8rem; /* 巨大的襯線字體 */
+            line-height: 1.1;
+            color: #111;
+            letter-spacing: -1px;
+        }
+        .typo-text sup {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.2rem;
+            color: #888;
+            font-weight: 400;
+            vertical-align: super;
+            margin-left: 6px;
+            letter-spacing: 0;
+        }
+        .typo-text i {
+            font-style: italic;
+            font-weight: 600;
+        }
+        .typo-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 320px; /* 中間 UPO 2.png 的大小 */
+            z-index: 10;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15); /* 微微的陰影讓圖片浮出來 */
+        }
+        
+        /* 手機版適應 */
+        @media (max-width: 900px) {
+            .typo-text { font-size: 2.8rem; }
+            .typo-image { width: 200px; }
+        }
+    
     </style>
 </head>
 <body>
@@ -234,6 +282,27 @@
             <img src="images/hero-logo.png?v=2" alt="JAY POSH" class="logo-overlay-img">
         </div>
     </section>
+
+    <!-- ★ 全新字體牆區塊 開始 ★ -->
+        <section class="typo-wall-section">
+            <div class="typo-text">
+                Jay Posh, <i>Visual Designer & Art Director</i><sup>26.01</sup> / Taipei City<sup>TW</sup> / 
+                Exploring Cinematic <i>Narratives</i><sup>001</sup> / High-End Fashion <i>Photography</i><sup>15.011</sup> / 
+                Visual Workspace – <i>Unleash The Aesthetic</i><sup>16.002</sup> / Pinkselfie, 2026<sup>023</sup> / 
+                Dynamic Lighting, 25°02'N 121°33'E<sup>026</sup> / Editorial Style, W.W.–U.O.<sup>039</sup> / 
+                <i>Lookbook</i> & Studio Experiments<sup>013</sup> / ART, Y.T.<sup>010</sup> / 
+                Portraits : <i>Personality 01</i><sup>XXX</sup> / Cinematic Output<sup>042</sup> / 
+                Urban Suburbs, <i>denimdesert</i><sup>047</sup> / Motion & Branding<sup>030</sup> / 
+                Avant Garde, <i>Magazine Layouts</i><sup>008</sup> / AESTHETIC VISION<sup>014</sup> / 
+                Portraits : <i>Personality 02</i><sup>XXX</sup>
+            </div>
+            
+            <!-- 中央底圖 -->
+            <div class="typo-image">
+                <img src="images/UPO 2.png" alt="Jay Posh UPO">
+            </div>
+        </section>
+        <!-- ★ 全新字體牆區塊 結束 ★ -->
 
     <section class="split-image-section">
         <div class="split-img-box"><img src="images/split-1.jpg" alt="Visual 1"></div>
